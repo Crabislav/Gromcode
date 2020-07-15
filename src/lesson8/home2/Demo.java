@@ -6,8 +6,6 @@ public class Demo {
     public static void main(String[] args) {
         Course[] coursesTaken = {};
 
-        Demo demo = new Demo();
-
         Student student = createHighestParent("Alex", "Kopnin", 1, coursesTaken);
         SpecialStudent specialStudent = createLowestChild("Andrey", "Petrov", 2, coursesTaken, 5464, "example@mail.com");
 
