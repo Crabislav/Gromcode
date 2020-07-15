@@ -9,7 +9,7 @@ public class Message extends BaseEntity {
     Date dateRead;
     String message;
 
-    public Message(long id, User userFrom, User userTo, Date dateSent, Date dateRead, String message) {
+    public Message(long id, User userFrom, User userTo, String message) {
         super(id);
         this.userFrom = userFrom;
         this.userTo = userTo;
