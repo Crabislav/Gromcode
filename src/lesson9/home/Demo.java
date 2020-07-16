@@ -9,23 +9,28 @@ public class Demo {
         UserRepository userRepository = new UserRepository(generateUsers(5));
 
         User[] users = new User[5];
-        UserRepository userRepository1 = new UserRepository(users);
+        UserRepository emptyUserRepository = new UserRepository(users);
 
         System.out.println("Part 2");
         checkHomeworkPart2(userRepository);
-        checkHomeworkPart2(userRepository1);
+        checkHomeworkPart2(emptyUserRepository);
 
         System.out.println("\nPart 3");
         checkHomeworkPart3(userRepository);
-        checkHomeworkPart3(userRepository1);
+        checkHomeworkPart3(emptyUserRepository);
 
         System.out.println("\nPart 4");
-        checkHomeworkPart4();
+        User[] users1 = new User[1];
+        UserRepository userRepository2 = new UserRepository(users1);
+        checkHomeworkPart4(userRepository2);
+        checkHomeworkPart4(emptyUserRepository);
+
 
         System.out.println("\nPart 5");
-        User[] users1 = new User[2];
-        UserRepository userRepository2 = new UserRepository(users1);
-        checkHomeworkPart5(userRepository2);
+        User[] users2 = new User[5];
+        UserRepository userRepository3 = new UserRepository(users2);
+        checkHomeworkPart5(userRepository3);
+        checkHomeworkPart5(emptyUserRepository);
 
     }
 
@@ -67,15 +72,12 @@ public class Demo {
         System.out.println(userRepository.getUserBySessionId("session") + "\n");  //null
     }
 
-    public static void checkHomeworkPart4() {
-        User[] users = new User[1];
-        UserRepository userRepository = new UserRepository(users);
-
+    public static void checkHomeworkPart4(UserRepository userRepository) {
         User user = new User(8, "Name8", "Session8");
         System.out.println(userRepository.save(user));
 
         User user1 = new User(8, "Name7", "Session8");
-        System.out.println(userRepository.save(user1) + "\n");
+        System.out.println(userRepository.save(user1));
 
     }
 
