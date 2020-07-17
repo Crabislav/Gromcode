@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 public class Demo {
     public static void main(String[] args) {
-
-
         UserRepository userRepository = new UserRepository(generateUsers(5));
 
         User[] users = new User[5];
@@ -78,7 +76,6 @@ public class Demo {
 
         User user1 = new User(8, "Name7", "Session8");
         System.out.println(userRepository.save(user1));
-
     }
 
     public static void checkHomeworkPart5(UserRepository userRepository) {

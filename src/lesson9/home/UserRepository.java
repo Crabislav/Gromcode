@@ -16,9 +16,6 @@ public class UserRepository {
 
     //Homework.part2
     public String[] getUserNames() {
-        if (users == null)
-            return null;
-
         int index = 0;
         String[] userNames = new String[users.length];
 
@@ -32,10 +29,6 @@ public class UserRepository {
     }
 
     public long[] getUserIds() {
-        if (users == null) {
-            return null;
-        }
-
         int index = 0;
         long[] ids = new long[users.length];
 
@@ -60,11 +53,9 @@ public class UserRepository {
 
     //Homework.part3
     public User getUserByName(String name) {
-        if (users != null) {
-            for (User user : users) {
-                if (user != null && user.getName().equals(name)) {
-                    return user;
-                }
+        for (User user : users) {
+            if (user != null && user.getName().equals(name)) {
+                return user;
             }
         }
         return null;
@@ -72,50 +63,78 @@ public class UserRepository {
 
     //renamed from getUserById to findUserById + public -> private
     private User findUserById(long id) {
-        if (users != null) {
-            for (User user : users) {
-                if (user != null && user.getId() == id) {
-                    return user;
-                }
+        for (User user : users) {
+            if (user != null && user.getId() == id) {
+                return user;
             }
         }
         return null;
     }
 
     public User getUserBySessionId(String sessionId) {
-        if (users != null) {
-            for (User user : users) {
-                if (user != null && user.getSessionId().equals(sessionId)) {
-                    return user;
-                }
+        for (User user : users) {
+            if (user != null && user.getSessionId().equals(sessionId)) {
+                return user;
             }
         }
         return null;
     }
 
 
-    //Homework.part4
+    //Homework.part4 - old method
+//    public User save(User user) {
+//        if (user != null && users != null && findUserById(user.getId()) == null) {
+//            for (int i = 0; i < users.length; i++) {
+//                if (users[i] == null) {
+//                    users[i] = user;
+//                    return users[i];
+//                }
+//            }
+//        }
+//        return null;
+//    }
+
     public User save(User user) {
-        if (user != null && users != null && findUserById(user.getId()) == null) {
-            for (int i = 0; i < users.length; i++) {
-                if (users[i] == null) {
-                    users[i] = user;
-                    return users[i];
-                }
+        if (user == null || findUserById(user.getId()) != null)
+            return null;
+
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null) {
+                users[i] = user;
+                return users[i];
             }
         }
         return null;
     }
+
+    //Homework.part4 - second variant
+//    public User save2(User user) {
+//        if (user != null && findUserById(user.getId()) == null) {
+//            return setUserOnEmptySlot(user);
+//        }
+//        return null;
+//    }
+//
+//    private User setUserOnEmptySlot(User user) {
+//        for (int i = 0; i < users.length; i++) {
+//            if (users[i] == null) {
+//                users[i] = user;
+//                return users[i];
+//            }
+//        }
+//        return null;
+//    }
 
 
     //Homework.part5
     public User update(User user) {
-        if (user != null && users != null && findUserById(user.getId()) == null) {
-            for (int i = 0; i < users.length; i++) {
-                if (users[i].getId() == user.getId()) {
-                    users[i] = user;
-                    return users[i];
-                }
+        if (user == null || findUserById(user.getId()) != null)
+            return null;
+
+        for (int i = 0; i < users.length; i++) {
+            if (users[i].getId() == user.getId()) {
+                users[i] = user;
+                return users[i];
             }
         }
         return null;
@@ -123,8 +142,6 @@ public class UserRepository {
 
 
     public void delete(long id) {
-        if (users == null)
-            return;
         for (int i = 0; i < users.length; i++) {
             if (users[i].equals(findUserById(id))) {
                 users[i] = null;
