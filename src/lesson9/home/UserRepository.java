@@ -80,20 +80,7 @@ public class UserRepository {
         return null;
     }
 
-
-    //Homework.part4 - old method
-//    public User save(User user) {
-//        if (user != null && users != null && findUserById(user.getId()) == null) {
-//            for (int i = 0; i < users.length; i++) {
-//                if (users[i] == null) {
-//                    users[i] = user;
-//                    return users[i];
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
+    //Homework.part4
     public User save(User user) {
         if (user == null || findUserById(user.getId()) != null)
             return null;
@@ -106,24 +93,6 @@ public class UserRepository {
         }
         return null;
     }
-
-    //Homework.part4 - second variant
-//    public User save2(User user) {
-//        if (user != null && findUserById(user.getId()) == null) {
-//            return setUserOnEmptySlot(user);
-//        }
-//        return null;
-//    }
-//
-//    private User setUserOnEmptySlot(User user) {
-//        for (int i = 0; i < users.length; i++) {
-//            if (users[i] == null) {
-//                users[i] = user;
-//                return users[i];
-//            }
-//        }
-//        return null;
-//    }
 
 
     //Homework.part5
