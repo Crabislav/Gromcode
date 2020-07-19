@@ -15,7 +15,7 @@ public class ElectronicsOrder extends Order {
         String[] validCitiesForOrderFrom = {"Киев", "Одесса", "Днепр", "Харьков"};
 
         for (String city : validCitiesForOrderFrom) {
-            if (city.equals(getShipFromCity()) && getBasePrice() >= 100 && getCustomerOwned().getGender().toLowerCase().equals("женский")) {
+            if (city.equals(getShipFromCity()) && getBasePrice() >= 100 && getCustomerOwned().getGender()/*.toLowerCase()*/.equals("Женский")) {
                 setDateConfirmed(new Date());
             }
         }
@@ -38,7 +38,7 @@ public class ElectronicsOrder extends Order {
         String[] mediumShippingPriceCities = {"Киев", "Одесса"};
 
         for (String city : mediumShippingPriceCities) {
-            if (getShipToCity().toLowerCase().equals(city.toLowerCase())) {
+            if (getShipToCity()/*.toLowerCase()*/.equals(city/*.toLowerCase()*/)) {
                 return getBasePrice() * 0.1;
             }
         }
