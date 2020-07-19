@@ -23,14 +23,11 @@ public class ElectronicsOrder extends Order {
 
     @Override
     void calculatePrice() {
-//        double totalPrice = getBasePrice() > 1000 ? getBasePrice() * 0.95d + calculateShippingPrice() : getBasePrice() + calculateShippingPrice();
-//        setTotalPrice(totalPrice);
-
+        double totalPrice = getBasePrice() + calculateShippingPrice();
         if (getBasePrice() > 1000) {
-            //5% discount
-            setTotalPrice(getBasePrice() * 0.95d + calculateShippingPrice());
+            setTotalPrice(totalPrice * 0.95d);
         } else {
-            setTotalPrice(getBasePrice() + calculateShippingPrice());
+            setTotalPrice(totalPrice);
         }
     }
 
