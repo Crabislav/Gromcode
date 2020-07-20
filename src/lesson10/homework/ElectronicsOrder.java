@@ -12,10 +12,10 @@ public class ElectronicsOrder extends Order {
 
     @Override
     void validateOrder() {
-        String[] validCitiesForOrderFrom = {"Киев", "Одесса", "Днепр", "Харьков"};
+        String[] validCitiesForOrder = {"Киев", "Одесса", "Днепр", "Харьков"};
 
-        for (String city : validCitiesForOrderFrom) {
-            if (city == getShipFromCity() && getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский") {
+        for (String city : validCitiesForOrder) {
+            if (city == getShipFromCity() && getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский" && city == getShipToCity()) {
                 setDateConfirmed(new Date());
             }
         }
