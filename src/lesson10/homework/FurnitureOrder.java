@@ -12,13 +12,19 @@ public class FurnitureOrder extends Order {
 
     @Override
     void validateOrder() {
-        String[] validCitiesForOrderFrom = {"Киев", "Львов"};
+        if (validateCity(getShipFromCity()) && getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест") {
+            setDateConfirmed(new Date());
+        }
+    }
 
+    private boolean validateCity(String cityToValidate) {
+        String[] validCitiesForOrderFrom = {"Киев", "Львов"};
         for (String city : validCitiesForOrderFrom) {
-            if (city == getShipFromCity() && getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест") {
-                setDateConfirmed(new Date());
+            if (city == cityToValidate) {
+                return true;
             }
         }
+        return false;
     }
 
     @Override

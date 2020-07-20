@@ -35,7 +35,7 @@ public class Demo {
 
         System.out.println(furnitureOrder0);
 
-        Customer customer4 = new Customer("НеТест", "Киев", "Мужской");
+        Customer customer4 = new Customer("НеТест", "Мухосранск", "Мужской");
         FurnitureOrder furnitureOrder1 = new FurnitureOrder("FurnitureOrder1", new Date(), customer4.getCity(), "Одесса", 600, customer4, "54");
 
         furnitureOrder1.validateOrder();
