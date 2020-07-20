@@ -24,8 +24,11 @@ public class ElectronicsOrder extends Order {
     @Override
     void calculatePrice() {
         double totalPrice = getBasePrice() + calculateShippingPrice();
+
         if (getBasePrice() > 1000) {
-            setTotalPrice(totalPrice * 0.95d);
+            //5% discount
+            double discountedTotalPrice = totalPrice * 0.95d;
+            setTotalPrice(discountedTotalPrice);
         } else {
             setTotalPrice(totalPrice);
         }
@@ -36,10 +39,10 @@ public class ElectronicsOrder extends Order {
 
         for (String city : mediumShippingPriceCities) {
             if (getShipToCity() == city) {
-                return getBasePrice() * 0.1;
+                return getBasePrice() * 0.1d;
             }
         }
-        return getBasePrice() * 0.15;
+        return getBasePrice() * 0.15d;
     }
 
 }
