@@ -25,7 +25,7 @@ public class ElectronicsOrder extends Order {
     void calculatePrice() {
         double totalPrice = getBasePrice() + calculateShippingPrice();
 
-        if (getBasePrice() > 1000) {
+        if (getTotalPrice() > 1000) {
             //5% discount
             double discountedTotalPrice = totalPrice * 0.95d;
             setTotalPrice(discountedTotalPrice);
