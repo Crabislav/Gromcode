@@ -38,10 +38,8 @@ public class DemoHomework {
 
         API[] apis = new API[]{googleAPI, emptyTripAdvisorAPI, tripAdvisorAPI};
         Controller controller = new Controller(apis);
-        for (API api : apis) {
-            System.out.println("\n" + api.getClass());
-            System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", "Hotel")));
-        }
+        System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", "Hotel")));
+
 
     }
 
