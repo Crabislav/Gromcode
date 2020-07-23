@@ -8,11 +8,11 @@ public class DemoHomework {
         Room[] emptyRoomArray = new Room[5];
 
         //GoogleAPI Test
-        Room room1 = new Room(881, 100, 9, new Date(), "Hotel", "City");
-        Room room2 = new Room(222, 100, 2, new Date(), "Hotel", "City");
-        Room room3 = new Room(311, 100, 2, new Date(), "Hotel", "City");
-        Room room4 = new Room(474, 100, 2, new Date(), "Hotel", "Hotel");
-        Room room5 = new Room(5357, 1900, 2, new Date(), "Hotel", "City");
+        Room room1 = new Room(1, 100, 2, new Date(), "Hotel", "City");
+        Room room2 = new Room(2, 100, 2, new Date(), "Hotel", "City");
+        Room room3 = new Room(3, 300, 2, new Date(), "Hotel", "City");
+        Room room4 = new Room(4, 100, 2, new Date(), "Hotel", "City");
+        Room room5 = new Room(5, 500, 2, new Date(), "Hotel", "City");
 
         Room[] googleAPIRooms = new Room[]{room1, room2, room3, room4, room5};
 
@@ -20,11 +20,11 @@ public class DemoHomework {
         GoogleAPI emptyGoogleAPI = new GoogleAPI(emptyRoomArray);
 
 
-        Room room11 = new Room(1, 100, 6, new Date(), "Hotel", "City");
-        Room room22 = new Room(45, 100, 2, new Date(), "Hotel", "City");
-        Room room33 = new Room(553, 100, 2, new Date(), "Hotel", "City");
-        Room room44 = new Room(664, 100, 3, new Date(), "Hotel", "City");
-        Room room55 = new Room(85, 100, 4, new Date(), "Hotel", "City");
+        Room room11 = new Room(6, 600, 2, new Date(), "Hotel", "City");
+        Room room22 = new Room(7, 100, 2, new Date(), "Hotel", "City");
+        Room room33 = new Room(8, 100, 2, new Date(), "Hotel", "City");
+        Room room44 = new Room(9, 900, 2, new Date(), "Hotel", "City");
+        Room room55 = new Room(10, 100, 2, new Date(), "Hotel", "City");
 
         Room[] TripAdvisorAPIRooms = new Room[]{room11, room22, room33, room44, room55};
 
@@ -38,9 +38,9 @@ public class DemoHomework {
 
         API[] apis = new API[]{googleAPI, emptyTripAdvisorAPI, tripAdvisorAPI};
         Controller controller = new Controller(apis);
-        System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", "Hotel")));
-
-
+        // System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", "Hotel")));
+       // System.out.println(controller.cheapestRoom());
+        System.out.println(Arrays.toString(controller.check(googleAPI, tripAdvisorAPI)));
     }
 
 
