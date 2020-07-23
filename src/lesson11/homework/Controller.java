@@ -11,12 +11,11 @@ public class Controller {
     //finds rooms among all APIs
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
         int amount = calculateRoomsAmount(price, persons, city, hotel);
+        Room[] resultRooms = new Room[amount];
 
         if (amount <= 0) {
-            return null;
+            return new Room[0];
         }
-
-        Room[] resultRooms = new Room[amount];
 
         int index = 0;
         for (API api : apis) {
