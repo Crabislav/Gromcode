@@ -11,12 +11,11 @@ public class BookingComAPI implements API {
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         int amount = calculateValidRoomsAmount(price, persons, city, hotel);
+        Room[] resultRooms = new Room[amount];
 
         if (!isQueryValid(price, persons) || rooms == null || amount <= 0) {
-            return null;
+            return new Room[0];
         }
-
-        Room[] resultRooms = new Room[amount];
 
         int index = 0;
         for (Room room : rooms) {
@@ -35,10 +34,6 @@ public class BookingComAPI implements API {
 
     private int calculateValidRoomsAmount(int price, int persons, String city, String hotel) {
         int count = 0;
-        if (rooms == null) {
-            return count;
-        }
-
         for (Room room : rooms) {
             if (isRoomValid(price, persons, city, hotel, room))
                 count++;

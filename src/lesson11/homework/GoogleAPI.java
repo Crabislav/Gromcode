@@ -11,12 +11,11 @@ public class GoogleAPI implements API {
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         int amount = calculateValidRoomsAmount(price, persons, city, hotel);
+        Room[] resultRooms = new Room[amount];
 
         if (!isQueryValid(price, persons) || rooms == null || amount <= 0) {
-            return null;
+            return new Room[0];
         }
-
-        Room[] resultRooms = new Room[amount];
 
         int index = 0;
         for (Room room : rooms) {
