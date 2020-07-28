@@ -18,82 +18,39 @@ public class Main {
 
         BankSystem bankSystem = new UkrainianBankSystem();
 
-        checkAndPrintMethodResults(users, euUser2, bankSystem, 50);
-
+        checkUpBankSystemMethods(users, bankSystem, euUser1, 50);
     }
 
-    //Method is only for beautiful console output
+    private static void checkUpBankSystemMethods(User[] users, BankSystem bankSystem, User toUser, int amount) {
+        for (User user : users) {
+            printDivider('=');
+            System.out.println("Amount of money is " + amount);
+            printDivider('=');
+            System.out.println(user.getName() + "'s balance before withdraw " + user.getBalance());
+            bankSystem.withdraw(user, amount);
+            System.out.println(user.getName() + "'s balance after withdraw " + user.getBalance() + "\n");
+
+            System.out.println(user.getName() + "'s balance before transferMoney " + user.getBalance());
+            bankSystem.transferMoney(user, toUser, amount);
+            System.out.println(user.getName() + "'s balance after transferMoney " + user.getBalance() + "\n");
+
+            System.out.println(user.getName() + "'s balance before paySalary " + user.getBalance());
+            bankSystem.paySalary(user);
+            System.out.println(user.getName() + "'s balance after paySalary " + user.getBalance() + "\n");
+
+            System.out.println(user.getName() + "'s balance before fund " + user.getBalance());
+            bankSystem.fund(user, amount);
+            System.out.println(user.getName() + "'s balance after fund " + user.getBalance() + "\n");
+
+
+            System.out.println('\n');
+        }
+    }
+
     private static void printDivider(char symbol) {
         for (int i = 0; i < 50; i++) {
             System.out.print(symbol);
         }
         System.out.println();
-    }
-
-    //Method is only for beautiful console output
-    private static void printOperationResults(User fromUser, User toUser, int amount, BankSystem bankSystem, OperationName operationName) {
-        printDivider('=');
-        System.out.println("Operation - " + operationName);
-        System.out.println(fromUser.getBank().getClass());
-        printDivider('=');
-
-        if (operationName == OperationName.PAY_SALARY) {
-            printAmountMsg(operationName, fromUser.getSalary());
-        } else {
-            printAmountMsg(operationName, amount);
-        }
-
-        printDivider('-');
-
-        printBalanceMsg(operationName, "Before", fromUser);
-        defineOperationToUse(fromUser, toUser, amount, bankSystem, operationName);
-        printBalanceMsg(operationName, "After", fromUser);
-
-        System.out.println("\n");
-    }
-
-    //Method is only for beautiful console output
-    private static void printBalanceMsg(OperationName operationName, String msg, User user) {
-        System.out.println(msg + " " + operationName + " balance is " + user.getBalance());
-    }
-
-    //Method is only for beautiful console output
-    private static void printAmountMsg(OperationName operationName, int output) {
-        System.out.println("Amount of money to " + operationName + " is " + output);
-    }
-
-    //Method is only for beautiful console output
-    private static void defineOperationToUse(User user, User toUser, int amount, BankSystem bankSystem, OperationName operationName) {
-        switch (operationName) {
-            case WITHDRAW:
-                bankSystem.withdraw(user, amount);
-                break;
-            case FUND:
-                bankSystem.fund(user, amount);
-                break;
-            case TRANSFER:
-                bankSystem.transferMoney(user, toUser, amount);
-                break;
-            case PAY_SALARY:
-                bankSystem.paySalary(user);
-                break;
-            default:
-                System.err.println("Wrong operation was chosen");
-                break;
-        }
-    }
-
-    //Method is only for beautiful console output
-    private static void checkAndPrintMethodResults(User[] users, User toUser, BankSystem bankSystem, int amount) {
-        for (User user : users) {
-            printDivider('/');
-            System.out.println("User " + user.getName());
-            printDivider('/');
-            System.out.println();
-
-            for (OperationName operationName : OperationName.values()) {
-                printOperationResults(user, toUser, amount, bankSystem, operationName);
-            }
-        }
     }
 }
