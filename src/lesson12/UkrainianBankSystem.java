@@ -10,7 +10,6 @@ public class UkrainianBankSystem implements BankSystem {
         setBalanceAfterWithdraw(user, amount);
     }
 
-
     @Override
     public void fund(User user, int amount) {
         if (!checkFund(user, amount)) {
@@ -18,7 +17,6 @@ public class UkrainianBankSystem implements BankSystem {
         }
         setBalanceAfterFund(user, amount);
     }
-
 
     @Override
     public void transferMoney(User fromUser, User toUser, int amount) {
@@ -36,9 +34,9 @@ public class UkrainianBankSystem implements BankSystem {
 
     @Override
     public void paySalary(User user) {
-        fund(user, user.getSalary());
+        int salary = user.getSalary();
+        user.setBalance(user.getBalance() + salary - user.getBank().getCommission(salary));
     }
-
 
     private void printWithdrawalErrorMsg(int amount, User user) {
         System.err.println("Can't withdraw money " + amount + "\n   from " + user.toString());
@@ -52,23 +50,21 @@ public class UkrainianBankSystem implements BankSystem {
         System.err.println("Can't transfer money " + amount + "\n   from" + fromUser.toString() + "\n   to " + toUser.toString());
     }
 
-
     private boolean checkWithdraw(User user, int amount) {
         return checkWithdrawLimits(user, amount, user.getBank().getLimitOfWithdrawal()) &&
                 checkWithdrawLimits(user, amount, user.getBalance());
     }
 
     private boolean checkFund(User user, int amount) {
-        if (amount + user.getBank().getCommission(amount) > user.getBank().getLimitOfFunding() || amount <= 0) {
+        if (amount + user.getBank().getCommission(amount) > user.getBank().getLimitOfFunding()) {
             printFundErrorMsg(amount, user);
             return false;
         }
         return true;
     }
 
-    //I'd added check for negative withdraw amount here
     private boolean checkWithdrawLimits(User user, int amount, double limit) {
-        if (amount + user.getBank().getCommission(amount) > limit || amount <= 0) {
+        if (amount + user.getBank().getCommission(amount) > limit) {
             printWithdrawalErrorMsg(amount, user);
             return false;
         }
@@ -77,18 +73,16 @@ public class UkrainianBankSystem implements BankSystem {
 
     private void setBalanceAfterWithdraw(User user, int amount) {
         //code bellow is according to the video-lesson
-//        user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
+        user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
 
         //code after using math rule : a*b - a*c = a*(b - c)
-        user.setBalance(user.getBalance() - amount * (1 - user.getBank().getCommission(amount)));
+//        user.setBalance(user.getBalance() - amount * (1 - user.getBank().getCommission(amount)));
     }
 
     private void setBalanceAfterFund(User user, int amount) {
-        //code bellow is according to the video-lesson
-//        user.setBalance(user.getBalance() + amount - amount * user.getBank().getCommission(amount));
+        user.setBalance(user.getBalance() + amount - amount * user.getBank().getCommission(amount));
 
         //code after using math rule : a*b - a*c = a*(b - c)
-        user.setBalance(user.getBalance() + amount * (1 - user.getBank().getCommission(amount)));
+//        user.setBalance(user.getBalance() + amount * (1 - user.getBank().getCommission(amount)));
     }
-
 }
