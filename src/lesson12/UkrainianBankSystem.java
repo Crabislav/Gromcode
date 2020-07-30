@@ -7,7 +7,7 @@ public class UkrainianBankSystem implements BankSystem {
         if (!checkWithdraw(user, amount)) {
             return;
         }
-        setBalanceAfterWithdraw(user, amount);
+        user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
     }
 
     @Override
@@ -15,7 +15,7 @@ public class UkrainianBankSystem implements BankSystem {
         if (!checkFund(user, amount)) {
             return;
         }
-        setBalanceAfterFund(user, amount);
+        user.setBalance(user.getBalance() + amount - amount * user.getBank().getCommission(amount));
     }
 
     @Override
@@ -28,8 +28,8 @@ public class UkrainianBankSystem implements BankSystem {
             return;
         }
 
-        setBalanceAfterWithdraw(fromUser, amount);
-        setBalanceAfterFund(toUser, amount);
+        fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
+        toUser.setBalance(toUser.getBalance() + amount - amount * toUser.getBank().getCommission(amount));
     }
 
     @Override
@@ -69,20 +69,5 @@ public class UkrainianBankSystem implements BankSystem {
             return false;
         }
         return true;
-    }
-
-    private void setBalanceAfterWithdraw(User user, int amount) {
-        //code bellow is according to the video-lesson
-        user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
-
-        //code after using math rule : a*b - a*c = a*(b - c)
-//        user.setBalance(user.getBalance() - amount * (1 - user.getBank().getCommission(amount)));
-    }
-
-    private void setBalanceAfterFund(User user, int amount) {
-        user.setBalance(user.getBalance() + amount - amount * user.getBank().getCommission(amount));
-
-        //code after using math rule : a*b - a*c = a*(b - c)
-//        user.setBalance(user.getBalance() + amount * (1 - user.getBank().getCommission(amount)));
     }
 }
