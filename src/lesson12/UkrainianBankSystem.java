@@ -24,7 +24,7 @@ public class UkrainianBankSystem implements BankSystem {
         //fund money to User
 
         if (!checkWithdraw(fromUser, amount) && !checkFund(toUser, amount)) {
-            printTransferErrorMsg(amount, fromUser, toUser);
+            System.err.println("Can't transfer money " + amount + "\n   from" + fromUser.toString() + "\n   to " + toUser.toString());
             return;
         }
 
@@ -38,17 +38,17 @@ public class UkrainianBankSystem implements BankSystem {
         user.setBalance(user.getBalance() + salary - user.getBank().getCommission(salary));
     }
 
-    private void printWithdrawalErrorMsg(int amount, User user) {
-        System.err.println("Can't withdraw money " + amount + "\n   from " + user.toString());
-    }
+//    private void printWithdrawalErrorMsg(int amount, User user) {
+//        System.err.println("Can't withdraw money " + amount + "\n   from " + user.toString());
+//    }
 
-    private void printFundErrorMsg(int amount, User user) {
-        System.err.println("Can't fund money " + amount + "\n   from " + user.toString());
-    }
+//    private void printFundErrorMsg(int amount, User user) {
+//        System.err.println("Can't fund money " + amount + "\n   from " + user.toString());
+//    }
 
-    private void printTransferErrorMsg(int amount, User fromUser, User toUser) {
+/*    private void printTransferErrorMsg(int amount, User fromUser, User toUser) {
         System.err.println("Can't transfer money " + amount + "\n   from" + fromUser.toString() + "\n   to " + toUser.toString());
-    }
+    }*/
 
     private boolean checkWithdraw(User user, int amount) {
         return checkWithdrawLimits(user, amount, user.getBank().getLimitOfWithdrawal()) &&
@@ -57,7 +57,7 @@ public class UkrainianBankSystem implements BankSystem {
 
     private boolean checkFund(User user, int amount) {
         if (amount + user.getBank().getCommission(amount) > user.getBank().getLimitOfFunding()) {
-            printFundErrorMsg(amount, user);
+            System.err.println("Can't fund money " + amount + "\n   from " + user.toString());
             return false;
         }
         return true;
@@ -65,7 +65,7 @@ public class UkrainianBankSystem implements BankSystem {
 
     private boolean checkWithdrawLimits(User user, int amount, double limit) {
         if (amount + user.getBank().getCommission(amount) > limit) {
-            printWithdrawalErrorMsg(amount, user);
+            System.err.println("Can't withdraw money " + amount + "\n   from " + user.toString());
             return false;
         }
         return true;
