@@ -97,7 +97,7 @@ public class UserRepository {
 
     //Homework.part5
     public User update(User user) {
-        if (user == null || findUserById(user.getId()) != null)
+        if (user == null || findUserById(user.getId()) == null)
             return null;
 
         for (int i = 0; i < users.length; i++) {
