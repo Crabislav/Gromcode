@@ -16,6 +16,10 @@ public class UserRepository {
 
     //Homework.part2
     public String[] getUserNames() {
+        if (users == null) {
+            return new String[0];
+        }
+
         int index = 0;
         String[] userNames = new String[users.length];
 
@@ -29,6 +33,10 @@ public class UserRepository {
     }
 
     public long[] getUserIds() {
+        if (users == null) {
+            return new long[0];
+        }
+
         int index = 0;
         long[] ids = new long[users.length];
 
@@ -82,8 +90,9 @@ public class UserRepository {
 
     //Homework.part4
     public User save(User user) {
-        if (user == null || findUserById(user.getId()) != null)
+        if (user == null || findUserById(user.getId()) != null) {
             return null;
+        }
 
         for (int i = 0; i < users.length; i++) {
             if (users[i] == null) {
@@ -97,8 +106,9 @@ public class UserRepository {
 
     //Homework.part5
     public User update(User user) {
-        if (user == null || findUserById(user.getId()) == null)
+        if (user == null || findUserById(user.getId()) == null) {
             return null;
+        }
 
         for (int i = 0; i < users.length; i++) {
             if (users[i].getId() == user.getId()) {
@@ -112,7 +122,7 @@ public class UserRepository {
 
     public void delete(long id) {
         for (int i = 0; i < users.length; i++) {
-            if (users[i].equals(findUserById(id))) {
+            if (users[i] == findUserById(id)){
                 users[i] = null;
                 return;
             }
