@@ -9,26 +9,20 @@ public class Demo {
 
         //GoogleAPI Test
         Room room1 = new Room(1, 100, 2, new Date(), "Hotel", "City");
-        Room room2 = new Room(2, 100, 2, new Date(), "Hotel", "City");
-        Room room3 = new Room(3, 300, 2, new Date(), "Hotel", "City");
-        Room room4 = new Room(4, 100, 2, new Date(), "Hotel", "City");
-        Room room5 = new Room(5, 500, 2, new Date(), "Hotel", "City");
+        Room room2 = new Room(2, 100, 2, new Date(), null, "City");
+        Room room3 = null;
+        Room room4 = new Room(4, 1100, 2, new Date(), null, "City");
+        Room room5 = new Room(5, 50, 2, new Date(), "Hotel", null);
 
-        Room[] googleAPIRooms = new Room[]{room1, room2, room3, room4, room5};
+        Room[] rooms = new Room[]{room1, room2, room3, room4, room5};
 
-        GoogleAPI googleAPI = new GoogleAPI(googleAPIRooms);
+        GoogleAPI googleAPI = new GoogleAPI(rooms);
         GoogleAPI emptyGoogleAPI = new GoogleAPI(emptyRoomArray);
 
+        BookingComAPI BookingComAPI = new BookingComAPI(rooms);
+        BookingComAPI emptyBookingComAPI = new BookingComAPI(emptyRoomArray);
 
-        Room room11 = new Room(6, 600, 2, new Date(), "Hotel", "City");
-        Room room22 = new Room(7, 100, 2, new Date(), "Hotel", "City");
-        Room room33 = new Room(8, 100, 2, new Date(), "Hotel", "City");
-        Room room44 = new Room(9, 900, 2, new Date(), "Hotel", "City");
-        Room room55 = new Room(10, 100, 2, new Date(), "Hotel", "City");
-
-        Room[] TripAdvisorAPIRooms = new Room[]{room11, room22, room33, room44, room55};
-
-        TripAdvisorAPI tripAdvisorAPI = new TripAdvisorAPI(TripAdvisorAPIRooms);
+        TripAdvisorAPI tripAdvisorAPI = new TripAdvisorAPI(rooms);
         TripAdvisorAPI emptyTripAdvisorAPI = new TripAdvisorAPI(emptyRoomArray);
 
 
@@ -36,13 +30,42 @@ public class Demo {
         System.out.println("API Test");
         printDivider();
 
-        API[] apis = new API[]{googleAPI, emptyTripAdvisorAPI, tripAdvisorAPI};
+        API[] apis = new API[]{googleAPI, emptyGoogleAPI, emptyTripAdvisorAPI, tripAdvisorAPI, BookingComAPI, emptyBookingComAPI};
         Controller controller = new Controller(apis);
-        // System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", "Hotel")));
-       // System.out.println(controller.cheapestRoom());
-        System.out.println(Arrays.toString(controller.check(googleAPI, tripAdvisorAPI)));
-    }
 
+        //requestRooms test
+        //usual query +
+        System.out.println("\ncorrect query");
+        System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", "Hotel")));
+        //negative price +
+        System.out.println("\nnegative price");
+        System.out.println(Arrays.toString(controller.requestRooms(-100, 2, "City", "Hotel")));
+        //city is null +
+        System.out.println("\ncity is null");
+        System.out.println(Arrays.toString(controller.requestRooms(50, 2, null, "Hotel")));
+        //hotel is null +
+        System.out.println("\nhotel is null");
+        System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", null)));
+
+
+        //cheapestRoom test
+        System.out.println(controller.cheapestRoom());
+
+        //check test
+        //normal usage +
+        System.out.println(Arrays.toString(controller.check(googleAPI, tripAdvisorAPI)));
+        //first param is null +
+        System.out.println(Arrays.toString(controller.check(null, tripAdvisorAPI)));
+        //second param is null +
+        System.out.println(Arrays.toString(controller.check(googleAPI, null)));
+        //check one empty and one not +
+        System.out.println(Arrays.toString(controller.check(emptyGoogleAPI, tripAdvisorAPI)));
+        //check empty api +
+        System.out.println(Arrays.toString(controller.check(emptyGoogleAPI, emptyGoogleAPI)));
+        //similar types of api input +
+        System.out.println(Arrays.toString(controller.check(googleAPI, googleAPI)));
+
+    }
 
     private static void printDivider() {
         for (int i = 0; i < 50; i++) {
