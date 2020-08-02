@@ -12,24 +12,6 @@ public class ElectronicsOrder extends Order {
 
     @Override
     void validateOrder() {
-//        String[] validCitiesForOrder = {"Киев", "Одесса", "Днепр", "Харьков"};
-//
-//        boolean isFromCityValid = false;
-//        boolean isToCityValid = false;
-//
-//        for (String city : validCitiesForOrder) {
-//            if (city == getShipFromCity()) {
-//                isFromCityValid = true;
-//            }
-//            if (city == getShipToCity()) {
-//                isToCityValid = true;
-//            }
-//        }
-//
-//        if (isFromCityValid && isToCityValid && getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский") {
-//            setDateConfirmed(new Date());
-//        }
-
         if (validateCity(getShipToCity()) && validateCity(getShipFromCity()) && getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский") {
             setDateConfirmed(new Date());
         }
