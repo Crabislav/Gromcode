@@ -45,24 +45,36 @@ public class Demo {
         System.out.println(Arrays.toString(controller.requestRooms(50, 2, null, "Hotel")));
         //hotel is null +
         System.out.println("\nhotel is null");
-        System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", null)));
+        System.out.println(Arrays.toString(controller.requestRooms(100, 2, "City", null))+"\n");
 
 
         //cheapestRoom test
-        System.out.println(controller.cheapestRoom());
+        printDivider();
+        System.out.println("CheapestRoom test");
+        printDivider();
+        System.out.println(controller.cheapestRoom() + "\n\n");
 
         //check test
+        printDivider();
+        System.out.println("Check test");
+        printDivider();
         //normal usage +
+        System.out.println("\nnormal usage");
         System.out.println(Arrays.toString(controller.check(googleAPI, tripAdvisorAPI)));
         //first param is null +
+        System.out.println("\nfirst param is null");
         System.out.println(Arrays.toString(controller.check(null, tripAdvisorAPI)));
         //second param is null +
+        System.out.println("\nsecond param is null");
         System.out.println(Arrays.toString(controller.check(googleAPI, null)));
         //check one empty and one not +
+        System.out.println("\ncheck one empty and one not");
         System.out.println(Arrays.toString(controller.check(emptyGoogleAPI, tripAdvisorAPI)));
         //check empty api +
+        System.out.println("\ncheck empty api");
         System.out.println(Arrays.toString(controller.check(emptyGoogleAPI, emptyGoogleAPI)));
         //similar types of api input +
+        System.out.println("\nsimilar types of api input");
         System.out.println(Arrays.toString(controller.check(googleAPI, googleAPI)));
 
     }
