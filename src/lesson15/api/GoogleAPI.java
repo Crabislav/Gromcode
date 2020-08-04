@@ -1,5 +1,7 @@
 package lesson15.api;
 
+import java.util.Date;
+
 public class GoogleAPI implements API {
     private Room[] rooms;
 
@@ -7,19 +9,49 @@ public class GoogleAPI implements API {
         this.rooms = rooms;
     }
 
-    //TODO: remove code duplicates
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
-        int amount = calculateValidRoomsAmount(price, persons, city, hotel);
-        Room[] resultRooms = new Room[amount];
-
-        if (!isQueryValid(price, persons) || rooms == null || amount <= 0) {
+        //no available rooms or negative price/persons - go out from method
+        if (rooms == null || !isQueryValid(price, persons)) {
             return new Room[0];
         }
 
+        //room obj which will be used with equals method
+        Room roomToFind = new Room(0, price, persons, new Date(), hotel, city);
+
+        //calculates result array's length
+        int count = 0;
+        for (Room room : rooms) {
+            //if room == null -  the next 'if' statement will throw NullPointer
+            if (room == null) {
+                break;
+            }
+            if (room.getCityName() == null || room.getHotelName() == null) {
+                break;
+            }
+            //changed to equals here
+            if (roomToFind.equals(room)) {
+                count++;
+            }
+        }
+
+        //result array's length should be at least 1
+        if (count <= 0) {
+            return new Room[0];
+        }
+
+        //this array will be returned by this method
+        Room[] resultRooms = new Room[count];
+
+        //result array filled here
         int index = 0;
         for (Room room : rooms) {
-            if (isRoomValid(price, persons, city, hotel, room)) {
+            //if room == null -  the next 'if' statement will throw NullPointer
+            if (room == null) {
+                continue;
+            }
+            //changed to equals here
+            if (roomToFind.equals(room)) {
                 resultRooms[index] = room;
                 index++;
             }
@@ -33,26 +65,8 @@ public class GoogleAPI implements API {
         return rooms;
     }
 
-    private int calculateValidRoomsAmount(int price, int persons, String city, String hotel) {
-        int count = 0;
-        for (Room room : rooms) {
-            if (isRoomValid(price, persons, city, hotel, room)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
+    //self-explanatory
     private boolean isQueryValid(int price, int persons) {
         return price > 0 && persons > 0;
-    }
-
-    //class differs only with this method
-    private boolean isRoomValid(int price, int persons, String city, String hotel, Room room) {
-        if (room == null) {
-            return false;
-        }
-        return room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city
-                && room.getHotelName() == hotel;
     }
 }
