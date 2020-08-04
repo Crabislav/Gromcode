@@ -9,13 +9,28 @@ public class Controller {
 
     //finds rooms among all APIs
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
-        int amount = calculateRoomsAmount(price, persons, city, hotel);
-        Room[] resultRooms = new Room[amount];
-
-        if (amount <= 0) {
+        //no apis or negative price/persons - go out from method
+        if (apis == null || !isQueryValid(price, persons)) {
             return new Room[0];
         }
 
+        //calculates result array's length
+        int count = 0;
+        for (API api : apis) {
+            if (api != null) {
+                count += api.findRooms(price, persons, city, hotel).length;
+            }
+        }
+
+        //result array's length should be at least 1
+        if (count <= 0) {
+            return new Room[0];
+        }
+
+        //this array will be returned by this method
+        Room[] resultRooms = new Room[count];
+
+        //result array filled here
         int index = 0;
         for (API api : apis) {
             Room[] rooms = api.findRooms(price, persons, city, hotel);
@@ -27,33 +42,50 @@ public class Controller {
         return resultRooms;
     }
 
-    //TODO: probably do some refactor
     //finds similar rooms among two APIs
     public Room[] check(API api1, API api2) {
+        //null input check
         if (api1 == null || api2 == null) {
             return new Room[0];
         }
 
+        //variable for result array's length
         int count = 0;
 
         Room[] roomsAPI1 = api1.getAll();
         Room[] roomsAPI2 = api2.getAll();
 
+        //calculates result array's length
         for (Room roomAPI1 : roomsAPI1) {
             for (Room roomAPI2 : roomsAPI2) {
-                if (isRoomsSimilar(roomAPI1, roomAPI2)) {
+                if (roomAPI1 == null || roomAPI2 == null) {
+                    continue;
+                }
+                //changed to equals here
+                if (roomAPI1.equals(roomAPI2)) {
                     count++;
                     break;
                 }
             }
         }
 
+        //result array's length should be at least 1
+        if (count <= 0) {
+            return new Room[0];
+        }
+
+        //this array will be returned by this method
         Room[] resultRooms = new Room[count];
 
+        //result array filled here
         int index = 0;
         for (Room roomAPI1 : roomsAPI1) {
             for (Room roomAPI2 : roomsAPI2) {
-                if (isRoomsSimilar(roomAPI1, roomAPI2)) {
+                if (roomAPI1 == null || roomAPI2 == null) {
+                    continue;
+                }
+                //changed to equals here
+                if (roomAPI1.equals(roomAPI2)) {
                     resultRooms[index] = roomAPI1;
                     index++;
                     break;
@@ -66,14 +98,23 @@ public class Controller {
 
     //finds the cheapest room among all APIs
     public Room cheapestRoom() {
-        //calculate the whole amount of all rooms
-        int allRoomsAmount = calculateRoomsAmount();
+        //calculates the whole amount of all rooms
+        int allRoomsAmount = 0;
+        for (API api : apis) {
+            if (api != null) {
+                allRoomsAmount += api.getAll().length;
+            }
+        }
+
+        //array with all rooms - empty. only with proper length
         Room[] allRooms = new Room[allRoomsAmount];
 
+        //no rooms - go out from method
         if (allRoomsAmount <= 0) {
             return null;
         }
 
+        //array with all rooms filled here
         int index = 0;
         for (API api : apis) {
             Room[] rooms = api.getAll();
@@ -83,7 +124,10 @@ public class Controller {
             }
         }
 
+        //we guess that the first slot of array with all rooms is the cheapest
         Room cheapRoom = allRooms[0];
+
+        //the cheapest room finds out here
         for (Room room : allRooms) {
             if (room != null && room.getPrice() < cheapRoom.getPrice()) {
                 cheapRoom = room;
@@ -92,33 +136,9 @@ public class Controller {
         return cheapRoom;
     }
 
-    private int calculateRoomsAmount(int price, int persons, String city, String hotel) {
-        int count = 0;
-        for (API api : apis) {
-            if (api != null) {
-                count += api.findRooms(price, persons, city, hotel).length;
-            }
-        }
-        return count;
-    }
-
-    private int calculateRoomsAmount() {
-        int count = 0;
-        for (API api : apis) {
-            if (api != null) {
-                count += api.getAll().length;
-            }
-        }
-        return count;
-    }
-
-    private boolean isRoomsSimilar(Room room1, Room room2) {
-        if (room1 == null || room2 == null) {
-            return false;
-        }
-
-        return room1.getPrice() == room2.getPrice() && room1.getCityName() == room2.getCityName()
-                && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName();
+    //self-explanatory
+    private boolean isQueryValid(int price, int persons) {
+        return price > 0 && persons > 0;
     }
 }
 
