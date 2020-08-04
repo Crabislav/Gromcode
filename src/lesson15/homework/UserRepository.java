@@ -18,7 +18,6 @@ public class UserRepository {
         if (user == null || findUser(user) != null) {
             return null;
         }
-
         for (int i = 0; i < users.length; i++) {
             if (users[i] == null) {
                 users[i] = user;
@@ -27,21 +26,41 @@ public class UserRepository {
         }
         return user;
     }
-//
-//    public User update(User user) {
-//
-//    }
-//
-//    public void delete(long id) {
-//
-//    }
+
+    public User update(User user) {
+        if (user == null) {
+            return null;
+        }
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] != null) {
+                if (user.getId() == users[i].getId()) {
+                    users[i] = user;
+                    break;
+                }
+            }
+        }
+        return user;
+    }
+
+
+    //if id is unique - it works fine
+    public void delete(long id) {
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] != null) {
+                if (users[i].getId() == id) {
+                    users[i] = null;
+                    return;
+                }
+            }
+        }
+    }
 
     public User findUser(User user) {
         if (user == null) {
             return null;
         }
         for (User resultUser : users) {
-            if (user.equals(resultUser) && user.hashCode() == resultUser.hashCode()) {
+            if (user.equals(resultUser)) {
                 return resultUser;
             }
         }
