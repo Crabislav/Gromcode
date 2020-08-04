@@ -7,17 +7,29 @@ public class TripAdvisorAPI implements API {
         this.rooms = rooms;
     }
 
-    //TODO: remove code duplicates
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
-        int amount = calculateValidRoomsAmount(price, persons, city, hotel);
-        Room[] resultRooms = new Room[amount];
-
-        if (!isQueryValid(price, persons) || rooms == null || amount <= 0) {
+        //no available rooms or negative price/persons - go out from method
+        if (rooms == null || !isQueryValid(price, persons)) {
             return new Room[0];
         }
 
+        //calculates result array's length
+        int count = 0;
+        for (Room room : rooms) {
+            if (isRoomValid(price, persons, city, hotel, room))
+                count++;
+        }
 
+        //result array's length should be at least 1
+        if (count <= 0) {
+            return new Room[0];
+        }
+
+        //this array will be returned by this method
+        Room[] resultRooms = new Room[count];
+
+        //result array filled here
         int index = 0;
         for (Room room : rooms) {
             if (isRoomValid(price, persons, city, hotel, room)) {
@@ -26,7 +38,6 @@ public class TripAdvisorAPI implements API {
             }
         }
         return resultRooms;
-
     }
 
     @Override
@@ -43,11 +54,12 @@ public class TripAdvisorAPI implements API {
         return count;
     }
 
+    //self-explanatory
     private boolean isQueryValid(int price, int persons) {
         return price > 0 && persons > 0;
     }
 
-    //class differs only with this method
+    //used instead of equals
     private boolean isRoomValid(int price, int persons, String city, String hotel, Room room) {
         if (room == null) {
             return false;
