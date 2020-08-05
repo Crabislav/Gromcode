@@ -45,15 +45,6 @@ public class TripAdvisorAPI implements API {
         return rooms;
     }
 
-    private int calculateValidRoomsAmount(int price, int persons, String city, String hotel) {
-        int count = 0;
-        for (Room room : rooms) {
-            if (isRoomValid(price, persons, city, hotel, room))
-                count++;
-        }
-        return count;
-    }
-
     //self-explanatory
     private boolean isQueryValid(int price, int persons) {
         return price > 0 && persons > 0;
