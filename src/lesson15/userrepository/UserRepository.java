@@ -14,57 +14,69 @@ public class UserRepository {
     }
 
     public User save(User user) {
-        //user exists if findUser(user) != null
-        if (user == null || findUser(user) != null) {
+        User findUserResult = findUser(user);
+        //if there is a such user with the same id - we don't need to save him
+        if (/*user == null || */findUserResult != null || !isIdAvailable(user)) {
             return null;
         }
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] == null) {
-                users[i] = user;
-                break;
+        int index = 0;
+        for (User user1 : users) {
+            if (user1 == null /*&& isIdAvailable(user)*/) {
+                users[index] = user;
+                return users[index];
             }
+            index++;
         }
-        return user;
+        return null;
     }
 
     public User update(User user) {
-        if (user == null) {
+    /*    if (user == null) {
             return null;
-        }
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] != null) {
-                if (user.getId() == users[i].getId()) {
-                    users[i] = user;
-                    break;
-                }
+        }*/
+        int index = 0;
+        for (User user1 : users) {
+            if (user1 != null && user.getId() == user1.getId()) {
+                users[index] = user;
+                return users[index];
             }
+            index++;
         }
-        return user;
+        return null;
     }
 
 
     //if id is unique - it works fine
     public void delete(long id) {
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] != null) {
-                if (users[i].getId() == id) {
-                    users[i] = null;
-                    return;
-                }
+        int index = 0;
+        for (User user : users) {
+            if (user != null && user.getId() == id) {
+                users[index] = null;
+                return;
             }
+            index++;
         }
     }
 
     public User findUser(User user) {
-        if (user == null) {
+/*        if (user == null) {
             return null;
-        }
+        }*/
         for (User resultUser : users) {
             if (user.equals(resultUser)) {
                 return resultUser;
             }
         }
         return null;
+    }
+
+    private boolean isIdAvailable(User user) {
+        for (User resultUser : users) {
+            if (resultUser != null && user.getId() == resultUser.getId()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
