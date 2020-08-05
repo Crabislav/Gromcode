@@ -64,7 +64,6 @@ public class Controller {
                 //changed to equals here
                 if (roomAPI1.equals(roomAPI2)) {
                     count++;
-                    break;
                 }
             }
         }
@@ -88,7 +87,6 @@ public class Controller {
                 if (roomAPI1.equals(roomAPI2)) {
                     resultRooms[index] = roomAPI1;
                     index++;
-                    break;
                 }
             }
         }
