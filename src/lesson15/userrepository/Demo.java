@@ -20,26 +20,30 @@ public class Demo {
         System.out.println(userRepository.toString());
         userRepository.save(user1);
         System.out.println(userRepository.toString());
-        //null input
+        /*//null input
         userRepository.save(null);
-        System.out.println(userRepository.toString() + "\n");
+        System.out.println(userRepository.toString() + "\n");*/
 
         //empty array +
         System.out.println("Empty array");
         //saving a user +
+        System.out.println("\nsaving a user"+"\nBefore saving");
         System.out.println(emptyUserRepository.toString());
         emptyUserRepository.save(user1);
+        System.out.println("\nAfter saving");
         System.out.println(emptyUserRepository.toString() + "\n");
 
         //saving the user with the same id +
+        System.out.println("saving a user with the same id"+"\nBefore saving");
         System.out.println(emptyUserRepository.toString());
         emptyUserRepository.save(user2);
+        System.out.println("After saving");
         System.out.println(emptyUserRepository.toString() + "\n");
 
-        //null input +
+        /*//null input +
         System.out.println(emptyUserRepository.toString());
         emptyUserRepository.save(null);
-        System.out.println(emptyUserRepository.toString() + "\n");
+        System.out.println(emptyUserRepository.toString() + "\n");*/
 
         //delete test
         System.out.println("delete test");
@@ -70,9 +74,11 @@ public class Demo {
         //fully filled array
         System.out.println("Fully filled array");
         //update using correct user id +
+        System.out.println("Correct id"+"\nBefore update");
         System.out.println(userRepository.toString());
-        User user3 = new User(0, "Alex", "asdasda");
+        User user3 = new User(2, "Alex", "asdasda");
         userRepository.update(user3);
+        System.out.println("After update");
         System.out.println(userRepository.toString() + "\n");
 
         //update using wrong user id  +
@@ -81,10 +87,10 @@ public class Demo {
         userRepository.update(user3);
         System.out.println(userRepository.toString() + "\n");
 
-        //null input +
+   /*     //null input +
         System.out.println(userRepository.toString());
         userRepository.update(null);
-        System.out.println(userRepository.toString() + "\n");
+        System.out.println(userRepository.toString() + "\n");*/
 
         //empty array +
         System.out.println("Empty array");
