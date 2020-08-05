@@ -58,11 +58,8 @@ public class Controller {
         //calculates result array's length
         for (Room roomAPI1 : roomsAPI1) {
             for (Room roomAPI2 : roomsAPI2) {
-                if (roomAPI1 == null || roomAPI2 == null) {
-                    continue;
-                }
                 //changed to equals here
-                if (roomAPI1.equals(roomAPI2)) {
+                if (roomAPI1 != null && roomAPI1.equals(roomAPI2)) {
                     count++;
                 }
             }
@@ -80,11 +77,8 @@ public class Controller {
         int index = 0;
         for (Room roomAPI1 : roomsAPI1) {
             for (Room roomAPI2 : roomsAPI2) {
-                if (roomAPI1 == null || roomAPI2 == null) {
-                    continue;
-                }
                 //changed to equals here
-                if (roomAPI1.equals(roomAPI2)) {
+                if (roomAPI1 != null && roomAPI1.equals(roomAPI2)) {
                     resultRooms[index] = roomAPI1;
                     index++;
                 }
