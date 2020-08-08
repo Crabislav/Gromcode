@@ -70,7 +70,7 @@ public class UserRepository {
     }
 
     //renamed from getUserById to findById + public -> private
-    private User findById(long id) {
+    public User findById(long id) {
         for (User user : users) {
             if (user != null && user.getId() == id) {
                 return user;
@@ -91,7 +91,7 @@ public class UserRepository {
     //Homework.part4
     public User save(User user) {
         //if there is a such user with the same id - we don't need to save him
-        if (user == null || findById(user.getId()) != null || !isIdAvailable(user)) {
+        if (user == null || findById(user.getId()) != null) {
             return null;
         }
         int index = 0;
@@ -123,31 +123,21 @@ public class UserRepository {
         return null;
     }
 
-
     public void delete(long id) {
-     /*   for (int i = 0; i < users.length; i++) {
-            if (users[i] == findById(id)) {
-                users[i] = null;
-                return;
-            }
-        }*/
+         /*   for (int i = 0; i < users.length; i++) {
+                if (users[i] == findById(id)) {
+                    users[i] = null;
+                    return;
+                }
+            }*/
         int index = 0;
         for (User user : users) {
-            if (users[index] == findById(id)) {
+            if (user != null && user.getId() == id) {
                 users[index] = null;
                 return;
             }
             index++;
         }
-    }
-
-    private boolean isIdAvailable(User user) {
-        for (User resultUser : users) {
-            if (resultUser != null && user.getId() == resultUser.getId()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override
