@@ -69,7 +69,7 @@ public class UserRepository {
         return null;
     }
 
-    //renamed from getUserById to findById + public -> private
+    //renamed from getUserById to findById
     public User findById(long id) {
         for (User user : users) {
             if (user != null && user.getId() == id) {
