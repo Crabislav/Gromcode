@@ -14,9 +14,8 @@ public class UserRepository {
     }
 
     public User save(User user) {
-        User findUserResult = findUser(user);
         //if there is a such user with the same id - we don't need to save him
-        if (/*user == null || */findUserResult != null || !isIdAvailable(user)) {
+        if (/*user == null || */findUser(user) != null || !isIdAvailable(user)) {
             return null;
         }
         int index = 0;
