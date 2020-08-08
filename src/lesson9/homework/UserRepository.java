@@ -90,15 +90,17 @@ public class UserRepository {
 
     //Homework.part4
     public User save(User user) {
-        if (user == null || findById(user.getId()) != null) {
+        //if there is a such user with the same id - we don't need to save him
+        if (user == null || findById(user.getId()) != null || !isIdAvailable(user)) {
             return null;
         }
-
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] == null) {
-                users[i] = user;
-                return users[i];
+        int index = 0;
+        for (User user1 : users) {
+            if (user1 == null) {
+                users[index] = user;
+                return users[index];
             }
+            index++;
         }
         return null;
     }
@@ -106,27 +108,46 @@ public class UserRepository {
 
     //Homework.part5
     public User update(User user) {
-        if (user == null || findById(user.getId()) == null) {
+        if (user == null/* || findById(user.getId()) == null*/) {
             return null;
         }
 
-        for (int i = 0; i < users.length; i++) {
-            if (users[i].getId() == user.getId()) {
-                users[i] = user;
-                return users[i];
+        int index = 0;
+        for (User user1 : users) {
+            if (user1 != null && user.getId() == user1.getId()) {
+                users[index] = user;
+                return users[index];
             }
+            index++;
         }
         return null;
     }
 
 
     public void delete(long id) {
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] == findById(id)){
+     /*   for (int i = 0; i < users.length; i++) {
+            if (users[i] == findById(id)) {
                 users[i] = null;
                 return;
             }
+        }*/
+        int index = 0;
+        for (User user : users) {
+            if (users[index] == findById(id)) {
+                users[index] = null;
+                return;
+            }
+            index++;
         }
+    }
+
+    private boolean isIdAvailable(User user) {
+        for (User resultUser : users) {
+            if (resultUser != null && user.getId() == resultUser.getId()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
