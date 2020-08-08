@@ -69,8 +69,8 @@ public class UserRepository {
         return null;
     }
 
-    //renamed from getUserById to findUserById + public -> private
-    private User findUserById(long id) {
+    //renamed from getUserById to findById + public -> private
+    private User findById(long id) {
         for (User user : users) {
             if (user != null && user.getId() == id) {
                 return user;
@@ -90,7 +90,7 @@ public class UserRepository {
 
     //Homework.part4
     public User save(User user) {
-        if (user == null || findUserById(user.getId()) != null) {
+        if (user == null || findById(user.getId()) != null) {
             return null;
         }
 
@@ -106,7 +106,7 @@ public class UserRepository {
 
     //Homework.part5
     public User update(User user) {
-        if (user == null || findUserById(user.getId()) == null) {
+        if (user == null || findById(user.getId()) == null) {
             return null;
         }
 
@@ -122,7 +122,7 @@ public class UserRepository {
 
     public void delete(long id) {
         for (int i = 0; i < users.length; i++) {
-            if (users[i] == findUserById(id)){
+            if (users[i] == findById(id)){
                 users[i] = null;
                 return;
             }
