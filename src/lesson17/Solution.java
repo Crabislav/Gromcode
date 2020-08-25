@@ -104,10 +104,7 @@ public class Solution {
     }
 
     private static boolean isWord(String input) {
-        if (hasSpecialChar(input) || input.isBlank() || input.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !hasSpecialChar(input) && !input.isBlank() && !input.isEmpty();
     }
 
     private static int[] countDuplicates(String input, String[] words) {
