@@ -76,7 +76,6 @@ public class Solution {
             return null; //probably change for something
         }
 
-        int index = 0; //used for wordRepeats array
         String[] words = input.trim().split(" ");
 
         int[] wordsRepeats = countDuplicates(input, words);
@@ -87,7 +86,6 @@ public class Solution {
             if (wordsRepeats[i] > maxRepeats) {
                 maxRepeats = wordsRepeats[i];
                 maxIndex = i;
-                index++;
             }
         }
 
