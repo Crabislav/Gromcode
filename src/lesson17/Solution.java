@@ -2,11 +2,22 @@ package lesson17;
 
 public class Solution {
     public static void main(String[] args) {
-        String string = "as asd   aad123   ";
+        String string = "word  another word another word";
+        String string1 = "word another another";
+        String string2 = "word word another another";
+        String string3 = "word word f f f another another";
+
+
         System.out.println(countWords(string));
 
         System.out.println(maxWord(string));
         System.out.println(minWord(string));
+
+        System.out.println();
+        System.out.println(mostCountedWord(string));
+        System.out.println(mostCountedWord(string1));
+        System.out.println(mostCountedWord(string2));
+        System.out.println(mostCountedWord(string3));
     }
 
     //the first task
@@ -19,7 +30,7 @@ public class Solution {
         String[] words = input.trim().split(" ");
 
         for (String word : words) {
-            if (!hasSpecialChar(word) && !word.isBlank()) {
+            if (isWord(word)) {
                 count++;
             }
         }
@@ -36,7 +47,7 @@ public class Solution {
         String result = words[0];
 
         for (String word : words) {
-            if (!hasSpecialChar(word) && !word.isBlank() && word.length() > result.length()) {
+            if (isWord(word) && word.length() > result.length()) {
                 result = word;
             }
         }
@@ -52,34 +63,36 @@ public class Solution {
         String result = words[0];
 
         for (String word : words) {
-            if (!hasSpecialChar(word) && !word.isBlank() && word.length() < result.length()) {
+            if (isWord(word) && word.length() < result.length()) {
                 result = word;
             }
         }
         return result;
     }
 
-//    //the third task
-//    public static String mostCountedWord(String input) {
-//        if (input.isEmpty()) {
-//            return null; //probably change for something
-//        }
-//
-//        String[] words = input.trim().split(" ");
-//        String result = words[0];
-//
-//        int[] wordsRepeats = new int[words.length]; //TODO: check up here for array length
-//
-//        for (int i = 0; i < words.length; i++) {
-//            for (int j = 0; j < words.length; j++) {
-//                if (words[i].equals(words[j])) {
-//
-//                }
-//            }
-//        }
-//
-//        return result;
-//    }
+    //the third task
+    public static String mostCountedWord(String input) {
+        if (input.isEmpty()) {
+            return null; //probably change for something
+        }
+
+        int index = 0; //used for wordRepeats array
+        String[] words = input.trim().split(" ");
+
+        int[] wordsRepeats = countDuplicates(input, words);
+
+        int maxRepeats = 0;
+        int maxIndex = 0;
+        for (int i = 0; i < wordsRepeats.length; i++) {
+            if (wordsRepeats[i] > maxRepeats) {
+                maxRepeats = wordsRepeats[i];
+                maxIndex = i;
+                index++;
+            }
+        }
+
+        return words[maxIndex];
+    }
 
     private static boolean hasSpecialChar(String word) {
         char[] chars = word.toCharArray();
@@ -92,6 +105,31 @@ public class Solution {
         return false;
     }
 
+    private static boolean isWord(String input) {
+        if (hasSpecialChar(input) || input.isBlank() || input.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    private static int[] countDuplicates(String input, String[] words) {
+        String[] strings = input.split(" ");
+
+        int[] res = new int[words.length];
+
+        for (String string : strings) {
+            if (!isWord(string)) {
+                continue;
+            }
+            for (int i = 0; i < words.length; i++) {
+                if (isWord(words[i]) && string.equals(words[i])) {
+                    res[i]++;
+                }
+            }
+        }
+
+        return res;
+    }
 
 //    //TODO: find out how to do this method
 //    public static int countWords(String input) {
