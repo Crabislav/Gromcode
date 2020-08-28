@@ -2,22 +2,29 @@ package lesson17;
 
 public class Solution {
     public static void main(String[] args) {
-        String string = "word  another word another word";
-        String string1 = "word another another";
-        String string2 = "word word another another";
-        String string3 = "word word f f f another another";
+//        String string = "word  another word another word";
+//        String string1 = "word another another";
+//        String string2 = "word word another another";
+//        String string3 = "word word f f f another another";
+//
+//
+//        System.out.println(countWords(string));
+//
+//        System.out.println(maxWord(string));
+//        System.out.println(minWord(string));
+//
+//        System.out.println();
+//        System.out.println(mostCountedWord(string));
+//        System.out.println(mostCountedWord(string1));
+//        System.out.println(mostCountedWord(string2));
+//        System.out.println(mostCountedWord(string3));
 
 
-        System.out.println(countWords(string));
-
-        System.out.println(maxWord(string));
-        System.out.println(minWord(string));
-
-        System.out.println();
-        System.out.println(mostCountedWord(string));
-        System.out.println(mostCountedWord(string1));
-        System.out.println(mostCountedWord(string2));
-        System.out.println(mostCountedWord(string3));
+        System.out.println(validate("https://sd.org//"));
+        System.out.println(validate("http://.sd.org"));
+        System.out.println(validate("https://sd.org"));
+        System.out.println(validate("sd.org"));
+        System.out.println(validate("sd"));
     }
 
     //the first task
@@ -89,7 +96,69 @@ public class Solution {
             }
         }
 
+        if (maxRepeats == 0) {
+            return null;
+        }
+
         return words[maxIndex];
+    }
+
+    //the 4th task
+    //TODO:split into methods
+    public static boolean validate(String address) {
+        if (address == null || address.isEmpty() || address.isBlank()) {
+            return false;
+        }
+
+        String[] validProtocols = {"https", "http"};
+        String[] validDomains = {"com", "org", "net"};
+
+        boolean isProtocolValid = false;
+        boolean isDomainValid = false;
+        boolean hasSpecChar = false;
+
+        int protocolLength = 0;
+        int domainLength = 0;
+
+        //protocol checking
+        for (String validProtocol : validProtocols) {
+            isProtocolValid = address.startsWith(validProtocol + "://");
+            if (isProtocolValid) {
+                protocolLength = validProtocol.length() + 3;
+                break;
+            }
+        }
+
+        if (!isProtocolValid) {
+            return false;
+        }
+
+        //domain checking
+        for (String validDomain : validDomains) {
+            isDomainValid = address.endsWith('.' + validDomain);
+            if (isDomainValid) {
+                domainLength = validDomain.length() + 1;
+                break;
+            }
+        }
+
+        if (!isDomainValid) {
+            return false;
+        }
+
+        //spec char checking
+        char[] addressChars = address.substring(protocolLength, address.length() - domainLength).toCharArray();
+        for (char aChar : addressChars) {
+            if (!Character.isLetterOrDigit(aChar)) {
+                hasSpecChar = true;
+            }
+        }
+
+        if (hasSpecChar) {
+            return false;
+        }
+
+        return true;
     }
 
     private static boolean hasSpecialChar(String word) {
