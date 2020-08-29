@@ -136,6 +136,7 @@ public class Solution {
         return !hasSpecChar;
     }
 
+    //used at the fourth task
     private static int calculateInputLength(String[] validWords, String address, boolean isProtocol) {
         if (validWords == null || address == null) {
             return -1;
@@ -166,11 +167,12 @@ public class Solution {
         return false;
     }
 
-    //used at first task
+    //used at the first task
     private static boolean isWord(String input) {
         return !isWordValid(input) && !input.isBlank() && !input.isEmpty();
     }
 
+    //used at the third task
     private static int[] countDuplicates(String input, String[] words) {
         String[] strings = input.split(" ");
 
