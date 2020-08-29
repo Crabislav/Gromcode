@@ -2,22 +2,21 @@ package lesson17;
 
 public class Solution {
     public static void main(String[] args) {
-//        String string = "word  another word another word";
-//        String string1 = "word another another";
-//        String string2 = "word word another another";
-//        String string3 = "word word f f f another another";
-//
-//
-//        System.out.println(countWords(string));
-//
-//        System.out.println(maxWord(string));
-//        System.out.println(minWord(string));
-//
-//        System.out.println();
-//        System.out.println(mostCountedWord(string));
-//        System.out.println(mostCountedWord(string1));
-//        System.out.println(mostCountedWord(string2));
-//        System.out.println(mostCountedWord(string3));
+        String string = "word  another word another word";
+        String string1 = "word another another";
+        String string2 = "word word another another";
+        String string3 = "word word f f f another another";
+
+        System.out.println(countWords(string));
+
+        System.out.println(maxWord(string));
+        System.out.println(minWord(string));
+
+        System.out.println();
+        System.out.println(mostCountedWord(string));
+        System.out.println(mostCountedWord(string1));
+        System.out.println(mostCountedWord(string2));
+        System.out.println(mostCountedWord(string3));
 
 
         System.out.println(validate("https://sd.org//"));
@@ -126,7 +125,7 @@ public class Solution {
             return false;
         }
 
-        //spec char checking
+        //special char checking
         char[] addressChars = address.substring(protocolLength, address.length() - domainLength).toCharArray();
         for (char aChar : addressChars) {
             if (!Character.isLetterOrDigit(aChar)) {
@@ -155,7 +154,8 @@ public class Solution {
         return -1;
     }
 
-    private static boolean hasSpecialChar(String word) {
+    //used at first task
+    private static boolean isWordValid(String word) {
         char[] chars = word.toCharArray();
 
         for (char aChar : chars) {
@@ -166,8 +166,9 @@ public class Solution {
         return false;
     }
 
+    //used at first task
     private static boolean isWord(String input) {
-        return !hasSpecialChar(input) && !input.isBlank() && !input.isEmpty();
+        return !isWordValid(input) && !input.isBlank() && !input.isEmpty();
     }
 
     private static int[] countDuplicates(String input, String[] words) {
