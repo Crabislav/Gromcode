@@ -21,7 +21,7 @@ public class Solution {
 
 
         System.out.println(validate("https://sd.org//"));
-        System.out.println(validate("http://.sd.org"));
+        System.out.println(validate("http://sd.org"));
         System.out.println(validate("https://sd.org"));
         System.out.println(validate("sd.org"));
         System.out.println(validate("sd"));
@@ -104,45 +104,25 @@ public class Solution {
     }
 
     //the 4th task
-    //TODO:split into methods
     public static boolean validate(String address) {
         if (address == null || address.isEmpty() || address.isBlank()) {
             return false;
         }
 
-        String[] validProtocols = {"https", "http"};
-        String[] validDomains = {"com", "org", "net"};
+        String[] validProtocols = {"https://", "http://"};
+        String[] validDomains = {".com", ".org", ".net"};
 
-        boolean isProtocolValid = false;
-        boolean isDomainValid = false;
         boolean hasSpecChar = false;
 
-        int protocolLength = 0;
-        int domainLength = 0;
+        int protocolLength = calculateInputLength(validProtocols, address, true);
 
-        //protocol checking
-        for (String validProtocol : validProtocols) {
-            isProtocolValid = address.startsWith(validProtocol + "://");
-            if (isProtocolValid) {
-                protocolLength = validProtocol.length() + 3;
-                break;
-            }
-        }
-
-        if (!isProtocolValid) {
+        if (protocolLength == -1) {
             return false;
         }
 
-        //domain checking
-        for (String validDomain : validDomains) {
-            isDomainValid = address.endsWith('.' + validDomain);
-            if (isDomainValid) {
-                domainLength = validDomain.length() + 1;
-                break;
-            }
-        }
+        int domainLength = calculateInputLength(validDomains, address, false);
 
-        if (!isDomainValid) {
+        if (domainLength == -1) {
             return false;
         }
 
@@ -154,11 +134,25 @@ public class Solution {
             }
         }
 
-        if (hasSpecChar) {
-            return false;
+        return !hasSpecChar;
+    }
+
+    private static int calculateInputLength(String[] validWords, String address, boolean isProtocol) {
+        if (validWords == null || address == null) {
+            return -1;
         }
 
-        return true;
+        for (String validWord : validWords) {
+            if (isProtocol && address.startsWith(validWord)) {
+                return validWord.length();
+            }
+
+            if (!isProtocol && address.endsWith(validWord)) {
+                return validWord.length();
+            }
+
+        }
+        return -1;
     }
 
     private static boolean hasSpecialChar(String word) {
