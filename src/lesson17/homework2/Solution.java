@@ -32,12 +32,16 @@ public class Solution {
         String[] words = input.trim().split(" ");
         String result = words[0];
 
+        if (!isWord(result)) {
+            return null;
+        }
+
         for (String word : words) {
             if (isWord(word) && word.length() > result.length()) {
                 result = word;
             }
         }
-        return isWord(result) ? result : null;
+        return result;
     }
 
     //finds the shortest word
@@ -48,12 +52,15 @@ public class Solution {
         String[] words = input.trim().split(" ");
         String result = words[0];
 
+        if (!isWord(result)) {
+            return null;
+        }
         for (String word : words) {
             if (isWord(word) && word.length() < result.length()) {
                 result = word;
             }
         }
-        return isWord(result) ? result : null;
+        return result;
     }
 
     private static boolean isWord(String input) {
