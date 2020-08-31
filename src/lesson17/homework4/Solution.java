@@ -15,50 +15,59 @@ public class Solution {
             return false;
         }
 
-        String[] validProtocols = {"https://", "http://"};
-        String[] validDomains = {".com", ".org", ".net"};
-
-        boolean hasSpecChar = false;
-
-        int protocolLength = calculateInputLength(validProtocols, address, true);
-
+        int protocolLength = calculateProtocolLength(address);
         if (protocolLength == -1) {
             return false;
         }
 
-        int domainLength = calculateInputLength(validDomains, address, false);
-
+        int domainLength = calculateDomainLength(address);
         if (domainLength == -1) {
             return false;
         }
 
-        //special char checking
-        char[] addressChars = address.substring(protocolLength, address.length() - domainLength).toCharArray();
-        for (char aChar : addressChars) {
-            if (!Character.isLetterOrDigit(aChar)) {
-                hasSpecChar = true;
-            }
-        }
+        boolean hasSpecChar = checkMiddlePartForSpecialChars(address, protocolLength, domainLength);
 
         return !hasSpecChar;
     }
 
-    //used at the fourth task
-    private static int calculateInputLength(String[] validWords, String address, boolean isProtocol) {
-        if (validWords == null || address == null) {
+    private static int calculateProtocolLength(String address) {
+        String[] validProtocols = {"https://", "http://"};
+
+        if (address == null) {
             return -1;
         }
 
-        for (String validWord : validWords) {
-            if (isProtocol && address.startsWith(validWord)) {
-                return validWord.length();
+        for (String validProtocol : validProtocols) {
+            if (address.startsWith(validProtocol)) {
+                return validProtocol.length();
             }
-
-            if (!isProtocol && address.endsWith(validWord)) {
-                return validWord.length();
-            }
-
         }
         return -1;
+    }
+
+    private static int calculateDomainLength(String address) {
+        String[] validDomains = {".com", ".org", ".net"};
+
+        if (address == null) {
+            return -1;
+        }
+
+        for (String validDomain : validDomains) {
+            if (address.endsWith(validDomain)) {
+                return validDomain.length();
+            }
+        }
+        return -1;
+    }
+
+    private static boolean checkMiddlePartForSpecialChars(String address, int protocolLength, int domainLength) {
+        char[] addressChars = address.substring(protocolLength, address.length() - domainLength).toCharArray();
+
+        for (char aChar : addressChars) {
+            if (!Character.isLetterOrDigit(aChar)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
