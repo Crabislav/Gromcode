@@ -55,6 +55,7 @@ public class Solution {
         if (!isWord(result)) {
             return null;
         }
+
         for (String word : words) {
             if (isWord(word) && word.length() < result.length()) {
                 result = word;
