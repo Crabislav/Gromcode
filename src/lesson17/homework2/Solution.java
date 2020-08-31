@@ -68,9 +68,8 @@ public class Solution {
         if (word.isBlank()) {
             return false;
         }
-        char[] chars = word.toCharArray();
 
-        for (char aChar : chars) {
+        for (char aChar : word.toCharArray()) {
             if (!Character.isLetter(aChar)) {
                 return false;
             }
