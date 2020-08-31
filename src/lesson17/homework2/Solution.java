@@ -4,12 +4,13 @@ public class Solution {
     public static void main(String[] args) {
         String string = "word  another word another word";
         String string1 = "another word  another word another word";
-        String string2 = "";
+        String string2 = "  another word another word";
         String string3 = null;
         String string4 = ".... ..";
         String string5 = " ";
+        String string6 = ".... another word  another word another word";
 
-        String[] strings = new String[]{string, string1, string2, string3, string4, string5};
+        String[] strings = new String[]{string, string1, string2, string3, string4, string5, string6};
 
         System.out.println("Max word");
         for (String str : strings) {
@@ -33,16 +34,12 @@ public class Solution {
         String[] words = input.trim().split(" ");
         String result = words[0];
 
-        if (!isWord(result)) {
-            return null;
-        }
-
         for (String word : words) {
             if (isWord(word) && word.length() > result.length()) {
                 result = word;
             }
         }
-        return result;
+        return isWord(result) ? result : null;
     }
 
     //finds the shortest word
@@ -54,16 +51,13 @@ public class Solution {
         String[] words = input.trim().split(" ");
         String result = words[0];
 
-        if (!isWord(result)) {
-            return null;
-        }
-
         for (String word : words) {
             if (isWord(word) && word.length() < result.length()) {
                 result = word;
             }
         }
-        return result;
+
+        return isWord(result) ? result : null;
     }
 
     private static boolean isWord(String input) {
@@ -71,6 +65,9 @@ public class Solution {
     }
 
     private static boolean isWordValid(String word) {
+        if (word.isBlank()) {
+            return false;
+        }
         char[] chars = word.toCharArray();
 
         for (char aChar : chars) {
