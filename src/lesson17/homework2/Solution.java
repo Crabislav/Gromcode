@@ -8,7 +8,7 @@ public class Solution {
         String string3 = null;
         String string4 = ".... ..";
         String string5 = " ";
-        String string6 = ".... another word  another word another word";
+        String string6 = ".. another word  another word another word";
 
         String[] strings = new String[]{string, string1, string2, string3, string4, string5, string6};
 
@@ -32,14 +32,14 @@ public class Solution {
         }
 
         String[] words = input.trim().split(" ");
-        String result = words[0];
+        String result = "";
 
         for (String word : words) {
             if (isWord(word) && word.length() > result.length()) {
                 result = word;
             }
         }
-        return isWord(result) ? result : null;
+        return /*isWord(result) && */!result.isEmpty() ? result : null;
     }
 
     //finds the shortest word
@@ -49,15 +49,15 @@ public class Solution {
         }
 
         String[] words = input.trim().split(" ");
-        String result = words[0];
+        String result = "";
 
         for (String word : words) {
-            if (isWord(word) && word.length() < result.length()) {
+            if (isWord(word) && (word.length() < result.length() || result.isEmpty())) {
                 result = word;
             }
         }
 
-        return isWord(result) ? result : null;
+        return !result.isEmpty() ? result : null;
     }
 
     private static boolean isWord(String input) {
