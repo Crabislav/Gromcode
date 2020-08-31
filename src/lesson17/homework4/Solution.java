@@ -11,7 +11,7 @@ public class Solution {
 
     //the 4th task
     public static boolean validate(String address) {
-        if (address == null || address.isEmpty() || address.isBlank()) {
+        if (address == null || address.isBlank()) {
             return false;
         }
 
@@ -31,11 +31,11 @@ public class Solution {
     }
 
     private static int calculateProtocolLength(String address) {
-        String[] validProtocols = {"https://", "http://"};
-
         if (address == null) {
             return -1;
         }
+
+        String[] validProtocols = {"https://", "http://"};
 
         for (String validProtocol : validProtocols) {
             if (address.startsWith(validProtocol)) {
@@ -46,11 +46,11 @@ public class Solution {
     }
 
     private static int calculateDomainLength(String address) {
-        String[] validDomains = {".com", ".org", ".net"};
-
         if (address == null) {
             return -1;
         }
+
+        String[] validDomains = {".com", ".org", ".net"};
 
         for (String validDomain : validDomains) {
             if (address.endsWith(validDomain)) {
@@ -61,6 +61,10 @@ public class Solution {
     }
 
     private static boolean checkMiddlePartForSpecialChars(String address, int protocolLength, int domainLength) {
+        if (address == null || protocolLength == -1 || domainLength == -1) {
+            return false;
+        }
+
         char[] addressChars = address.substring(protocolLength, address.length() - domainLength).toCharArray();
 
         for (char aChar : addressChars) {
