@@ -17,47 +17,31 @@ public class Solution {
     //the third task
     public static String mostCountedWord(String input) {
         if (input.isEmpty()) {
-            return null; //probably change for something
-        }
-
-        String[] words = input.trim().split(" ");
-
-        int[] wordsRepeats = countDuplicates(input, words);
-
-        int maxRepeats = 0;
-        int maxIndex = 0;
-        for (int i = 0; i < wordsRepeats.length; i++) {
-            if (wordsRepeats[i] > maxRepeats) {
-                maxRepeats = wordsRepeats[i];
-                maxIndex = i;
-            }
-        }
-
-        if (maxRepeats == 0) {
             return null;
         }
 
-        return words[maxIndex];
-    }
+        int tempCount = 0;
+        int finalCount = 0;
+        String mostCountedWord = "";
 
-    //used at the third task
-    private static int[] countDuplicates(String input, String[] words) {
-        String[] strings = input.split(" ");
+        String[] words = input.trim().split(" ");
 
-        int[] res = new int[words.length];
+        for (String word : words) {
+            tempCount = 0;
 
-        for (String string : strings) {
-            if (!isWord(string)) {
-                continue;
-            }
-            for (int i = 0; i < words.length; i++) {
-                if (isWord(words[i]) && string.equals(words[i])) {
-                    res[i]++;
+            for (String w : words) {
+                if (isWord(word) && isWord(w) && word.equals(w)) {
+                    tempCount++;
                 }
+            }
+
+            if (tempCount >= finalCount) {
+                finalCount = tempCount;
+                mostCountedWord = word;
             }
         }
 
-        return res;
+        return mostCountedWord;
     }
 
     private static boolean isWord(String input) {
@@ -65,9 +49,7 @@ public class Solution {
     }
 
     private static boolean isWordValid(String word) {
-        char[] chars = word.toCharArray();
-
-        for (char aChar : chars) {
+        for (char aChar : word.toCharArray()) {
             if (!Character.isLetter(aChar)) {
                 return true;
             }
