@@ -45,15 +45,19 @@ public class Solution {
     }
 
     private static boolean isWord(String input) {
-        return !isWordValid(input) && !input.isBlank() && !input.isEmpty();
+        return isWordValid(input) && !input.isBlank();
     }
 
     private static boolean isWordValid(String word) {
+        if (word.isBlank()) {
+            return false;
+        }
+
         for (char aChar : word.toCharArray()) {
             if (!Character.isLetter(aChar)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
