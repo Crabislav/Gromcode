@@ -29,6 +29,7 @@ public class Solution {
         if (input == null || input.isBlank()) {
             return null;
         }
+
         String[] words = input.trim().split(" ");
         String result = words[0];
 
@@ -49,6 +50,7 @@ public class Solution {
         if (input == null || input.isBlank()) {
             return null;
         }
+
         String[] words = input.trim().split(" ");
         String result = words[0];
 
