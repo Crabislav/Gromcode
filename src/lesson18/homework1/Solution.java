@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        String[] text = {"asdasdasd 222s 333", null, "222 22222"};
+        String[] text = {"asdasdasd 222s 333", null, "222   22222"};
 
         for (String textItem : text) {
             System.out.println(Arrays.toString(findNumbers(textItem)));
@@ -26,7 +26,7 @@ public class Solution {
                 Integer.parseInt(word);
                 count++;
             } catch (Exception e) {
-                System.err.println(word + "not a number");
+                System.err.println(word + " not a number");
             }
         }
 
@@ -39,12 +39,9 @@ public class Solution {
                 resultArray[index] = Integer.parseInt(word);
                 index++;
             } catch (Exception e) {
-                System.err.println(word + "not a number");
+                System.err.println(word + " not a number");
             }
         }
-
         return resultArray;
     }
-
-
 }
