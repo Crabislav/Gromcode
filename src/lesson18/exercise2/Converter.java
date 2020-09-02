@@ -8,11 +8,11 @@ public class Converter {
 
         System.out.println(StringToInt("1050a"));
 
-        System.out.println(intToString(111231));
-        System.out.println(StringToInt("11"));
+        System.out.println(intToString(-122));
+        System.out.println(StringToInt("  "));
 
-        System.out.println(intToString(111231));
-        System.out.println(StringToInt("11"));
+        System.out.println(intToString(0));
+        System.out.println(StringToInt("\n"));
 
     }
 
