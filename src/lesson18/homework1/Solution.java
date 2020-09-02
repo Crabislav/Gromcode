@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        String[] text = {"asdasdasd 222s 333", null, "222   22222"};
+        String[] text = {"asdasdasd 222s 333", null, "22.2   22222"};
 
         for (String textItem : text) {
             System.out.println(Arrays.toString(findNumbers(textItem)));
