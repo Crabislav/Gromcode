@@ -11,7 +11,7 @@ public class Task {
 
         printer(fileStorage);
 
-//        System.out.println("Done");
+        System.out.println("Done");
 
 
         String[] fileNames1 = {"test1", "test2", "test3", "test4", "test5"};
