@@ -10,6 +10,7 @@ public class Task {
         System.out.println("Start printing name...");
 
         printer(fileStorage);
+//        printerNoTryCatch(fileStorage);
 
         System.out.println("Done");
 
@@ -17,10 +18,13 @@ public class Task {
         String[] fileNames1 = {"test1", "test2", "test3", "test4", "test5"};
         fileStorage.setFiles(fileNames1);
         printer(fileStorage);
+        printerNoTryCatch(fileStorage);
 
         String[] fileNames2 = null;
         fileStorage.setFiles(fileNames2);
         printer(fileStorage);
+        printerNoTryCatch(fileStorage);
+
     }
 
     public static void printer(Storage storage) {
@@ -32,10 +36,22 @@ public class Task {
             System.err.println("5th name can not be found...");
 //            System.err.println(e.getMessage());
         }
+    }
 
-        //solution 2
-        //handle without try/catch
+    //handle without try/catch
+    public static void printerNoTryCatch(Storage storage) {
+        if (storage == null || storage.getFiles() == null) {
+            System.err.println("5th name can not be found...");
+            return;
+        }
 
+        String[] names = storage.getFiles();
+        int index = 4;
 
+        if (index > names.length) {
+            System.err.println("5th name can not be found...");
+        } else {
+            System.out.println("5th name is " + names[index]);
+        }
     }
 }
