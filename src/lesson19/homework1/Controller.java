@@ -24,17 +24,23 @@ public class Controller {
         int index = 0;
 
         for (File element : files) {
+            if (element == null) {
+                continue;
+            }
+
             if (element.equals(file)) {
                 files[index] = null;
                 return;
             }
             index++;
+
         }
 
         throw new Exception("file(id=" + file.getId() + ") is absent at" +
                 " storage(id=" + storage.getId() + ")");
     }
 
+    //TODO:fix up deleting elements at storageFrom
     //transfers all files from one storage to another
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception {
         validateTransferAll(storageFrom, storageTo);
@@ -61,12 +67,16 @@ public class Controller {
         validateTransfer(fileToTransfer, storageFrom, storageTo, id);
 
         put(storageTo, fileToTransfer);
+        delete(storageFrom, fileToTransfer);
     }
 
     private long calculateUsedStorageMemory(Storage storage) {
         long usedStorageMemory = 0;
 
         for (File element : storage.getFiles()) {
+            if (element == null) {
+                continue;
+            }
             usedStorageMemory += element.getSize();
         }
 
@@ -154,7 +164,7 @@ public class Controller {
 
         //no space for file
         if (storage.getStorageSize() < calculateUsedStorageMemory(storage) + file.getSize()) {
-            throw new Exception("Not enough space for file(id= " + fileId + ") at storage(id= " + storageId);
+            throw new Exception("Not enough space for file(id= " + fileId + ") at storage(id= " + storageId + ")");
         }
 
         //invalid new file format
@@ -164,6 +174,10 @@ public class Controller {
 
         //check up for file existing
         for (File element : storage.getFiles()) {
+            if (element == null) {
+                continue;
+            }
+
             if (element.equals(file)) {
                 throw new Exception("file(id=" + fileId + ") is already exists at storage(id=" + storageId + ")");
             }
