@@ -19,24 +19,7 @@ public class Demo {
         Storage storage = new Storage(0, files, new String[]{"pdf", "jpg"}, "Russia", 300);
         Storage emptyStorage = new Storage(2, emptyFiles, new String[]{"pdf", "jpg"}, "Russia", 300);
 
-
-        //transferAll test
-        System.out.println("Before transfer all");
-        System.out.println("Old storage");
-        System.out.println(Arrays.toString(storage.getFiles()));
-        System.out.println("New storage storage");
-        System.out.println(Arrays.toString(emptyStorage.getFiles()));
-        try {
-            controller.transferAll(storage, emptyStorage);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("\nAfter transfer all");
-        System.out.println("Old storage");
-        System.out.println(Arrays.toString(storage.getFiles()));
-        System.out.println("New storage storage");
-
-        System.out.println(Arrays.toString(emptyStorage.getFiles()));
+        transferAllMethodTest(controller, storage, emptyStorage);
 
 //        transferMethodTest(controller, storage, emptyStorage);
     }
@@ -99,6 +82,25 @@ public class Demo {
             System.out.println(e.getMessage());
         }
         System.out.println(Arrays.toString(storageFrom.getFiles()));
+        System.out.println(Arrays.toString(storageTo.getFiles()));
+
+    }
+
+    private static void transferAllMethodTest(Controller controller, Storage storageFrom, Storage storageTo) {
+        System.out.println("Before transfer all");
+        System.out.println("Old storage");
+        System.out.println(Arrays.toString(storageFrom.getFiles()));
+        System.out.println("New storage storage");
+        System.out.println(Arrays.toString(storageTo.getFiles()));
+        try {
+            controller.transferAll(storageFrom, storageTo);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("\nAfter transfer all");
+        System.out.println("Old storage");
+        System.out.println(Arrays.toString(storageFrom.getFiles()));
+        System.out.println("New storage storage");
         System.out.println(Arrays.toString(storageTo.getFiles()));
 
     }
