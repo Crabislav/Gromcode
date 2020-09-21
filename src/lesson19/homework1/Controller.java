@@ -11,6 +11,7 @@ public class Controller {
         for (File element : files) {
             if (element == null) {
                 files[index] = file;
+                storage.setFiles(files);
                 return;
             }
             index++;
@@ -19,22 +20,19 @@ public class Controller {
 
     //deletes file from storage
     public void delete(Storage storage, File file) throws Exception {
-        File[] files = storage.getFiles();
-
         int index = 0;
 
-        for (File element : files) {
-            if (element == null) {
-                continue;
-            }
+        File[] files = storage.getFiles();
 
-            if (element.equals(file)) {
+        for (File element : files) {
+            if (element != null && element.equals(file)) {
                 files[index] = null;
+                storage.setFiles(files);
                 return;
             }
             index++;
-
         }
+
 
         throw new Exception("file(id=" + file.getId() + ") is absent at" +
                 " storage(id=" + storage.getId() + ")");
@@ -74,10 +72,9 @@ public class Controller {
         long usedStorageMemory = 0;
 
         for (File element : storage.getFiles()) {
-            if (element == null) {
-                continue;
+            if (element != null) {
+                usedStorageMemory += element.getSize();
             }
-            usedStorageMemory += element.getSize();
         }
 
         return usedStorageMemory;
@@ -123,8 +120,8 @@ public class Controller {
         long freeStorageToMemory = storageTo.getStorageSize() - calculateUsedStorageMemory(storageTo);
 
         if (calculateUsedStorageMemory(storageFrom) > freeStorageToMemory) {
-            throw new Exception("new storage(id= " + storageToId + "hasn't enough space for transferring"
-                    + "files from storage(id= " + storageFrom.getId() + ")");
+            throw new Exception("new storage(id=" + storageToId + ") hasn't enough space for transferring files from old storage(id=" +
+                    storageFrom.getId() + ")");
         }
 
         //comparing old storage's valid formats with a new one's
