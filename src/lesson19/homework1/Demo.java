@@ -10,21 +10,32 @@ public class Demo {
 
         File file1 = new File(0, "file0", "pdf", 100);
         File file2 = new File(1, "file1", "jpg", 100);
+        File file3 = new File(2, "file2", "jpg", 100);
+//        File file4 = new File(3, "file3", "jpg", 100);
 
-        File[] files = {file1, file2};
-        File[] emptyFiles = new File[2];
+        File[] files = {file1, file2, file3};
+        File[] emptyFiles = new File[3];
+
         Storage storage = new Storage(0, files, new String[]{"pdf", "jpg"}, "Russia", 300);
         Storage emptyStorage = new Storage(2, emptyFiles, new String[]{"pdf", "jpg"}, "Russia", 300);
 
 
         //transferAll test
+        System.out.println("Before transfer all");
+        System.out.println("Old storage");
         System.out.println(Arrays.toString(storage.getFiles()));
+        System.out.println("New storage storage");
+        System.out.println(Arrays.toString(emptyStorage.getFiles()));
         try {
             controller.transferAll(storage, emptyStorage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("\nAfter transfer all");
+        System.out.println("Old storage");
         System.out.println(Arrays.toString(storage.getFiles()));
+        System.out.println("New storage storage");
+
         System.out.println(Arrays.toString(emptyStorage.getFiles()));
 
 //        transferMethodTest(controller, storage, emptyStorage);
