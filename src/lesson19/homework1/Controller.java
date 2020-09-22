@@ -117,50 +117,38 @@ public class Controller {
 
         //comparing old storage's size with a new one's
         long freeStorageToMemory = storageTo.getStorageSize() - calculateUsedStorageMemory(storageTo);
-
         if (calculateUsedStorageMemory(storageFrom) > freeStorageToMemory) {
             throw new Exception("new storage(id=" + storageToId + ") hasn't enough space for transferring files from old storage(id=" +
                     storageFrom.getId() + ")");
         }
 
-        //comparing old storage's valid formats with a new one's
         checkUpAllSupportedFormats(storageFrom, storageTo);
-
-        //checking for enough empty storage cells
-        if (calculateFreeStorageCells(storageTo) < storageFrom.getFiles().length) {
-            throw new Exception("Not enough empty cells at new storage(id=" + storageToId + ")");
-        }
+        checkUpFreeStorageCells(storageTo, storageFrom.getFiles().length);
     }
 
     private void validateTransfer(File fileToTransfer, Storage storageFrom, Storage storageTo, long id) throws Exception {
-        long storageToId = storageTo.getId();
-
         if (fileToTransfer == null) {
             throw new Exception("file with id=" + id + "is absent at storage(id=" + storageFrom.getId() + ")");
         }
 
-        //checking for valid file format for transferring to storageTo
         checkUpFileFormat(storageTo, fileToTransfer);
+        checkUpFreeStorageCells(storageTo, 1);
+    }
 
-        //checking for enough empty storage cells
-        if (calculateFreeStorageCells(storageTo) < 1) {
-            throw new Exception("Not enough empty cells at new storage(id=" + storageToId + ")");
+    private void checkUpFreeStorageCells(Storage storage, long usedStorageCells) throws Exception {
+        if (calculateFreeStorageCells(storage) < usedStorageCells) {
+            throw new Exception("Not enough empty cells at new storage(id=" + storage.getId() + ")");
         }
     }
 
     private void validatePut(Storage storage, File file) throws Exception {
-        long fileId = file.getId();
-        long storageId = storage.getId();
-
         //no space for file
         if (storage.getStorageSize() < calculateUsedStorageMemory(storage) + file.getSize()) {
-            throw new Exception("Not enough space for file(id= " + fileId + ") at storage(id= " + storageId + ")");
+            throw new Exception("Not enough space for file(id= " + file.getId() + ") at storage(id= " + storage.getId() + ")");
         }
 
         checkUpFileFormat(storage, file);
-
         checkUpFileExisting(storage, file);
-
     }
 
     private void checkUpFileExisting(Storage storage, File file) throws Exception {
