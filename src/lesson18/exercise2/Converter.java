@@ -23,7 +23,7 @@ public class Converter {
     public static int StringToInt(String input) {
         try {
             return Integer.parseInt(input);
-        } catch (Exception e) {
+        } catch (/*NumberFormatException*/ Exception e) {
             System.out.println(input + " cannot be converted to int");
             return 0;
         }

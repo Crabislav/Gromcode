@@ -7,7 +7,6 @@ public class Demo {
         FoodProvider foodProvider = (FoodProvider) testFood();
         System.out.println(provider);
 
-
     }
 
     private static Provider test() {

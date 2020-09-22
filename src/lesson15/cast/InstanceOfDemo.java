@@ -11,10 +11,13 @@ public class InstanceOfDemo {
         System.out.println(provider instanceof FoodProvider);
         System.out.println(internetProvider instanceof Provider);
 
+
         if (test() instanceof InternetProvider) {
             //
+            System.out.println(test());
         } else if (test() instanceof FoodProvider) {
             //
+            System.out.println( test());
         }
     }
 
