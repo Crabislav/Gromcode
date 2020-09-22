@@ -33,17 +33,14 @@ public class Controller {
             index++;
         }
 
-
         throw new Exception("file(id=" + file.getId() + ") is absent at" +
                 " storage(id=" + storage.getId() + ")");
     }
 
-    //TODO:fix up deleting elements at storageFrom
     //transfers all files from one storage to another
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception {
         validateTransferAll(storageFrom, storageTo);
 
-        //transferring file from old storage to a new one
         for (File file : storageFrom.getFiles()) {
             put(storageTo, file);
             delete(storageFrom, file);
@@ -80,16 +77,16 @@ public class Controller {
         return usedStorageMemory;
     }
 
-    private boolean isFileFormatValid(Storage storage, File file) {
+    private void checkUpFileFormat(Storage storage, File file) throws Exception {
         for (String supportedFormat : storage.getFormatsSupported()) {
             if (supportedFormat.equals(file.getFormat())) {
-                return true;
+                return;
             }
         }
-        return false;
+        throw new Exception("Invalid file(id=" + file.getId() + ") format");
     }
 
-    private boolean isAllFormatsSupported(Storage storageFrom, Storage storageTo) {
+    private void checkUpAllSupportedFormats(Storage storageFrom, Storage storageTo) throws Exception {
         boolean isAllFormatsSupported = false;
 
         for (String oldValidFormat : storageFrom.getFormatsSupported()) {
@@ -98,7 +95,9 @@ public class Controller {
             }
         }
 
-        return isAllFormatsSupported;
+        if (!isAllFormatsSupported) {
+            throw new Exception("New storage(id=" + storageTo.getId() + "doesn't support necessary file formats");
+        }
     }
 
     private long calculateFreeStorageCells(Storage storage) {
@@ -125,9 +124,7 @@ public class Controller {
         }
 
         //comparing old storage's valid formats with a new one's
-        if (!isAllFormatsSupported(storageFrom, storageTo)) {
-            throw new Exception("New storage(id=" + storageToId + "doesn't support necessary file formats");
-        }
+        checkUpAllSupportedFormats(storageFrom, storageTo);
 
         //checking for enough empty storage cells
         if (calculateFreeStorageCells(storageTo) < storageFrom.getFiles().length) {
@@ -143,11 +140,7 @@ public class Controller {
         }
 
         //checking for valid file format for transferring to storageTo
-        if (!isFileFormatValid(storageTo, fileToTransfer)) {
-            throw new Exception("File(id=" + fileToTransfer.getId() +
-                    ") cannot be transferred to storage(id=" + storageToId +
-                    ") because of invalid file format");
-        }
+        checkUpFileFormat(storageTo, fileToTransfer);
 
         //checking for enough empty storage cells
         if (calculateFreeStorageCells(storageTo) < 1) {
@@ -164,24 +157,21 @@ public class Controller {
             throw new Exception("Not enough space for file(id= " + fileId + ") at storage(id= " + storageId + ")");
         }
 
-        //invalid new file format
-        if (!isFileFormatValid(storage, file)) {
-            throw new Exception("Invalid new file(id=" + fileId + ") format");
-        }
+        checkUpFileFormat(storage, file);
 
-        //check up for file existing
+        checkUpFileExisting(storage, file);
+
+    }
+
+    private void checkUpFileExisting(Storage storage, File file) throws Exception {
+        long fileId = file.getId();
+
         for (File element : storage.getFiles()) {
-            if (element == null) {
-                continue;
-            }
-
-            if (element.equals(file)) {
-                throw new Exception("file(id=" + fileId + ") is already exists at storage(id=" + storageId + ")");
-            }
-
-            if (element.getId() == fileId) {
-                throw new Exception("file with id=" + fileId + ") is already exists at storage(id=" + storageId + ")");
+            if (element != null && (element.equals(file) || element.getId() == fileId)) {
+                throw new Exception("file(id=" + fileId + ") is already exists at storage(id=" + storage.getId() + ")");
             }
         }
     }
+
+
 }
