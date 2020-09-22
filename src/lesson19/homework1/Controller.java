@@ -155,7 +155,7 @@ public class Controller {
         long fileId = file.getId();
 
         for (File element : storage.getFiles()) {
-            if (element != null && (element.equals(file) || element.getId() == fileId)) {
+            if (element != null && element.equals(file)) {
                 throw new Exception("file(id=" + fileId + ") is already exists at storage(id=" + storage.getId() + ")");
             }
         }
