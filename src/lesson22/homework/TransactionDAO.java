@@ -8,9 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TransactionDAO {
-    private Transaction[] transactions = new Transaction[10];
+    private static Transaction[] transactions = new Transaction[10];
 
-    public Transaction save(Transaction transaction) throws Exception {
+    public static Transaction save(Transaction transaction) throws Exception {
         validate(transaction);
 
         int index = 0;
@@ -26,7 +26,7 @@ public class TransactionDAO {
         throw new InternalServerException("No space for transaction (id=" + transaction.getId() + ")");
     }
 
-    private void validate(Transaction transaction) throws Exception {
+    private static void validate(Transaction transaction) throws Exception {
         if (transaction == null) {
             throw new BadRequestException("Can't save null transaction");
         }
@@ -61,7 +61,7 @@ public class TransactionDAO {
         validateTransactionCity(transaction);
     }
 
-    private void validateTransactionCity(Transaction transaction) throws BadRequestException {
+    private static void validateTransactionCity(Transaction transaction) throws BadRequestException {
         for (String city : Utils.getCities()) {
             if (transaction.getCity().equals(city)) {
                 return;
@@ -70,11 +70,11 @@ public class TransactionDAO {
         throw new BadRequestException("Invalid transaction's (id=" + transaction.getId() + ") city");
     }
 
-    public Transaction[] transactionList() {
+    public static Transaction[] transactionList() {
         return transactions;
     }
 
-    public Transaction[] transactionList(String city) {
+    public static Transaction[] transactionList(String city) {
         int count = 0;
         for (Transaction tr : transactions) {
             if (tr != null && tr.getCity().equals(city)) {
@@ -95,7 +95,7 @@ public class TransactionDAO {
         return result;
     }
 
-    public Transaction[] transactionList(int amount) {
+    public static Transaction[] transactionList(int amount) {
         int count = 0;
         for (Transaction tr : transactions) {
             if (tr != null && tr.getAmount() == amount) {
@@ -115,7 +115,7 @@ public class TransactionDAO {
         return result;
     }
 
-    private Transaction[] getTransactionsPerDay(Date dateOfCurTransaction) {
+    private static Transaction[] getTransactionsPerDay(Date dateOfCurTransaction) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateOfCurTransaction);
         int month = calendar.get(Calendar.MONTH);

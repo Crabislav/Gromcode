@@ -27,12 +27,10 @@ public class Demo {
     }
 
     private static void testMethods(Transaction[] trNormal, String city, int amount) {
-        Controller controller = new Controller();
-
         //save test
         for (Transaction element : trNormal) {
             try {
-                controller.save(element);
+                Controller.save(element);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -41,7 +39,7 @@ public class Demo {
         //transactionList - empty
         try {
             System.out.println("Transaction list. No filter");
-            System.out.println(Arrays.toString(controller.transactionList()));
+            System.out.println(Arrays.toString(Controller.transactionList()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -49,7 +47,7 @@ public class Demo {
         //transactionList - amount
         try {
             System.out.println("\nTransaction list. Amount filter");
-            System.out.println(Arrays.toString(controller.transactionList(amount)));
+            System.out.println(Arrays.toString(Controller.transactionList(amount)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -57,7 +55,7 @@ public class Demo {
         //transactionList - city
         try {
             System.out.println("\nTransaction list. City filter");
-            System.out.println(Arrays.toString(controller.transactionList(city)));
+            System.out.println(Arrays.toString(Controller.transactionList(city)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
