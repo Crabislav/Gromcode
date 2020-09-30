@@ -3,7 +3,6 @@ package lesson25.examples;
 public class GeneralDAO {
     private void print(Order order) {
         System.out.println("order is:" + order.toString());
-
     }
 
 
