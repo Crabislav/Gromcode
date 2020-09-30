@@ -14,8 +14,9 @@ public class Demo {
         Product book = new Book(0, "book");
         Product magazine = new Magazine(1, "magazine");
         Product newsPaper = new Newspaper(3, "newspaper");
+        Product badIdNewsPaper = new Newspaper(3, "newspaper");
 
-        Product[] products = {book, magazine, newsPaper};
+        Product[] products = {book, magazine, newsPaper, badIdNewsPaper};
 
         for (Product element : products) {
             try {
