@@ -49,7 +49,7 @@ public class UserRepository {
         for (User element : users) {
             if (element.equals(user)) {
                 users.set(index, user);
-                return user;
+                return users.get(index);
             }
             index++;
         }
