@@ -5,7 +5,7 @@ import lesson28.comparatorexample.Capability;
 import java.util.Comparator;
 import java.util.Date;
 
-public class DateCreatedComparator implements Comparator<Capability> {
+public class DateComparator implements Comparator<Capability> {
     @Override
     public int compare(Capability o1, Capability o2) {
         Date o1Date = o1.getDateCreated();

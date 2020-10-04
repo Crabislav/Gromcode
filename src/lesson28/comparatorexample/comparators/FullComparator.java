@@ -5,7 +5,7 @@ import lesson28.comparatorexample.Capability;
 import java.util.Comparator;
 import java.util.Date;
 
-public class ThreeFieldComparator implements Comparator<Capability> {
+public class FullComparator implements Comparator<Capability> {
     @Override
     public int compare(Capability o1, Capability o2) {
         //if channelName != - compare using it

@@ -1,8 +1,8 @@
 package lesson28.comparatorexample;
 
-import lesson28.comparatorexample.comparators.DateCreatedComparator;
+import lesson28.comparatorexample.comparators.DateComparator;
 import lesson28.comparatorexample.comparators.IsActiveComparator;
-import lesson28.comparatorexample.comparators.ThreeFieldComparator;
+import lesson28.comparatorexample.comparators.FullComparator;
 
 import java.util.*;
 
@@ -14,13 +14,13 @@ public class DemoComparator {
         capabilities.sort(new IsActiveComparator());
         System.out.println("After IsActiveComparator\n" + capabilities);
 
-        System.out.println("\nBefore DateCreatedComparator\n" + capabilities);
-        capabilities.sort(new DateCreatedComparator());
-        System.out.println("After DateCreatedComparator\n" + capabilities);
+        System.out.println("\nBefore DateComparator\n" + capabilities);
+        capabilities.sort(new DateComparator());
+        System.out.println("After DateComparator\n" + capabilities);
 
-        System.out.println("\nBefore ThreeFieldComparator\n" + capabilities);
-        capabilities.sort(new ThreeFieldComparator());
-        System.out.println("After ThreeFieldComparator\n" + capabilities);
+        System.out.println("\nBefore FullComparator\n" + capabilities);
+        capabilities.sort(new FullComparator());
+        System.out.println("After FullComparator\n" + capabilities);
 
     }
 
