@@ -8,15 +8,6 @@ import java.util.Date;
 public class DateComparator implements Comparator<Capability> {
     @Override
     public int compare(Capability o1, Capability o2) {
-        Date o1Date = o1.getDateCreated();
-        Date o2Date = o2.getDateCreated();
-
-        if (o1Date.before(o2Date)) {
-            return -1;
-        } else if (o1Date.equals(o2Date)) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return o2.getDateCreated().compareTo(o1.getDateCreated());
     }
 }

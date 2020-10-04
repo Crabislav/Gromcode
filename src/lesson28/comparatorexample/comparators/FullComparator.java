@@ -32,7 +32,7 @@ public class FullComparator implements Comparator<Capability> {
                 Date o2DateCreated = o2.getDateCreated();
 
                 if (!o1DateCreated.equals(o2DateCreated)) {
-                    return o1DateCreated.compareTo(o2DateCreated);
+                    return o2DateCreated.compareTo(o1DateCreated);
                 } else {
                     return 0;
                 }
