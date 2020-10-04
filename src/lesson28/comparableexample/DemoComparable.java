@@ -1,4 +1,6 @@
-package lesson28.comparable;
+package lesson28.comparableexample;
+
+
 
 import java.util.Date;
 import java.util.Set;

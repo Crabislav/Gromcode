@@ -1,4 +1,4 @@
-package lesson28.comparable;
+package lesson28.comparableexample;
 
 import java.util.Date;
 
@@ -59,12 +59,12 @@ public class Capability implements Comparable<Capability> {
 
     @Override
     public String toString() {
-        return "Capability{" +
+        return "\nCapability{" +
                 "id=" + id +
                 ", channelName='" + channelName + '\'' +
                 ", fingerprint='" + fingerprint + '\'' +
                 ", isActive=" + isActive +
-                ", dateCreated=" + dateCreated + "\n" +
+                ", dateCreated=" + dateCreated +
                 '}';
     }
 }
