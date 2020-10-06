@@ -6,10 +6,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class HashSetTest {
-    public static void main(String[] args) {
-        useHashSet();
-    }
-
     public static Set<Order> useHashSet() {
         Set<Order> orders = new HashSet<>();
 
@@ -44,6 +40,7 @@ public class HashSetTest {
     private static void removeShowcase(Set<Order> orders) {
         Order order = new Order(9, 233, "USD", "noItemName", "asdasd");
         orders.add(order);
+
         System.out.println("\nBefore remove(E e)\n" + orders);
         orders.remove(order);
         System.out.println("\nAfter remove(E e)\n" + orders);
