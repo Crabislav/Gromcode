@@ -14,35 +14,9 @@ public class HashSetTest {
         fillSet(orders, 5);
         System.out.println("\nAfter add(E e)\n" + orders);
 
-        //remove
-//        removeShowcase(orders);
-        Order order = new Order(9, 233, "USD", "noItemName", "asdasd");
-        orders.add(order);
-
-        System.out.println("\nBefore remove(E e)\n" + orders);
-        orders.remove(order);
-        System.out.println("\nAfter remove(E e)\n" + orders);
-
-
-        //iterator
-//        iteratorShowcase(orders);
-        System.out.println("Iterator usage");
-        Iterator<Order> orderIterator = orders.iterator();
-        while (orderIterator.hasNext()) {
-            System.out.println(orderIterator.next().getItemName());
-        }
-
-        //retainAll
-//        retainAllShowcase(orders);
-        orders.clear();
-        fillSet(orders, 3);
-
-        Set<Order> orders1 = new HashSet<>();
-        fillSet(orders1, 1);
-
-        System.out.println("\nBefore retainAll\n" + "Orders\n" + orders + "\n" + "\nOrders1\n" + orders1);
-        orders.retainAll(orders1);
-        System.out.println("\nAfter retainAll\n" + "Orders\n" + orders + "\n" + "\nOrders1\n" + orders1);
+        removeShowcase(orders);
+        iteratorShowcase(orders);
+        retainAllShowcase(orders);
 
         //Object[] toArray()
         System.out.println("\nObject[] toArray()\n" + Arrays.toString(orders.toArray()));
@@ -55,34 +29,34 @@ public class HashSetTest {
         return orders;
     }
 
-//    private static void iteratorShowcase(Set<Order> orders) {
-//        System.out.println("Iterator usage");
-//        Iterator<Order> orderIterator = orders.iterator();
-//        while (orderIterator.hasNext()) {
-//            System.out.println(orderIterator.next().getItemName());
-//        }
-//    }
+    private static void iteratorShowcase(Set<Order> orders) {
+        System.out.println("Iterator usage");
+        Iterator<Order> orderIterator = orders.iterator();
+        while (orderIterator.hasNext()) {
+            System.out.println(orderIterator.next().getItemName());
+        }
+    }
 
-//    private static void removeShowcase(Set<Order> orders) {
-//        Order order = new Order(9, 233, "USD", "noItemName", "asdasd");
-//        orders.add(order);
-//
-//        System.out.println("\nBefore remove(E e)\n" + orders);
-//        orders.remove(order);
-//        System.out.println("\nAfter remove(E e)\n" + orders);
-//    }
+    private static void removeShowcase(Set<Order> orders) {
+        Order order = new Order(9, 233, "USD", "noItemName", "asdasd");
+        orders.add(order);
 
-//    private static void retainAllShowcase(Set<Order> orders) {
-//        orders.clear();
-//        fillSet(orders, 3);
-//
-//        Set<Order> orders1 = new HashSet<>();
-//        fillSet(orders1, 1);
-//
-//        System.out.println("\nBefore retainAll\n" + "Orders\n" + orders + "\n" + "\nOrders1\n" + orders1);
-//        orders.retainAll(orders1);
-//        System.out.println("\nAfter retainAll\n" + "Orders\n" + orders + "\n" + "\nOrders1\n" + orders1);
-//    }
+        System.out.println("\nBefore remove(E e)\n" + orders);
+        orders.remove(order);
+        System.out.println("\nAfter remove(E e)\n" + orders);
+    }
+
+    private static void retainAllShowcase(Set<Order> orders) {
+        orders.clear();
+        fillSet(orders, 3);
+
+        Set<Order> orders1 = new HashSet<>();
+        fillSet(orders1, 1);
+
+        System.out.println("\nBefore retainAll\n" + "Orders\n" + orders + "\n" + "\nOrders1\n" + orders1);
+        orders.retainAll(orders1);
+        System.out.println("\nAfter retainAll\n" + "Orders\n" + orders + "\n" + "\nOrders1\n" + orders1);
+    }
 
     private static void fillSet(Set<Order> orders, int amount) {
         if (amount > 0) {
