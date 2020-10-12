@@ -7,7 +7,6 @@ public class GoogleAPI implements API {
         this.rooms = rooms;
     }
 
-    //TODO: remove code duplicates
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         int amount = calculateValidRoomsAmount(price, persons, city, hotel);

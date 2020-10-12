@@ -27,7 +27,6 @@ public class Controller {
         return resultRooms;
     }
 
-    //TODO: probably do some refactor
     //finds similar rooms among two APIs
     public Room[] check(API api1, API api2) {
         if (api1 == null || api2 == null) {

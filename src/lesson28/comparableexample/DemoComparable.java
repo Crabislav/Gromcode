@@ -1,7 +1,5 @@
 package lesson28.comparableexample;
 
-
-
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;

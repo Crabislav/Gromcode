@@ -9,7 +9,6 @@ public class BookingComAPI implements API {
         this.rooms = rooms;
     }
 
-    //TODO: remove code duplicates
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         //no available rooms or negative price/persons - go out from method
