@@ -26,9 +26,9 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
+        return "\n\nDepartment\n{" +
                 "type=" + type +
-                ", employees=" + employees +
+                ", \nemployees=" + employees +
                 '}';
     }
 }

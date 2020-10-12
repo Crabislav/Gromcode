@@ -62,7 +62,6 @@ public class Employee implements Comparable<Employee> {
                 ", \nlastName='" + lastName + '\'' +
                 ", \ndateHired=" + dateHired +
                 ", \nposition=" + position +
-                ", \ndepartment=" + department +
                 ", \nprojects=" + projects +
                 '}';
     }
