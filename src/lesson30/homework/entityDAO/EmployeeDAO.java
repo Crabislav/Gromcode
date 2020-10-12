@@ -14,9 +14,28 @@ public class EmployeeDAO {
 
     //TODO: finish
     public static void init(int amount) {
+        createEmployees(amount);
+        settEmployeesToDepartment();
+
+        //set projects to employee
+    }
+
+    private static void settEmployeesToDepartment() {
+        for (Department department : DepartmentDAO.getDepartments()) {
+            ArrayList<Employee> departmentEmployees = new ArrayList<>();
+
+            for (Employee employee : employees) {
+                if (employee.getDepartment().getType() == department.getType()) {
+                    departmentEmployees.add(employee);
+                }
+            }
+            department.setEmployees(departmentEmployees);
+        }
+    }
+
+    private static void createEmployees(int amount) {
         Position position = null;
         String firstName = "";
-        Employee employee;
 
         ArrayList<Department> departments = DepartmentDAO.getDepartments();
 
@@ -47,27 +66,21 @@ public class EmployeeDAO {
                     default:
                         System.err.println("Unknown department");
                 }
-                employee = new Employee(firstName + (i + 1), position, departments.get(index));
-                employee.setDepartment(department);
-                employees.add(employee);
+                //adding an employee for current department
+                addAnEmployee(firstName + (i + 1), position, departments.get(index));
             }
+            //adding a teamLead for each department
+            addAnEmployee("TeamLead", Position.TEAM_LEAD, departments.get(index));
             index++;
         }
-
-        ArrayList<Employee> decEmployees = new ArrayList<>();
-
-        for (Department department : DepartmentDAO.getDepartments()) {
-            decEmployees.clear();
-            if (department.getEmployees() == null) {
-                for (Employee element : EmployeeDAO.getEmployees()) {
-                    if (department.getType() == DepartmentType.DEVELOPING && element.getPosition() == Position.DEVELOPER) {
-                        decEmployees.add(element);
-                    }
-                }
-            }
-            department.setEmployees(decEmployees);
-        }
     }
+
+    private static void addAnEmployee(String firstName, Position position, Department department) {
+        Employee employee = new Employee(firstName, position, department);
+        employee.setDepartment(department);
+        employees.add(employee);
+    }
+
 
     //TODO: test
     //список сотрудников, работающих над заданным проектом
