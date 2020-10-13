@@ -8,19 +8,29 @@ import lesson30.homework.entities.Employee;
 import lesson30.homework.entities.Project;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmployeeDAO {
     private static ArrayList<Employee> employees = new ArrayList<>();
 
-    //TODO: finish
     public static void init(int amount) {
         createEmployees(amount);
-        settEmployeesToDepartment();
-
-        //set projects to employee
+        settEmployeesToDepartments();
+        settEmployeesToProjects();
     }
 
-    private static void settEmployeesToDepartment() {
+    private static void settEmployeesToProjects() {
+        int index = 0;
+        for (Employee employee : employees) {
+            if (employees != null && (index < employees.toArray().length / 2)) {
+                employee.setProjects(ProjectDAO.getProjects());
+                index++;
+            }
+        }
+    }
+
+    private static void settEmployeesToDepartments() {
         for (Department department : DepartmentDAO.getDepartments()) {
             ArrayList<Employee> departmentEmployees = new ArrayList<>();
 
@@ -70,7 +80,7 @@ public class EmployeeDAO {
                 addAnEmployee(firstName + (i + 1), position, departments.get(index));
             }
             //adding a teamLead for each department
-            addAnEmployee("TeamLead", Position.TEAM_LEAD, departments.get(index));
+            addAnEmployee("TeamLead-" + department.getType(), Position.TEAM_LEAD, departments.get(index));
             index++;
         }
     }
@@ -82,7 +92,7 @@ public class EmployeeDAO {
     }
 
 
-    //TODO: test
+    //TODO: refactor
     //список сотрудников, работающих над заданным проектом
     public static ArrayList<Employee> employeesByProject(String projectName) throws Exception {
         if (projectName == null) {
@@ -92,29 +102,9 @@ public class EmployeeDAO {
         ArrayList<Employee> res = new ArrayList<>();
 
         for (Employee employee : EmployeeDAO.getEmployees()) {
-            for (Project project : ProjectDAO.getProjects()) {
-                if (project != null && projectName.equals(project.getName())) {
-                    res.add(employee);
-                }
-            }
-        }
-
-        return res;
-    }
-
-    //TODO: refactor + test
-    //список сотрудников из заданного отдела, не участвующих ни в одном проекте
-    public static ArrayList<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) throws Exception {
-        if (departmentType == null) {
-            throw new Exception("employeesByDepartmentWithoutProject : null input");
-        }
-
-        ArrayList<Employee> res = new ArrayList<>();
-
-        for (Department department : DepartmentDAO.getDepartments()) {
-            if (department.getType().equals(departmentType)) {
-                for (Employee employee : department.getEmployees()) {
-                    if (employee.getProjects().isEmpty()) {
+            if (employee != null) {
+                for (Project project : employee.getProjects()) {
+                    if (employee.getProjects() != null && projectName.equals(project.getName())) {
                         res.add(employee);
                     }
                 }
@@ -125,6 +115,28 @@ public class EmployeeDAO {
     }
 
     //TODO: refactor + test
+    //список сотрудников из заданного отдела, не участвующих ни в одном проекте
+    public static ArrayList<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) throws
+            Exception {
+        if (departmentType == null) {
+            throw new Exception("employeesByDepartmentWithoutProject : null input");
+        }
+
+        ArrayList<Employee> res = new ArrayList<>();
+
+        for (Department department : DepartmentDAO.getDepartments()) {
+            if (department.getType() == departmentType) {
+                for (Employee employee : department.getEmployees()) {
+                    if (employee.getProjects().isEmpty()) {
+                        res.add(employee);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    //TODO: refactor
     //список сотрудников, не участвующих ни в одном проекте
     public static ArrayList<Employee> employeesWithoutProject() {
         ArrayList<Employee> res = new ArrayList<>();
@@ -140,16 +152,16 @@ public class EmployeeDAO {
 
     //TODO: test
     //список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public static ArrayList<Employee> employeesByTeamLead(Employee lead) throws Exception {
+    public static Set<Employee> employeesByTeamLead(Employee lead) throws Exception {
         if (lead == null) {
             throw new Exception("employeesByTeamLead : null input");
         }
 
-        ArrayList<Employee> res = new ArrayList<>();
+        Set<Employee> res = new HashSet<>();
 
         for (Project project : lead.getProjects()) {
             for (Employee employee : employees) {
-                if (employee != null && employee.getProjects().contains(project)) {
+                if (employee != null && employee.getProjects().contains(project) && lead.getDepartment() == employee.getDepartment()) {
                     res.add(employee);
                 }
             }
@@ -159,12 +171,12 @@ public class EmployeeDAO {
 
     //TODO: test + refactor
     //список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
-    public static ArrayList<Employee> teamLeadsByEmployee(Employee employee) throws Exception {
+    public static Set<Employee> teamLeadsByEmployee(Employee employee) throws Exception {
         if (employee == null) {
             throw new Exception("teamLeadsByEmployee : null input");
         }
 
-        ArrayList<Employee> res = new ArrayList<>();
+        Set<Employee> res = new HashSet<>();
 
         for (Employee element : employees) {
             for (Project elementProject : element.getProjects()) {
@@ -181,11 +193,11 @@ public class EmployeeDAO {
 
     //TODO: test + refactor
     //список сотрудников, участвующих в тех же проектах, что и заданный сотрудник
-    public static ArrayList<Employee> employeesByProjectEmployee(Employee employee) throws Exception {
+    public static Set<Employee> employeesByProjectEmployee(Employee employee) throws Exception {
         if (employee == null) {
             throw new Exception("employeesByProjectEmployee : null input");
         }
-        ArrayList<Employee> res = new ArrayList<>();
+        Set<Employee> res = new HashSet<>();
 
         for (Employee element : employees) {
             for (Project elementProject : element.getProjects()) {
@@ -199,7 +211,7 @@ public class EmployeeDAO {
         return res;
     }
 
-    //TODO: test
+    //TODO: refactor
     //список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
     public static ArrayList<Employee> employeesByCustomerProjects(Customer customer) throws Exception {
         if (customer == null) {
