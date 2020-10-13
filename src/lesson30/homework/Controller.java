@@ -8,6 +8,7 @@ import lesson30.homework.entityDAO.EmployeeDAO;
 import lesson30.homework.entityDAO.ProjectDAO;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class Controller {
@@ -28,17 +29,17 @@ public class Controller {
     }
 
     //список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public static ArrayList<Employee> employeesByTeamLead(Employee lead) throws Exception {
+    public static Set<Employee> employeesByTeamLead(Employee lead) throws Exception {
         return EmployeeDAO.employeesByTeamLead(lead);
     }
 
     //список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
-    public static ArrayList<Employee> teamLeadsByEmployee(Employee employee) throws Exception {
+    public static Set<Employee> teamLeadsByEmployee(Employee employee) throws Exception {
         return EmployeeDAO.teamLeadsByEmployee(employee);
     }
 
     //список сотрудников, участвующих в тех же проектах, что и заданный сотрудник
-    public static ArrayList<Employee> employeesByProjectEmployee(Employee employee) throws Exception {
+    public static Set<Employee> employeesByProjectEmployee(Employee employee) throws Exception {
         return EmployeeDAO.employeesByProjectEmployee(employee);
     }
 
