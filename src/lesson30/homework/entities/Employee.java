@@ -2,6 +2,7 @@ package lesson30.homework.entities;
 
 import lesson30.homework.entities.enums.Position;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -20,6 +21,7 @@ public class Employee implements Comparable<Employee> {
         this.firstName = firstName;
         this.position = position;
         this.department = department;
+        this.projects = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -59,8 +61,8 @@ public class Employee implements Comparable<Employee> {
     public String toString() {
         return "\n\nEmployee{" +
                 "\nfirstName='" + firstName + '\'' +
-                ", \nlastName='" + lastName + '\'' +
-                ", \ndateHired=" + dateHired +
+                ", lastName='" + lastName + '\'' +
+                ", dateHired=" + dateHired +
                 ", \nposition=" + position +
                 ", \nprojects=" + projects +
                 '}';
