@@ -14,6 +14,7 @@ public class Demo {
 //        Utils.printResults(FirmDAO.getFirm());
 
         Utils.testEmployeeDAOMethods();
+        Utils.testProjectDAOMethods();
     }
 
 
