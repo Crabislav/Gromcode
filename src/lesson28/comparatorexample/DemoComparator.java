@@ -10,17 +10,17 @@ public class DemoComparator {
     public static void main(String[] args) {
         ArrayList<Capability> capabilities = initCapabilities();
 
-//        System.out.println("Before IsActiveComparator\n" + capabilities);
-//        capabilities.sort(new IsActiveComparator());
-//        System.out.println("After IsActiveComparator\n" + capabilities);
-//
+        System.out.println("Before IsActiveComparator\n" + capabilities);
+        capabilities.sort(new IsActiveComparator());
+        System.out.println("After IsActiveComparator\n" + capabilities);
+
         System.out.println("\nBefore DateComparator\n" + capabilities);
         capabilities.sort(new DateComparator());
         System.out.println("After DateComparator\n" + capabilities);
 
-//        System.out.println("\nBefore FullComparator\n" + capabilities);
-//        capabilities.sort(new FullComparator());
-//        System.out.println("After FullComparator\n" + capabilities);
+        System.out.println("\nBefore FullComparator\n" + capabilities);
+        capabilities.sort(new FullComparator());
+        System.out.println("After FullComparator\n" + capabilities);
 
     }
 
