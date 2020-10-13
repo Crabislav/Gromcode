@@ -14,7 +14,7 @@ import java.util.Set;
 public class Controller {
 
     //список сотрудников, работающих над заданным проектом
-    public static ArrayList<Employee> employeesByProject(String projectName) throws Exception {
+    public static Set<Employee> employeesByProject(String projectName) throws Exception {
         return EmployeeDAO.employeesByProject(projectName);
     }
 

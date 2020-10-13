@@ -15,16 +15,13 @@ public class ProjectDAO {
         }
     }
 
-    //TODO: test
     public static ArrayList<Project> projectsByEmployee(Employee employee) throws Exception {
         if (employee == null) {
             throw new Exception("projectsByEmployee : null input");
         }
-
         return (ArrayList<Project>) employee.getProjects();
     }
 
-    //TODO: test
     public static ArrayList<Project> projectsByCustomer(Customer customer) throws Exception {
         if (customer == null) {
             throw new Exception("projectsByCustomer : null input");
