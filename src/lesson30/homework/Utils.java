@@ -89,18 +89,27 @@ public class Utils {
 
     }
 
-//    static void testProjectDAOMethods() {
-//        ArrayList<Collection<Project>> testResults = new ArrayList<>();
-//        try {
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        for (Collection<Employee> testValue : testResults) {
-//            printResults(testValue);
-//        }
-//    }
+    static void testProjectDAOMethods() {
+        ArrayList<Collection<Project>> testResults = new ArrayList<>();
+
+        //projectsByEmployee +
+        try {
+            testResults.add(Controller.projectsByEmployee(EmployeeDAO.getEmployees().get(0)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //projectsByCustomer +
+        try {
+            testResults.add(Controller.projectsByCustomer(CustomerDAO.getCustomers().get(0)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (Collection<Project> testValue : testResults) {
+            printResults(testValue);
+        }
+    }
 
     private static Employee findTeamLead() {
         ArrayList<Employee> employees = EmployeeDAO.getEmployees();
@@ -114,10 +123,6 @@ public class Utils {
         }
         return lead;
     }
-
-    //projectsByEmployee
-    //projectsByCustomer
-
 
     public static void init(int amount) {
         CustomerDAO.init(amount);
