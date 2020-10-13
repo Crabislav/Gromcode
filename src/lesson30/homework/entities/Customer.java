@@ -45,7 +45,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "\nCustomer{" +
+        return "Customer{" +
                 "name='" + name + '\'' +
                 ", country='" + country + '\'' +
                 ", monthlyPay=" + monthlyPay +
