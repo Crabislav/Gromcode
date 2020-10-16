@@ -44,14 +44,6 @@ public class Employee implements Comparable<Employee> {
         return projects;
     }
 
-    public void setProjects(Collection<Project> projects) {
-        this.projects = projects;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     @Override
     public int compareTo(Employee o) {
         return this.lastName.compareTo(o.lastName);
