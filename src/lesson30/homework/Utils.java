@@ -36,7 +36,7 @@ public class Utils {
 
         //employeesByDepartmentWithoutProject +
         try {
-            testResults.add(Controller.employeesByDepartmentWithoutProject(DepartmentType.FINANCE));
+            testResults.add(Controller.employeesByDepartmentWithoutProject(DepartmentDAO.getDepartments().get(1).getType()));
         } catch (Exception e) {
             e.printStackTrace();
         }
