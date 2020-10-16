@@ -8,11 +8,11 @@ public class CustomerDAO {
     private static ArrayList<Customer> customers = new ArrayList<>();
 
     public CustomerDAO() {
-        Customer customer1 = new Customer("customer1", "country", 100);
-        Customer customer2 = new Customer("customer2", "country", 200);
-        Customer customer3 = new Customer("customer3", "country", 300);
-        Customer customer4 = new Customer("customer4", "country", 400);
-        Customer customer5 = new Customer("customer5", "country", 500);
+        Customer customer1 = new Customer("customer0", "country", 100);
+        Customer customer2 = new Customer("customer1", "country", 200);
+        Customer customer3 = new Customer("customer2", "country", 300);
+        Customer customer4 = new Customer("customer3", "country", 400);
+        Customer customer5 = new Customer("customer4", "country", 500);
 
         customers.add(customer1);
         customers.add(customer2);
