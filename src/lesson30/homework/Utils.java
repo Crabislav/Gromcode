@@ -17,12 +17,6 @@ public class Utils {
         printDivider();
     }
 
-    static <T> void printResults(Object input) {
-        printDivider();
-        System.out.println(input);
-        printDivider();
-    }
-
     private static void printDivider() {
         for (int i = 0; i < EmployeeDAO.getEmployees().get(0).toString().length(); i++) {
             System.out.print('=');
@@ -124,11 +118,4 @@ public class Utils {
         return lead;
     }
 
-    public static void init(int amount) {
-        CustomerDAO.init(amount);
-        ProjectDAO.init(amount);
-        DepartmentDAO.init(amount);
-        EmployeeDAO.init(amount);
-        FirmDAO.init(DepartmentDAO.getDepartments(), CustomerDAO.getCustomers());
-    }
 }

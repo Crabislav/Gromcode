@@ -5,7 +5,12 @@ import lesson30.homework.entityDAO.*;
 
 public class Demo {
     public static void main(String[] args) {
-        Utils.init(3);
+        CustomerDAO customerDAO = new CustomerDAO();
+        DepartmentDAO departmentDAO = new DepartmentDAO();
+        ProjectDAO projectDAO = new ProjectDAO();
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        FirmDAO firmDAO = new FirmDAO(DepartmentDAO.getDepartments(), CustomerDAO.getCustomers());
+
 
 //        Utils.printResults(CustomerDAO.getCustomers());
 //        Utils.printResults(DepartmentDAO.getDepartments());
