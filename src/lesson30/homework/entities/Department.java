@@ -2,6 +2,7 @@ package lesson30.homework.entities;
 
 import lesson30.homework.entities.enums.DepartmentType;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Department {
@@ -10,6 +11,7 @@ public class Department {
 
     public Department(DepartmentType type) {
         this.type = type;
+        this.employees = new ArrayList<>();
     }
 
     public DepartmentType getType() {
@@ -18,10 +20,6 @@ public class Department {
 
     public Collection<Employee> getEmployees() {
         return employees;
-    }
-
-    public void setEmployees(Collection<Employee> employees) {
-        this.employees = employees;
     }
 
     @Override
