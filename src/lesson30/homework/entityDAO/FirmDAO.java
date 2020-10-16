@@ -10,7 +10,7 @@ import java.util.Date;
 public class FirmDAO {
     private static Firm firm;
 
-    public static void init(Collection<Department> departments, Collection<Customer> customers) {
+    public FirmDAO(Collection<Department> departments, Collection<Customer> customers) {
         firm = new Firm(new Date(), departments, customers);
     }
 

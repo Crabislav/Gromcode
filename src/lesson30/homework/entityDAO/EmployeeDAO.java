@@ -15,91 +15,44 @@ import java.util.Set;
 public class EmployeeDAO {
     private static ArrayList<Employee> employees = new ArrayList<>();
 
-    public static void init(int amount) {
-        createEmployees(amount);
-        settEmployeesToDepartments();
-        settEmployeesToProjects();
+    public EmployeeDAO() {
+        Employee employee1 = new Employee("employe1", Position.TEAM_LEAD, DepartmentDAO.getDepartments().get(0));
+        Employee employee2 = new Employee("employe2", Position.ANALYST, DepartmentDAO.getDepartments().get(1));
+        Employee employee3 = new Employee("employe3", Position.FINANCE, DepartmentDAO.getDepartments().get(0));
+        Employee employee4 = new Employee("employe4", Position.MANAGER, DepartmentDAO.getDepartments().get(0));
+        Employee employee5 = new Employee("employe5", Position.DEVELOPER, DepartmentDAO.getDepartments().get(0));
+        Employee employee6 = new Employee("employe6", Position.MANAGER, DepartmentDAO.getDepartments().get(1));
+        Employee employee7 = new Employee("employe7", Position.TEAM_LEAD, DepartmentDAO.getDepartments().get(1));
+
+        employees.add(employee1);
+        employees.add(employee2);
+        employees.add(employee3);
+        employees.add(employee4);
+        employees.add(employee5);
+        employees.add(employee6);
+        employees.add(employee7);
+
+        employee1.getProjects().add(ProjectDAO.getProjects().get(0));
+        employee1.getProjects().add(ProjectDAO.getProjects().get(1));
+        employee2.getProjects().add(ProjectDAO.getProjects().get(0));
+        employee2.getProjects().add(ProjectDAO.getProjects().get(1));
+        employee3.getProjects().add(ProjectDAO.getProjects().get(0));
+        employee4.getProjects().add(ProjectDAO.getProjects().get(0));
+        employee5.getProjects().add(ProjectDAO.getProjects().get(0));
+        employee6.getProjects().add(ProjectDAO.getProjects().get(1));
+        employee7.getProjects().add(ProjectDAO.getProjects().get(1));
+
+        DepartmentDAO.getDepartments().get(0).getEmployees().add(EmployeeDAO.getEmployees().get(0));
+        DepartmentDAO.getDepartments().get(1).getEmployees().add(EmployeeDAO.getEmployees().get(1));
+        DepartmentDAO.getDepartments().get(0).getEmployees().add(EmployeeDAO.getEmployees().get(2));
+        DepartmentDAO.getDepartments().get(0).getEmployees().add(EmployeeDAO.getEmployees().get(3));
+        DepartmentDAO.getDepartments().get(0).getEmployees().add(EmployeeDAO.getEmployees().get(4));
+        DepartmentDAO.getDepartments().get(1).getEmployees().add(EmployeeDAO.getEmployees().get(5));
+        DepartmentDAO.getDepartments().get(1).getEmployees().add(EmployeeDAO.getEmployees().get(6));
     }
-
-    private static void settEmployeesToProjects() {
-        int index = 0;
-        for (Employee employee : employees) {
-            if (employees != null && (index < employees.toArray().length / 2)) {
-                employee.setProjects(ProjectDAO.getProjects());
-                index++;
-            }
-        }
-    }
-
-    private static void settEmployeesToDepartments() {
-        for (Department department : DepartmentDAO.getDepartments()) {
-            ArrayList<Employee> departmentEmployees = new ArrayList<>();
-
-            for (Employee employee : employees) {
-                if (employee.getDepartment().getType() == department.getType()) {
-                    departmentEmployees.add(employee);
-                }
-            }
-            department.setEmployees(departmentEmployees);
-        }
-    }
-
-    private static void createEmployees(int amount) {
-        Position position = null;
-        String firstName = "";
-
-        ArrayList<Department> departments = DepartmentDAO.getDepartments();
-
-        int index = 0;
-        for (Department department : departments) {
-            for (int i = 0; i < amount; i++) {
-                switch (department.getType()) {
-                    case MANAGEMENT:
-                        position = Position.MANAGER;
-                        firstName = "Manager";
-                        break;
-                    case FINANCE:
-                        position = Position.FINANCE;
-                        firstName = "Finance";
-                        break;
-                    case ANALYSTS:
-                        position = Position.ANALYST;
-                        firstName = "Analyst";
-                        break;
-                    case DESIGNING:
-                        position = Position.DESIGNER;
-                        firstName = "Designer";
-                        break;
-                    case DEVELOPING:
-                        position = Position.DEVELOPER;
-                        firstName = "Developer";
-                        break;
-                    default:
-                        System.err.println("Unknown department");
-                }
-                //adding an employee for current department
-                addAnEmployee(firstName + (i + 1), position, departments.get(index));
-            }
-            //adding a teamLead for each department
-            addAnEmployee("TeamLead-" + department.getType(), Position.TEAM_LEAD, departments.get(index));
-            index++;
-        }
-    }
-
-    private static void addAnEmployee(String firstName, Position position, Department department) {
-        Employee employee = new Employee(firstName, position, department);
-        employee.setDepartment(department);
-        employees.add(employee);
-    }
-
-
 
     //список сотрудников, работающих над заданным проектом
-    public static Set<Employee> employeesByProject(String projectName) throws Exception {
-        if (projectName == null) {
-            throw new Exception("employeesByProject : null input");
-        }
-
+    public static Set<Employee> employeesByProject(String projectName) {
         Set<Employee> res = new HashSet<>();
 
         for (Employee employee : employees) {
@@ -115,13 +68,17 @@ public class EmployeeDAO {
         return res;
     }
 
+//    private static void getEmployeesByProject(Collection<Project> projects, Collection<Employee> result, Object element, boolean condition) {
+//        for (Project project : projects) {
+//            if (condition) {
+//                result.add(element);
+//            }
+//        }
+//    }
+
 
     //список сотрудников из заданного отдела, не участвующих ни в одном проекте
-    public static ArrayList<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) throws Exception {
-        if (departmentType == null) {
-            throw new Exception("employeesByDepartmentWithoutProject : null input");
-        }
-
+    public static ArrayList<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
         for (Department department : DepartmentDAO.getDepartments()) {
             if (department.getType() == departmentType) {
                 return getEmployeesWithoutProjects(department.getEmployees());
@@ -147,11 +104,7 @@ public class EmployeeDAO {
     }
 
     //список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public static Set<Employee> employeesByTeamLead(Employee lead) throws Exception {
-        if (lead == null) {
-            throw new Exception("employeesByTeamLead : null input");
-        }
-
+    public static Set<Employee> employeesByTeamLead(Employee lead) {
         Set<Employee> res = new HashSet<>();
 
         for (Project project : lead.getProjects()) {
@@ -166,11 +119,7 @@ public class EmployeeDAO {
 
 
     //список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
-    public static Set<Employee> teamLeadsByEmployee(Employee employee) throws Exception {
-        if (employee == null) {
-            throw new Exception("teamLeadsByEmployee : null input");
-        }
-
+    public static Set<Employee> teamLeadsByEmployee(Employee employee) {
         Set<Employee> res = new HashSet<>();
 
         for (Employee element : employees) {
@@ -191,10 +140,7 @@ public class EmployeeDAO {
 
 
     //список сотрудников, участвующих в тех же проектах, что и заданный сотрудник
-    public static Set<Employee> employeesByProjectEmployee(Employee employee) throws Exception {
-        if (employee == null) {
-            throw new Exception("employeesByProjectEmployee : null input");
-        }
+    public static Set<Employee> employeesByProjectEmployee(Employee employee) {
         Set<Employee> res = new HashSet<>();
 
         for (Employee element : employees) {
@@ -213,11 +159,7 @@ public class EmployeeDAO {
 
 
     //список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
-    public static ArrayList<Employee> employeesByCustomerProjects(Customer customer) throws Exception {
-        if (customer == null) {
-            throw new Exception("employeesByCustomerProjects : null input");
-        }
-
+    public static ArrayList<Employee> employeesByCustomerProjects(Customer customer) {
         ArrayList<Employee> res = new ArrayList<>();
 
         for (Employee element : employees) {
