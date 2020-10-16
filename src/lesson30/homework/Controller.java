@@ -14,12 +14,12 @@ import java.util.Set;
 public class Controller {
 
     //список сотрудников, работающих над заданным проектом
-    public static Set<Employee> employeesByProject(String projectName) throws Exception {
+    public static Set<Employee> employeesByProject(String projectName) {
         return EmployeeDAO.employeesByProject(projectName);
     }
 
     //список сотрудников из заданного отдела, не участвующих ни в одном проекте
-    public static ArrayList<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) throws Exception {
+    public static ArrayList<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
         return EmployeeDAO.employeesByDepartmentWithoutProject(departmentType);
     }
 
@@ -29,32 +29,32 @@ public class Controller {
     }
 
     //список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public static Set<Employee> employeesByTeamLead(Employee lead) throws Exception {
+    public static Set<Employee> employeesByTeamLead(Employee lead) {
         return EmployeeDAO.employeesByTeamLead(lead);
     }
 
     //список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
-    public static Set<Employee> teamLeadsByEmployee(Employee employee) throws Exception {
+    public static Set<Employee> teamLeadsByEmployee(Employee employee) {
         return EmployeeDAO.teamLeadsByEmployee(employee);
     }
 
     //список сотрудников, участвующих в тех же проектах, что и заданный сотрудник
-    public static Set<Employee> employeesByProjectEmployee(Employee employee) throws Exception {
+    public static Set<Employee> employeesByProjectEmployee(Employee employee) {
         return EmployeeDAO.employeesByProjectEmployee(employee);
     }
 
     //список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
-    public static ArrayList<Employee> employeesByCustomerProjects(Customer customer) throws Exception {
+    public static ArrayList<Employee> employeesByCustomerProjects(Customer customer) {
         return EmployeeDAO.employeesByCustomerProjects(customer);
     }
 
     //список проектов, в которых участвует заданный сотрудник
-    public static ArrayList<Project> projectsByEmployee(Employee employee) throws Exception {
+    public static ArrayList<Project> projectsByEmployee(Employee employee) {
         return ProjectDAO.projectsByEmployee(employee);
     }
 
     //список проектов, выполняемых для заданного заказчика
-    public static ArrayList<Project> projectsByCustomer(Customer customer) throws Exception {
+    public static ArrayList<Project> projectsByCustomer(Customer customer) {
         return ProjectDAO.projectsByCustomer(customer);
     }
 }
