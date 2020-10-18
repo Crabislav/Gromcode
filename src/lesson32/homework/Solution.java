@@ -43,7 +43,8 @@ class Solution {
     }
 
     private static boolean isValid(String[] input) {
-        if (input.length == 0 || input.length > 10) {
+        //numbers amount
+        if (input.length != 10) {
             return false;
         }
 
