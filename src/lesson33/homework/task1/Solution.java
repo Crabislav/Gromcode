@@ -18,10 +18,14 @@ public class Solution {
         String writeCommand = "wr";
 
         try {
-            while (!userInput.equals(writeCommand)) {
+            while (true) {
                 System.out.println("Enter file content to write in the file: ");
-
                 userInput = bufferedReader.readLine();
+
+                if (userInput.equals(writeCommand)) {
+                    break;
+                }
+
                 result.append("\n").append(userInput);
             }
         } catch (IOException e) {
