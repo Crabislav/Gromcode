@@ -6,26 +6,23 @@ import java.io.*;
 
 public class Solution {
     static void readFileByConsolePath() {
+        readFile(getPathFromConsole());
+    }
+
+    private static String getPathFromConsole() {
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-        String path = "";
-        path = getPathFromConsoleInput(inputStreamReader, bufferedReader, path);
-
-        //Reading a file
-        readFile(path);
-
-    }
-
-    private static String getPathFromConsoleInput(InputStreamReader isr, BufferedReader br, String path) {
+        String path = null;
         System.out.println("Please, enter file path to read: ");
+
         try {
-            path = br.readLine();
+            path = bufferedReader.readLine();
         } catch (IOException e) {
             System.err.println("Reading from keyboard was failed");
         } finally {
-            IOUtils.closeQuietly(isr);
-            IOUtils.closeQuietly(br);
+            IOUtils.closeQuietly(inputStreamReader);
+            IOUtils.closeQuietly(bufferedReader);
         }
         return path;
     }
@@ -35,7 +32,7 @@ public class Solution {
         try {
             reader = new FileReader(path);
         } catch (FileNotFoundException e) {
-            System.err.println("File with path" + path + "not found");
+            System.err.println("File with path " + path + " not found");
             return;
         }
         BufferedReader br = new BufferedReader(reader);
