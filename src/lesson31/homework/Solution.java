@@ -11,15 +11,18 @@ public class Solution {
 
         Map<Character, Integer> result = new HashMap<>();
 
-        Character[] chars = text.chars()
-                .mapToObj(ch -> (char) ch)
-                .toArray(Character[]::new);
+        char[] chars = text.toCharArray();
 
-        for (Character aChar : chars) {
-            if (!Character.isLetter(aChar) || result.containsKey(aChar)) {
-                continue;
+        for (char aChar : chars) {
+            //calcs repeats
+            if (result.containsKey(aChar)) {
+                result.put(aChar, result.get(aChar) + 1);
             }
-            result.put(aChar, getRepeats(chars, aChar));
+
+            //sets the first repeat for proper element
+            if (Character.isLetter(aChar)) {
+                result.putIfAbsent(aChar, 1);
+            }
         }
         return result;
     }
@@ -34,24 +37,19 @@ public class Solution {
         String[] words = text.split(" ");
 
         for (String word : words) {
-            if (!isWord(word) || result.containsKey(word)) {
-                continue;
+            //calcs repeats
+            if (result.containsKey(word)) {
+                result.put(word, result.get(word) + 1);
             }
-            result.put(word, getRepeats(words, word));
+
+            //sets the first repeat for proper element
+            if ((word.length() > 2)) {
+                result.putIfAbsent(word, 1);
+            }
         }
         return result;
     }
 
-    private static <T> int getRepeats(T[] array, T element) {
-        int count = 0;
-
-        for (T t : array) {
-            if (t.equals(element)) {
-                count++;
-            }
-        }
-        return count;
-    }
 
     private static void validateInput(String text) throws Exception {
         if (text == null) {
@@ -61,9 +59,5 @@ public class Solution {
         if (text.isBlank()) {
             throw new Exception("input is blank");
         }
-    }
-
-    private static boolean isWord(String word) {
-        return word.length() > 2;
     }
 }
