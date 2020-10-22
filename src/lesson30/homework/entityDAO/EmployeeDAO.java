@@ -90,7 +90,7 @@ public class EmployeeDAO {
             ArrayList<Employee> employeesByProject = getEmployeesByProject(project);
 
             for (Employee employee : employeesByProject) {
-                if (lead.getDepartment() == employee.getDepartment() && !employee.equals(lead)) {
+                if (!employee.equals(lead)) {
                     res.add(employee);
                 }
             }
