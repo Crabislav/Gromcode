@@ -1,19 +1,24 @@
 package lesson34.homework.task1;
 
 import java.io.*;
-import java.util.ArrayList;
 
-public class Solution {
-    public static void main(String[] args) throws Exception {
-        String oldFilePath = "C:/Users/Alex Kopnin/Desktop/lib/test.txt";
-        String newFilePath = "C:/Users/Alex Kopnin/Desktop/lib/newTest.txt";
-
-        transferFileContent(oldFilePath, newFilePath);
-    }
-
+public class Solution implements Cloneable {
     static void transferFileContent(String fileFromPath, String fileToPath) throws Exception {
         validate(fileFromPath, fileToPath);
-        writeToFile(fileToPath, readFromFile(fileFromPath), true);
+
+        if (isFileEmpty(fileFromPath)) {
+            return;
+        }
+
+        if (!isFileEmpty(fileToPath)) {
+            writeToFile(fileToPath, readFromFile(fileFromPath).insert(0, "\n"), true);
+        } else {
+            writeToFile(fileToPath, readFromFile(fileFromPath), true);
+        }
+
+        //erasing content from fileFrom
+        StringBuffer eraser = new StringBuffer();
+        writeToFile(fileFromPath, eraser, false);
     }
 
     private static void validate(String fileFromPath, String fileToPath) throws Exception {
@@ -37,35 +42,45 @@ public class Solution {
         }
     }
 
-    private static String readFromFile(String path) {
-        StringBuilder fileContent = new StringBuilder();
-
+    private static boolean isFileEmpty(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            //saving a file's content
-            String line;
-            while ((line = br.readLine()) != null) {
-                fileContent.append(line).append("\n");
+            String line = br.readLine();
+            if (line != null) {
+                return false;
             }
-            fileContent.replace(fileContent.length() - 1, fileContent.length(), "");
-
-            //erasing
-            writeToFile(path, "", false);
         } catch (FileNotFoundException e) {
             System.err.println("File " + path + "doesn't exists");
         } catch (IOException e) {
             System.err.println("Can't read file from" + path);
         }
 
-        return fileContent.toString();
+        return true;
     }
 
-    private static void writeToFile(String path, String contentToWrite, boolean append) {
+    public static StringBuffer readFromFile(String path) {
+        StringBuffer res = new StringBuffer();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                res.append(line).append("\n");
+            }
+            res.replace(res.length() - 1, res.length(), "");
+        } catch (FileNotFoundException e) {
+            System.err.println("File " + path + "doesn't exists");
+        } catch (IOException e) {
+            System.err.println("Can't read file from" + path);
+        }
+
+        return res;
+    }
+
+    public static void writeToFile(String path, StringBuffer contentToWrite, boolean append) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, append))) {
             bw.append(contentToWrite);
         } catch (IOException e) {
             System.err.println("Can't write to file: " + path);
         }
     }
-
 }
 
