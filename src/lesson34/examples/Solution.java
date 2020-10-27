@@ -41,7 +41,7 @@ public class Solution {
         }
     }
 
-    private static StringBuffer readFromFile(String path) {
+    private static StringBuffer readFromFile(String path) throws IOException {
         StringBuffer res = new StringBuffer();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -51,19 +51,19 @@ public class Solution {
             }
             res.replace(res.length() - 1, res.length(), "");
         } catch (FileNotFoundException e) {
-            System.err.println("File " + path + "doesn't exists");
+            throw new FileNotFoundException("File " + path + "doesn't exists");
         } catch (IOException e) {
-            System.err.println("Can't read file from" + path);
+            throw new IOException("Can't read file from" + path);
         }
 
         return res;
     }
 
-    private static void writeToFile(String path, StringBuffer contentToWrite) {
+    private static void writeToFile(String path, StringBuffer contentToWrite) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
             bw.append(contentToWrite);
         } catch (IOException e) {
-            System.err.println("Can't write to file: " + path);
+            throw new IOException("Can't write to file: " + path);
         }
     }
 }

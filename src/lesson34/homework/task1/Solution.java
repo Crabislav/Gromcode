@@ -42,22 +42,22 @@ public class Solution implements Cloneable {
         }
     }
 
-    private static boolean isFileEmpty(String path) {
+    private static boolean isFileEmpty(String path) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line = br.readLine();
             if (line != null) {
                 return false;
             }
         } catch (FileNotFoundException e) {
-            System.err.println("File " + path + "doesn't exists");
+            throw new FileNotFoundException("File " + path + "doesn't exists");
         } catch (IOException e) {
-            System.err.println("Can't read file from" + path);
+            throw new IOException("Can't read file from" + path);
         }
 
         return true;
     }
 
-    public static StringBuffer readFromFile(String path) {
+    public static StringBuffer readFromFile(String path) throws IOException {
         StringBuffer res = new StringBuffer();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -67,9 +67,9 @@ public class Solution implements Cloneable {
             }
             res.replace(res.length() - 1, res.length(), "");
         } catch (FileNotFoundException e) {
-            System.err.println("File " + path + "doesn't exists");
+            throw new FileNotFoundException("File " + path + "doesn't exists");
         } catch (IOException e) {
-            System.err.println("Can't read file from" + path);
+            throw new IOException("Can't read file from" + path);
         }
 
         return res;
