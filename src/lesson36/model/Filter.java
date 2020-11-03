@@ -14,11 +14,10 @@ public class Filter {
     private String name;
     private String country;
     private String city;
-    //not necessary
-//    private String street;
+    private String street;
 
 
-    public Filter(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, String name, String country, String city) {
+    public Filter(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, String name, String country, String city, String street) {
         this.numberOfGuests = numberOfGuests;
         this.price = price;
         this.breakfastIncluded = breakfastIncluded;
@@ -27,5 +26,6 @@ public class Filter {
         this.name = name;
         this.country = country;
         this.city = city;
+        this.street = street;
     }
 }
