@@ -61,6 +61,7 @@ public abstract class Repository<T extends Entity> {
     Long getLastId(String path) throws IOException {
         long lastId;
         String lastLine = "";
+        String methodName = "getLastId";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String currentLine;
@@ -70,13 +71,12 @@ public abstract class Repository<T extends Entity> {
             //first field - is always an id field
             String idValue = lastLine.split(", ")[0];
             lastId = Long.parseLong(idValue);
-
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Can't parse id value from " + lastLine);
+            throw new NumberFormatException(methodName + ": Can't parse id value from " + lastLine);
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File " + path + "doesn't exists");
+            throw new FileNotFoundException(methodName + ": File " + path + "doesn't exists");
         } catch (IOException e) {
-            throw new IOException("Can't read file from" + path);
+            throw new IOException(methodName + ": Can't read file from" + path);
         }
 
         return lastId;
