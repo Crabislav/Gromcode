@@ -7,6 +7,7 @@ public class Hotel extends Entity {
     private String city;
     private String street;
 
+    //used for creating hotels
     private Hotel(String name, String country, String city, String street) {
         this.name = name;
         this.country = country;
@@ -25,11 +26,6 @@ public class Hotel extends Entity {
 
     //TODO: probably do refactor
     public static Hotel newInstance(String name, String country, String city, String street) {
-//        Entity.checkArgument(!name.isEmpty());
-//        Entity.checkArgument(!country.isEmpty());
-//        Entity.checkArgument(!city.isEmpty());
-//        Entity.checkArgument(!street.isEmpty());
-
         return new Hotel(name, country, city, street);
     }
 
