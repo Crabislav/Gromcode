@@ -13,20 +13,17 @@ public class UserRepository extends Repository<User> {
     }
 
     public User registerUser(User user) throws Exception {
-        save(getPath(), user);
-        return user;
+        return save(getPath(), user);
     }
 
-    //TODO: finish
-    public void login(String userName, String password) {
-        //find a user ->
-        // Session.setSignedInUser(user);
-
+    //TODO: probably return old params or delete method
+    public void login(User user) {
+        Session.setAuthorizedUser(user);
     }
 
     //TODO: test
     public void logout() {
-        Session.setSignedInUser(null);
+        Session.setAuthorizedUser(null);
     }
 
 }
