@@ -1,5 +1,6 @@
 package lesson36.controller;
 
+import lesson36.exceptions.AuthorizationException;
 import lesson36.exceptions.BadRequestException;
 import lesson36.service.UserService;
 import lesson36.model.User;
@@ -14,12 +15,12 @@ public class UserController {
     }
 
     //TODO: finish
-    public void login(String userName, String password) throws BadRequestException {
+    public void login(String userName, String password) throws Exception {
         userService.login(userName, password);
     }
 
     //TODO: finish
-    public void logout() throws BadRequestException {
+    public void logout() throws AuthorizationException {
         userService.logout();
     }
 }
