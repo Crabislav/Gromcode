@@ -14,6 +14,15 @@ public class Hotel extends Entity {
         this.street = street;
     }
 
+    //used for mapping
+    public Hotel(Long id, String name, String country, String city, String street) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+    }
+
     //TODO: probably do refactor
     public static Hotel newInstance(String name, String country, String city, String street) {
 //        Entity.checkArgument(!name.isEmpty());
