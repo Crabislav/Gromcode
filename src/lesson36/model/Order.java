@@ -2,7 +2,7 @@ package lesson36.model;
 
 import java.util.Date;
 
-public class Order {
+public class Order extends Entity {
     private Long id;
     private User user;
     private Room room;
@@ -19,8 +19,14 @@ public class Order {
         this.moneyPaid = moneyPaid;
     }
 
+    @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
