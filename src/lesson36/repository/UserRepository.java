@@ -1,7 +1,13 @@
 package lesson36.repository;
 
 import lesson36.Session;
+import lesson36.exceptions.BadRequestException;
+import lesson36.exceptions.MappingException;
 import lesson36.model.User;
+import lesson36.model.enums.UserType;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 //data access layer
 public class UserRepository extends Repository<User> {
@@ -26,4 +32,24 @@ public class UserRepository extends Repository<User> {
         Session.setAuthorizedUser(null);
     }
 
+    @Override
+    User getMappedObject(String[] objValues) {
+        Long id = Long.parseLong(objValues[0]);
+        String userName = objValues[1];
+        String password = objValues[2];
+        String country = objValues[3];
+        UserType userType = UserType.valueOf(objValues[4]);
+
+        return new User(id, userName, password, country, userType);
+    }
+
+    @Override
+    public String getPath() {
+        return super.getPath();
+    }
+
+    @Override
+    public ArrayList<User> getAllObjects() throws MappingException, IOException {
+        return super.getAllObjects();
+    }
 }
