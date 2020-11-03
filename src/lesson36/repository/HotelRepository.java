@@ -20,8 +20,7 @@ public class HotelRepository extends Repository<Hotel> {
     //only admins
     //TODO: finish
     public Hotel addHotel(Hotel hotel) throws Exception {
-        save(getPath(), hotel);
-        return hotel;
+        return save(getPath(), hotel);
     }
 
     //only admins
