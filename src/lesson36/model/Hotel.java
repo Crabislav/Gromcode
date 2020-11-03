@@ -7,7 +7,7 @@ public class Hotel extends Entity {
     private String city;
     private String street;
 
-    //used for creating hotels
+    //used for creating
     private Hotel(String name, String country, String city, String street) {
         this.name = name;
         this.country = country;

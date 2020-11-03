@@ -9,6 +9,7 @@ public class User extends Entity {
     private String country;
     private UserType userType;
 
+    //used for creating
     private User(String userName, String password, String country, UserType userType) {
         this.userName = userName;
         this.password = password;
