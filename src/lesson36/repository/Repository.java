@@ -1,8 +1,10 @@
 package lesson36.repository;
 
+import lesson36.exceptions.MappingException;
 import lesson36.model.Entity;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public abstract class Repository<T extends Entity> {
     private String path;
@@ -81,6 +83,48 @@ public abstract class Repository<T extends Entity> {
 
         return lastId;
     }
+
+    //maps info from file-db to objects
+    public ArrayList<T> getAllObjects() throws MappingException, IOException {
+        validateGetAllObjects(path);
+        //result collection
+        return readAndMap(path);
+    }
+
+    private void validateGetAllObjects(String path) throws MappingException {
+        String methodName = "getAllObjects";
+
+        if (path == null || path.isEmpty()) {
+            throw new IllegalArgumentException(methodName + ": path can't be null or empty");
+        }
+
+        if (!isFileExists(path)) {
+            throw new MappingException(methodName + ": Can't map from nonexistent file " + path);
+        }
+    }
+
+    private ArrayList<T> readAndMap(String path) throws IOException {
+        ArrayList<T> mappedObjects = new ArrayList<>();
+        String methodName = "readAndMap";
+
+        //reading from file and mapping
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] objValues = line.split(", ");
+                mappedObjects.add(getMappedObject(objValues));
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(methodName + ": File " + path + "doesn't exists");
+        } catch (IOException e) {
+            throw new IOException(methodName + ": Can't read file from" + path);
+        }
+        return mappedObjects;
+    }
+
+    //each entity has its own amount of fields,
+    //so it must be overwritten at each repository class
+    abstract T getMappedObject(String[] objValues);
 
     public String getPath() {
         return path;
