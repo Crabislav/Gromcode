@@ -4,7 +4,7 @@ import lesson36.Session;
 import lesson36.model.User;
 
 //data access layer
-public class UserRepository extends Repository {
+public class UserRepository extends Repository<User> {
     //считывание данных - считывание файла
     //обработка данных - маппинг данных
 
