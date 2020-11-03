@@ -16,6 +16,15 @@ public class User extends Entity {
         this.userType = userType;
     }
 
+    //used for mapping
+    public User(Long id, String userName, String password, String country, UserType userType) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.country = country;
+        this.userType = userType;
+    }
+
     //TODO: probably do refactor
     public static User newInstance(String userName, String password, String country, UserType userType) {
         return new User(userName, password, country, userType);
