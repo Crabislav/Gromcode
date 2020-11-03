@@ -4,22 +4,31 @@ import lesson36.model.Entity;
 
 import java.io.*;
 
-public class Repository {
+public abstract class Repository<T extends Entity> {
     private String path;
 
-    <T extends Entity> void save(String path, T object) throws Exception {
-        checkUpFileExistence(path);
-
-        //sets valid id to object
-        if (isFileEmpty(path)) {
-            object.setId(1L);
-        } else {
-            object.setId(getLastId(path) + 1L);
+    T save(String path, T t) throws Exception {
+        if (path == null || t == null) {
+            throw new IllegalArgumentException("save: Input (path or t) can't be null");
         }
 
         //this object contains content to write;
-        // for example : User info, Room info, etc.
-        StringBuffer content = new StringBuffer(object.toString());
+        StringBuffer content = new StringBuffer();
+
+        //creates a file if it doesn't exist
+        if (!isFileExists(path)) {
+            writeToFile(path, content);
+        }
+
+        //sets valid id
+        if (isFileEmpty(path)) {
+            t.setId(1L);
+        } else {
+            t.setId(getLastId(path) + 1L);
+        }
+
+        //sets proper content to write
+        content = new StringBuffer(t.toString());
 
         writeToFile(path, content);
     }
