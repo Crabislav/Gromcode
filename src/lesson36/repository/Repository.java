@@ -31,25 +31,7 @@ public abstract class Repository<T extends Entity> {
         content = new StringBuffer(t.toString());
 
         writeToFile(path, content);
-    }
-
-    @SuppressWarnings("all")
-    private void checkUpFileExistence(String path) {
-        File file = new File(path);
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                //TODO: change output
-                e.printStackTrace();
-            }
-        }
-    }
-
-    boolean isFileEmpty(String path) {
-        File file = new File(path);
-        return file.length() == 0;
+        return t;
     }
 
     private void writeToFile(String path, StringBuffer content) throws IOException {
@@ -62,8 +44,18 @@ public abstract class Repository<T extends Entity> {
                 bw.append("\n").append(content);
             }
         } catch (IOException e) {
-            throw new IOException("Can't write to file: " + path);
+            throw new IOException("writeToFile: Can't write to file: " + path);
         }
+    }
+
+    private boolean isFileExists(String path) {
+        File file = new File(path);
+        return file.exists();
+    }
+
+    boolean isFileEmpty(String path) {
+        File file = new File(path);
+        return file.length() == 0;
     }
 
     Long getLastId(String path) throws IOException {
