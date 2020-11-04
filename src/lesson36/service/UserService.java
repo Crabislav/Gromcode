@@ -1,6 +1,7 @@
 package lesson36.service;
 
 import lesson36.Session;
+import lesson36.exceptions.AuthorizationException;
 import lesson36.exceptions.BadRequestException;
 import lesson36.model.User;
 import lesson36.repository.UserRepository;
@@ -11,32 +12,31 @@ public class UserService {
 
     //TODO: test method
     public User registerUser(User user) throws Exception {
-        validate(user);
+        validateInput(user);
         return userRepository.registerUser(user);
     }
 
 
-    public void login(String userName, String password) throws BadRequestException {
-        //TODO: finish
-        //if user exists ->
-
-        // if session is empty -> do login +
-
-        if (Session.getSignedInUser() != null) {
-            throw new BadRequestException("System can't hold more than one signed in user");
+    public void login(String userName, String password) throws Exception {
+        //finds a user
+        for (User user : userRepository.getAllObjects()) {
+            //if it was found ->
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                //it will do login
+                Session.setAuthorizedUser(user);
+            }
         }
-        userRepository.login(userName, password);
+
+        //throws if there is no such user
+        throw new BadRequestException("UserRepository.login: Invalid user's name or password");
     }
 
     //TODO: test
-    public void logout() throws BadRequestException {
-        if (Session.getSignedInUser() == null) {
-            throw new BadRequestException("User didn't sign in system");
-        }
-        userRepository.logout();
+    public void logout() {
+        Session.setAuthorizedUser(null);
     }
 
-    private void validate(User user) throws BadRequestException {
+    private void validateInput(User user) throws BadRequestException {
         //input object
         if (user == null) {
             throw new BadRequestException("User can't be null");
