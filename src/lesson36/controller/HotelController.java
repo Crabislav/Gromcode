@@ -1,26 +1,38 @@
 package lesson36.controller;
 
+import lesson36.exceptions.AuthorizationException;
+import lesson36.exceptions.NotEnoughRightsException;
 import lesson36.model.Hotel;
+import lesson36.service.HotelService;
 
-public class HotelController {
-    //TODO: finish
-    public Hotel findHotelByName(String name) {
-        return null;
+public class HotelController extends Controller {
+    private HotelService hotelService = new HotelService();
+
+    //TODO: test
+    public Hotel findHotelByName(String name) throws AuthorizationException {
+        checkIsUserAuthorized();
+        return hotelService.findHotelByName(name);
     }
 
-    //TODO: finish
-    public Hotel findHotelByCity(String city) {
-        return null;
+    //TODO: test
+    public Hotel findHotelByCity(String city) throws NotEnoughRightsException {
+        checkUserRights();
+        return hotelService.findHotelByCity(city);
     }
 
     //only admins
-    //TODO: finish
-    public void addHotel(Hotel hotel) {
+    //TODO: test
+    public void addHotel(Hotel hotel) throws NotEnoughRightsException, AuthorizationException {
+        checkIsUserAuthorized();
+        checkUserRights();
+        hotelService.addHotel(hotel);
     }
 
     //only admins
-    //TODO: finish
-    public void deleteHotel(long hotelId) {
-
+    //TODO: test
+    public void deleteHotel(long hotelId) throws NotEnoughRightsException, AuthorizationException {
+        checkIsUserAuthorized();
+        checkUserRights();
+        hotelService.deleteHotel(hotelId);
     }
 }

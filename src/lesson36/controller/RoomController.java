@@ -1,32 +1,35 @@
 package lesson36.controller;
 
+import lesson36.exceptions.AuthorizationException;
+import lesson36.exceptions.NotEnoughRightsException;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 import lesson36.service.RoomService;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class RoomController {
+public class RoomController extends Controller {
     private RoomService roomService = new RoomService();
 
-    //TODO: finish + add a check for user is signed in the system
-    public List<Room> findRooms(Filter filter) {
+    //TODO: test
+    public List<Room> findRooms(Filter filter) throws NotEnoughRightsException {
+        checkUserRights();
         return roomService.findRooms(filter);
     }
 
-
-
-    //TODO: finish + add user role verification
+    //TODO: test
     //only admins
-    public void addRoom(Room room) {
+    public void addRoom(Room room) throws NotEnoughRightsException, AuthorizationException {
+        checkIsUserAuthorized();
+        checkUserRights();
         roomService.addRoom(room);
     }
 
-    //TODO: finish + add user role verification
+    //TODO: test
     //only admins
-    public void deleteRoom(long roomId) {
+    public void deleteRoom(long roomId) throws NotEnoughRightsException, AuthorizationException {
+        checkIsUserAuthorized();
+        checkUserRights();
         roomService.deleteRoom(roomId);
     }
 }
