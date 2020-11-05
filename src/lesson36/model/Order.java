@@ -10,6 +10,16 @@ public class Order extends Entity {
     private Date dateTo;
     private Double moneyPaid;
 
+    //used for creating
+    public Order(User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
+        this.user = user;
+        this.room = room;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.moneyPaid = moneyPaid;
+    }
+
+    //used for mapping
     public Order(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
         this.id = id;
         this.user = user;
