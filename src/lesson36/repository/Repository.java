@@ -1,10 +1,11 @@
 package lesson36.repository;
 
+import lesson36.exceptions.BadRequestException;
 import lesson36.exceptions.MappingException;
 import lesson36.model.Entity;
 
-import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public abstract class Repository<T extends Entity> {
     private String path;
@@ -36,89 +37,51 @@ public abstract class Repository<T extends Entity> {
         return t;
     }
 
-    private void writeToFile(String path, StringBuffer content) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-            if (isFileEmpty(path)) {
-                bw.append(content);
-            }
-            //if file isn't empty - it will add a new content from new line
-            else {
-                bw.append("\n").append(content);
-            }
-        } catch (IOException e) {
-            throw new IOException("writeToFile: Can't write to file: " + path);
-        }
-    }
-
-    private boolean isFileExists(String path) {
-        File file = new File(path);
-        return file.exists();
-    }
-
-    boolean isFileEmpty(String path) {
-        File file = new File(path);
-        return file.length() == 0;
-    }
-
-    Long getLastId(String path) throws IOException {
-        long lastId;
-        String lastLine = "";
-        String methodName = "getLastId";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                lastLine = currentLine;
-            }
-            //first field - is always an id field
-            String idValue = lastLine.split(", ")[0];
-            lastId = Long.parseLong(idValue);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(methodName + ": Can't parse id value from " + lastLine);
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(methodName + ": File " + path + "doesn't exists");
-        } catch (IOException e) {
-            throw new IOException(methodName + ": Can't read file from" + path);
+    public void remove(T t) throws Exception {
+        //find an object at repository
+        ArrayList<T> allObjects = getAllObjects();
+        if (!getAllObjects().contains(t)) {
+            throw new BadRequestException("remove: Input object wasn't found");
         }
 
-        return lastId;
+        //delete it
+        allObjects.remove(t);
+        //rewrite repos file
+        StringBuilder content = new StringBuilder();
+        for (T object : allObjects) {
+            content.append(object.toString()).append("\n");
+        }
+
+        if (content.length() > 0) {
+            content.replace(content.length() - 1, content.length(), "");
+        }
+        RepositoryUtils.writeToFile(path, content, false);
     }
 
     //maps info from file-db to objects
-    public ArrayList<T> getAllObjects() throws MappingException, IOException {
-        validateGetAllObjects(path);
-        //result collection
-        return readAndMap(path);
-    }
-
-    private void validateGetAllObjects(String path) throws MappingException {
+    public ArrayList<T> getAllObjects() throws Exception {
         String methodName = "getAllObjects";
 
-        if (path == null || path.isEmpty()) {
-            throw new IllegalArgumentException(methodName + ": path can't be null or empty");
+        if (!RepositoryUtils.isFileExists(path)) {
+            throw new MappingException(methodName + ": Can't map from non-existent file " + path);
         }
 
-        if (!isFileExists(path)) {
-            throw new MappingException(methodName + ": Can't map from nonexistent file " + path);
-        }
-    }
+        StringBuilder content = RepositoryUtils.readFromFile(path);
 
-    private ArrayList<T> readAndMap(String path) throws IOException {
+        if (content == null || content.toString().isEmpty()) {
+            throw new BadRequestException(methodName + ": Can't get object values from empty repository");
+        }
+
+        //result array
         ArrayList<T> mappedObjects = new ArrayList<>();
-        String methodName = "readAndMap";
 
-        //reading from file and mapping
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] objValues = line.split(", ");
-                mappedObjects.add(getMappedObject(objValues));
-            }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(methodName + ": File " + path + "doesn't exists");
-        } catch (IOException e) {
-            throw new IOException(methodName + ": Can't read file from" + path);
+        //filling result array with mapped objects
+        String[] objects = Pattern.compile("\n").split(content);
+        for (String object : objects) {
+            String[] objValues = object.split(", ");
+            mappedObjects.add(getMappedObject(objValues));
         }
+
         return mappedObjects;
     }
 
