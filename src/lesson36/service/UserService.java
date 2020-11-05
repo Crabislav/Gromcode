@@ -10,10 +10,12 @@ import lesson36.repository.UserRepository;
 public class UserService {
     private UserRepository userRepository = new UserRepository();
 
-    //TODO: test method
+    public UserService() throws IOException {
+    }
+
     public User registerUser(User user) throws Exception {
-        validateInput(user);
-        return userRepository.registerUser(user);
+        validateUser(user);
+        return userRepository.save(user);
     }
 
 
