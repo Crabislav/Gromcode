@@ -10,9 +10,7 @@ public class UserRepository extends Repository<User> {
 
     public UserRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/UserDb.txt");
-        if (!RepositoryUtils.isFileExists(getPath())) {
-            RepositoryUtils.writeToFile(getPath(), new StringBuilder(), false);
-        }
+        RepositoryUtils.createFileIfNotExists(getPath());
     }
 
     @Override
