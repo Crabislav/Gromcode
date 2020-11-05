@@ -1,10 +1,12 @@
 package lesson36.service;
 
 import lesson36.Session;
-import lesson36.exceptions.AuthorizationException;
 import lesson36.exceptions.BadRequestException;
 import lesson36.model.User;
 import lesson36.repository.UserRepository;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 //business layer
 public class UserService {
@@ -18,19 +20,32 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
     public void login(String userName, String password) throws Exception {
+        if (Session.getAuthorizedUser() != null) {
+            throw new BadRequestException("Can't do login for a new User. User(" + Session.getAuthorizedUser().toString() + ") has already authorized at system");
+        }
+
+        User userToLogin = null;
+
+        ArrayList<User> users = userRepository.getAllObjects();
         //finds a user
-        for (User user : userRepository.getAllObjects()) {
-            //if it was found ->
+        for (User user : users) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                //it will do login
-                Session.setAuthorizedUser(user);
+                userToLogin = user;
             }
         }
 
+        if (Session.getAuthorizedUser() == null) {
+            Session.setAuthorizedUser(userToLogin);
+            return;
+        }
+
+        if (userToLogin != null && !Session.getAuthorizedUser().equals(userToLogin)) {
+            throw new BadRequestException("Can't do login for a new User. User(" + Session.getAuthorizedUser().toString() + ") has already authorized at system");
+        }
+
         //throws if there is no such user
-        throw new BadRequestException("UserRepository.login: Invalid user's name or password");
+        throw new BadRequestException("login: Invalid user's name or password");
     }
 
     //TODO: test
