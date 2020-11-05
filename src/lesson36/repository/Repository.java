@@ -89,6 +89,15 @@ public abstract class Repository<T extends Entity> {
     //so it must be overwritten at each repository class
     abstract T getMappedObject(String[] objValues);
 
+    public T findObjById(long id) throws Exception {
+        for (T obj : getAllObjects()) {
+            if (obj.getId() == id) {
+                return obj;
+            }
+        }
+        return null;
+    }
+
     public String getPath() {
         return path;
     }
