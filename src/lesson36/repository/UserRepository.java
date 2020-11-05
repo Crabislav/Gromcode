@@ -1,21 +1,18 @@
 package lesson36.repository;
 
-import lesson36.exceptions.MappingException;
 import lesson36.model.User;
 import lesson36.model.enums.UserType;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 //data access layer
 public class UserRepository extends Repository<User> {
 
-    {
+    public UserRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/UserDb.txt");
-    }
-
-    public User registerUser(User user) throws Exception {
-        return save(getPath(), user);
+        if (!RepositoryUtils.isFileExists(getPath())) {
+            RepositoryUtils.writeToFile(getPath(), new StringBuilder(), false);
+        }
     }
 
     @Override
