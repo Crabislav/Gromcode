@@ -55,28 +55,29 @@ public class UserService {
         Session.setAuthorizedUser(null);
     }
 
-    private void validateInput(User user) throws BadRequestException {
+    private void validateUser(User user) throws BadRequestException {
+        String methodName = "validateUser";
         //input object
         if (user == null) {
-            throw new BadRequestException("User can't be null");
+            throw new BadRequestException(methodName + ": User can't be null");
         }
 
         //name
         String userName = user.getUserName();
         if (userName == null || userName.isEmpty()) {
-            throw new BadRequestException("User's name can't be empty or null. ");
+            throw new BadRequestException(methodName + ": User's name can't be empty or null.");
         }
 
         //userPassword
         String userPassword = user.getPassword();
         if (userPassword == null || userPassword.isEmpty()) {
-            throw new BadRequestException("User's password can't be empty or null");
+            throw new BadRequestException(methodName + ": User's password can't be empty or null");
         }
 
         //country
         String userCountry = user.getPassword();
         if (userCountry == null || userCountry.isEmpty()) {
-            throw new BadRequestException("User's country can't be empty or null");
+            throw new BadRequestException(methodName + ": User's country can't be empty or null");
         }
 
         //userType
