@@ -48,8 +48,10 @@ public class UserService {
         throw new BadRequestException("login: Invalid user's name or password");
     }
 
-    //TODO: test
-    public void logout() {
+    public void logout() throws BadRequestException {
+        if (Session.getAuthorizedUser() == null) {
+            throw new BadRequestException("Can't do logout for null user");
+        }
         Session.setAuthorizedUser(null);
     }
 
