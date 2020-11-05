@@ -1,6 +1,8 @@
 package lesson36.controller;
 
+import lesson36.Session;
 import lesson36.exceptions.AuthorizationException;
+import lesson36.exceptions.BadRequestException;
 import lesson36.service.UserService;
 import lesson36.model.User;
 
@@ -18,9 +20,10 @@ public class UserController extends Controller {
         userService.login(userName, password);
     }
 
-    //TODO: test
-    public void logout() throws AuthorizationException {
-        checkIsUserAuthorized();
+    public void logout() throws BadRequestException {
+        if (Session.getAuthorizedUser() == null) {
+            throw new BadRequestException("Can't do logout for null user");
+        }
         userService.logout();
     }
 }
