@@ -35,8 +35,9 @@ public class RoomService {
 
     //TODO: finish
     //only admins
-    public void addRoom(Room room) {
-
+    public void addRoom(Room room) throws Exception {
+        validateRoom(room);
+        roomRepository.save(room);
     }
 
     //TODO: finish
