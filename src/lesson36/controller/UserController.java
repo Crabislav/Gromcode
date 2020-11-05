@@ -23,9 +23,6 @@ public class UserController extends Controller {
     }
 
     public void logout() throws BadRequestException {
-        if (Session.getAuthorizedUser() == null) {
-            throw new BadRequestException("Can't do logout for null user");
-        }
         userService.logout();
     }
 
