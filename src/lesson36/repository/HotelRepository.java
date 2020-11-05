@@ -1,32 +1,15 @@
 package lesson36.repository;
 
+import lesson36.exceptions.BadRequestException;
 import lesson36.model.Hotel;
 
+import java.io.IOException;
+
 public class HotelRepository extends Repository<Hotel> {
-    {
+
+    public HotelRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/HotelDb.txt");
-    }
-
-    //TODO: finish
-    public Hotel findHotelByName(String name) {
-        return null;
-    }
-
-    //TODO: finish
-    public Hotel findHotelByCity(String city) {
-        return null;
-    }
-
-    //only admins
-    //TODO: finish
-    public Hotel addHotel(Hotel hotel) throws Exception {
-        return save(getPath(), hotel);
-    }
-
-    //only admins
-    //TODO: finish
-    public void deleteHotel(long hotelId) {
-
+        RepositoryUtils.createFileIfNotExists(getPath());
     }
 
     @Override
@@ -38,5 +21,15 @@ public class HotelRepository extends Repository<Hotel> {
         String street = objValues[4];
 
         return new Hotel(id, name, country, city, street);
+    }
+
+    @Override
+    public String getPath() {
+        return super.getPath();
+    }
+
+    @Override
+    public void setPath(String path) {
+        super.setPath(path);
     }
 }
