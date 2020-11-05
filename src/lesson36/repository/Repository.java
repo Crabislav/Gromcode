@@ -9,30 +9,30 @@ import java.util.ArrayList;
 public abstract class Repository<T extends Entity> {
     private String path;
 
-    T save(String path, T t) throws Exception {
+    public T save(T t) throws Exception {
         if (path == null || t == null) {
-            throw new IllegalArgumentException("save: Input (path or t) can't be null");
+            throw new IllegalArgumentException("save: Input can't be null");
         }
 
-        //this object contains content to write;
-        StringBuffer content = new StringBuffer();
+        //content to write;
+        StringBuilder content = new StringBuilder();
 
         //creates a file if it doesn't exist
-        if (!isFileExists(path)) {
-            writeToFile(path, content);
+        if (!RepositoryUtils.isFileExists(path)) {
+            RepositoryUtils.writeToFile(path, content, false);
         }
 
-        //sets valid id
-        if (isFileEmpty(path)) {
+        //sets valid id to object
+        if (RepositoryUtils.isFileEmpty(path)) {
             t.setId(1L);
         } else {
-            t.setId(getLastId(path) + 1L);
+            t.setId(RepositoryUtils.getLastId(path) + 1L);
         }
 
         //sets proper content to write
-        content = new StringBuffer(t.toString());
+        content = new StringBuilder(t.toString());
 
-        writeToFile(path, content);
+        RepositoryUtils.writeToFile(path, content, true);
         return t;
     }
 
