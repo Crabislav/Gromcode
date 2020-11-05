@@ -27,6 +27,11 @@ public class UserRepository extends Repository<User> {
     }
 
     @Override
+    public String getPath() {
+        return super.getPath();
+    }
+
+    @Override
     public void setPath(String path) {
         super.setPath(path);
     }
