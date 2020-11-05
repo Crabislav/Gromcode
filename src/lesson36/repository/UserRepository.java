@@ -30,12 +30,7 @@ public class UserRepository extends Repository<User> {
     }
 
     @Override
-    public String getPath() {
-        return super.getPath();
-    }
-
-    @Override
-    public ArrayList<User> getAllObjects() throws MappingException, IOException {
-        return super.getAllObjects();
+    public void setPath(String path) {
+        super.setPath(path);
     }
 }
