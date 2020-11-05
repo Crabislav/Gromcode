@@ -10,7 +10,7 @@ public class User extends Entity {
     private UserType userType;
 
     //used for creating
-    private User(String userName, String password, String country, UserType userType) {
+    public User(String userName, String password, String country, UserType userType) {
         this.userName = userName;
         this.password = password;
         this.country = country;
@@ -24,11 +24,6 @@ public class User extends Entity {
         this.password = password;
         this.country = country;
         this.userType = userType;
-    }
-
-    //TODO: probably do refactor
-    public static User newInstance(String userName, String password, String country, UserType userType) {
-        return new User(userName, password, country, userType);
     }
 
     @Override
