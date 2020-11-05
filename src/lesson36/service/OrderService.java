@@ -1,9 +1,14 @@
 package lesson36.service;
 
+import lesson36.exceptions.BadRequestException;
+import lesson36.model.Order;
+import lesson36.model.Room;
+import lesson36.model.User;
 import lesson36.repository.OrderRepository;
 import lesson36.repository.RoomRepository;
 import lesson36.repository.UserRepository;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class OrderService {
