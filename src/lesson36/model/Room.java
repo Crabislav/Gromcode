@@ -56,6 +56,10 @@ public class Room {
         return dateAvailableFrom;
     }
 
+    public void setDateAvailableFrom(Date dateAvailableFrom) {
+        this.dateAvailableFrom = dateAvailableFrom;
+    }
+
     public Hotel getHotel() {
         return hotel;
     }
