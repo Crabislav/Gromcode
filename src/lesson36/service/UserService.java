@@ -85,4 +85,13 @@ public class UserService {
             throw new BadRequestException("User's type can't be null");
         }
     }
+
+    public void deleteUser(User user) throws Exception {
+        userRepository.remove(user);
+    }
+
+    public void deleteUser(long id) throws Exception {
+        ServiceUtils.validateId(id);
+        userRepository.remove(userRepository.findObjById(id));
+    }
 }
