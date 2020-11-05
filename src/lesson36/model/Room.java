@@ -2,7 +2,7 @@ package lesson36.model;
 
 import java.util.Date;
 
-public class Room {
+public class Room extends Entity {
     private Long id;
     private Integer numberOfGuests;
     private Double price;
@@ -32,8 +32,14 @@ public class Room {
         this.hotel = hotel;
     }
 
+    @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getNumberOfGuests() {
