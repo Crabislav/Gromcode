@@ -1,39 +1,40 @@
 package lesson36.repository;
 
-import lesson36.model.Filter;
 import lesson36.model.Room;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
 
-public class RoomRepository {
 
-    //TODO: finish
-    public List<Room> findRooms(Filter filter) {
-        return new ArrayList<>();
-    }
+public class RoomRepository extends Repository<Room> {
 
-    //TODO: finish
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) {
-
-    }
-
-    //TODO: finish
-    public void cancelReservation(long roomId, long userId) {
-
+    public RoomRepository() throws IOException {
+        setPath("C:/Users/Alex Kopnin/Desktop/lesson36/RoomDb.txt");
+        RepositoryUtils.createFileIfNotExists(getPath());
     }
 
 
+    /*
+    *     private Long id;
+    private Integer numberOfGuests;
+    private Double price;
+    private Boolean breakfastIncluded;
+    private Boolean petsAllowed;
+    private Date dateAvailableFrom;
+    private Hotel hotel;
+    * */
     //TODO: finish
-    //only admins
-    public void addRoom(Room room) {
-
+    @Override
+    Room getMappedObject(String[] objValues) {
+        return null;
     }
 
-    //TODO: finish
-    //only admins
-    public void deleteRoom(long RoomId) {
+    @Override
+    public String getPath() {
+        return super.getPath();
+    }
 
+    @Override
+    public void setPath(String path) {
+        super.setPath(path);
     }
 }
