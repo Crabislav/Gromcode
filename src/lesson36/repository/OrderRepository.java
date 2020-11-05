@@ -1,16 +1,36 @@
 package lesson36.repository;
 
-import java.util.Date;
+import lesson36.model.Order;
 
-public class OrderRepository {
-    //TODO: finish + add a check for user is signed in the system
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) {
-        bookRoom(roomId, userId, dateFrom, dateTo);
+import java.io.IOException;
+
+public class OrderRepository extends Repository<Order> {
+
+    public OrderRepository() throws IOException {
+        setPath("C:/Users/Alex Kopnin/Desktop/lesson36/OrderDb.txt");
+        RepositoryUtils.createFileIfNotExists(getPath());
     }
 
-    //TODO: finish + add a check for user is signed in the system
-    public void cancelReservation(long roomId, long userId) {
-        cancelReservation(roomId, userId);
+    //TODO: finish
+    @Override
+    Order getMappedObject(String[] objValues) {
+        Long id = Long.parseLong(objValues[0]);
+//        User user = objValues[1];
+//        Room room;
+//        Date dateFrom;
+//        Date dateTo;
+//        Double moneyPaid;
+//        return new Order(id, user, room, dateFrom, dateTo, moneyPaid);
+        return null;
     }
 
+    @Override
+    public String getPath() {
+        return super.getPath();
+    }
+
+    @Override
+    public void setPath(String path) {
+        super.setPath(path);
+    }
 }
