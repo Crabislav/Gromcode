@@ -8,7 +8,7 @@ public class Hotel extends Entity {
     private String street;
 
     //used for creating
-    private Hotel(String name, String country, String city, String street) {
+    public Hotel(String name, String country, String city, String street) {
         this.name = name;
         this.country = country;
         this.city = city;
@@ -24,10 +24,6 @@ public class Hotel extends Entity {
         this.street = street;
     }
 
-    //TODO: probably do refactor
-    public static Hotel newInstance(String name, String country, String city, String street) {
-        return new Hotel(name, country, city, street);
-    }
 
     @Override
     public Long getId() {
