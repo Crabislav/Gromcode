@@ -21,36 +21,31 @@ public class UserService {
     }
 
     public void login(String userName, String password) throws Exception {
+        String methodName = "login";
         if (Session.getAuthorizedUser() != null) {
-            throw new BadRequestException("Can't do login for a new User. User(" + Session.getAuthorizedUser().toString() + ") has already authorized at system");
+            throw new BadRequestException(methodName + ": Can't do login for a new User. User(" +
+                    Session.getAuthorizedUser().toString() + ") has already authorized at system");
         }
 
         User userToLogin = null;
-
-        ArrayList<User> users = userRepository.getAllObjects();
-        //finds a user
-        for (User user : users) {
+        //finds a user at users repository
+        for (User user : userRepository.getAllObjects()) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 userToLogin = user;
             }
         }
 
-        if (Session.getAuthorizedUser() == null) {
-            Session.setAuthorizedUser(userToLogin);
-            return;
+        //if there is no such user
+        if (userToLogin == null) {
+            throw new BadRequestException(methodName + ": Can't find a such user at repository");
         }
 
-        if (userToLogin != null && !Session.getAuthorizedUser().equals(userToLogin)) {
-            throw new BadRequestException("Can't do login for a new User. User(" + Session.getAuthorizedUser().toString() + ") has already authorized at system");
-        }
-
-        //throws if there is no such user
-        throw new BadRequestException("login: Invalid user's name or password");
+        Session.setAuthorizedUser(userToLogin);
     }
 
     public void logout() throws BadRequestException {
         if (Session.getAuthorizedUser() == null) {
-            throw new BadRequestException("Can't do logout for null user");
+            throw new BadRequestException("logout: Can't do logout for null user");
         }
         Session.setAuthorizedUser(null);
     }
@@ -82,7 +77,7 @@ public class UserService {
 
         //userType
         if (user.getUserType() == null) {
-            throw new BadRequestException("User's type can't be null");
+            throw new BadRequestException(methodName + ": User's type can't be null");
         }
     }
 
