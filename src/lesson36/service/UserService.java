@@ -70,7 +70,7 @@ public class UserService {
         }
 
         //country
-        String userCountry = user.getPassword();
+        String userCountry = user.getCountry();
         if (userCountry == null || userCountry.isEmpty()) {
             throw new BadRequestException(methodName + ": User's country can't be empty or null");
         }
