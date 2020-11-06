@@ -40,10 +40,6 @@ public class RepositoryUtils {
     }
 
     static void writeToFile(String path, StringBuilder content, boolean append) throws IOException {
-        if (content == null) {
-            return;
-        }
-
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, append))) {
             if (isFileEmpty(path)) {
                 bw.append(content);
@@ -63,7 +59,7 @@ public class RepositoryUtils {
             String line;
             while ((line = br.readLine()) != null) {
                 if (isFileEmpty(path)) {
-                    return null;
+                    return content;
                 } else if (!line.isEmpty()) {
                     content.append(line).append("\n");
                 }
