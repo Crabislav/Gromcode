@@ -1,18 +1,23 @@
 package lesson36.repository;
 
 import lesson36.exceptions.BadRequestException;
-import lesson36.exceptions.MappingException;
 import lesson36.model.Entity;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public abstract class Repository<T extends Entity> {
     private String path;
 
-    public T save(T t) throws Exception {
-        if (path == null || t == null) {
-            throw new IllegalArgumentException("save: Input can't be null");
+    public T save(T t) throws IOException, BadRequestException {
+        if (t == null) {
+            throw new BadRequestException("save: input can't be null");
+        }
+
+        if (path == null) {
+            throw new BadRequestException("save: path can't be null");
         }
 
         //content to write;
@@ -49,11 +54,12 @@ public abstract class Repository<T extends Entity> {
         //rewrite repos file
         StringBuilder content = new StringBuilder();
         for (T object : allObjects) {
+            //appends last object without new line
+            if (allObjects.indexOf(object) == (allObjects.size() - 1)) {
+                content.append(object.toString());
+                break;
+            }
             content.append(object.toString()).append("\n");
-        }
-
-        if (content.length() > 0) {
-            content.replace(content.length() - 1, content.length(), "");
         }
         RepositoryUtils.writeToFile(path, content, false);
     }
@@ -63,12 +69,12 @@ public abstract class Repository<T extends Entity> {
         String methodName = "getAllObjects";
 
         if (!RepositoryUtils.isFileExists(path)) {
-            throw new MappingException(methodName + ": Can't map from non-existent file " + path);
+            throw new FileNotFoundException(methodName + ": Can't map from non-existent file " + path);
         }
 
         StringBuilder content = RepositoryUtils.readFromFile(path);
 
-        if (content == null || content.toString().isEmpty()) {
+        if (content.toString().isEmpty()) {
             throw new BadRequestException(methodName + ": Can't get object values from empty repository");
         }
 
