@@ -1,4 +1,4 @@
-package lesson33.examples;
+package gromcode.main.lesson33.examples;
 
 import org.apache.commons.io.IOUtils;
 
@@ -37,6 +37,7 @@ public class ReadWriteFile {
         FileWriter writer = null;
         BufferedWriter bufferedWriter = null;
         try {
+//            writer = new FileWriter(new File(path), true);
             writer = new FileWriter(path, true);
             bufferedWriter = new BufferedWriter(writer);
 
