@@ -71,25 +71,29 @@ public class HotelService {
 
     private void validateHotel(Hotel hotel) throws BadRequestException {
         String methodName = "validateHotel";
-        String msg = "field can't be null";
+        String msg = "can't be null or empty";
 
         if (hotel == null) {
             throw new BadRequestException(methodName + ": Input " + msg);
         }
 
-        if (hotel.getCity() == null) {
+        String hotelCity = hotel.getCity();
+        if (hotelCity == null || hotelCity.isEmpty()) {
             throw new BadRequestException(methodName + ": hotel's city " + msg);
         }
 
-        if (hotel.getName() == null) {
+        String hotelName = hotel.getName();
+        if (hotelName == null || hotelName.isEmpty()) {
             throw new BadRequestException(methodName + ": hotel's name " + msg);
         }
 
-        if (hotel.getCountry() == null) {
+        String hotelCountry = hotel.getCountry();
+        if (hotelCountry == null || hotelCountry.isEmpty()) {
             throw new BadRequestException(methodName + ": hotel's country " + msg);
         }
 
-        if (hotel.getStreet() == null) {
+        String hotelStreet = hotel.getStreet();
+        if (hotelStreet == null || hotelStreet.isEmpty()) {
             throw new BadRequestException(methodName + ": hotel's street " + msg);
         }
     }
