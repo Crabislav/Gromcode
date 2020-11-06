@@ -40,6 +40,8 @@ public class DemoUser {
             userController.registerUser(user);
 
             userController.deleteUser(user);
+            userController.deleteUser(1);
+            userController.deleteUser(2);
         } catch (Exception e) {
             e.printStackTrace();
         }
