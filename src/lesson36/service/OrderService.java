@@ -9,6 +9,7 @@ import lesson36.repository.RoomRepository;
 import lesson36.repository.UserRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class OrderService {
@@ -18,7 +19,6 @@ public class OrderService {
 
     public OrderService() throws IOException {
     }
-
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
         validateDate(dateFrom, dateTo);
@@ -76,10 +76,12 @@ public class OrderService {
         }
 
         //find an order
-        for (Order order : orderRepository.getAllObjects()) {
+        ArrayList<Order> allOrders = orderRepository.getAllObjects();
+        for (Order order : allOrders) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) {
                 //cancel reservation
                 orderRepository.remove(order);
+                break;
             }
         }
 
