@@ -6,7 +6,6 @@ import lesson36.repository.HotelRepository;
 
 import java.io.IOException;
 
-
 public class HotelService {
     private HotelRepository hotelRepository = new HotelRepository();
 
@@ -58,15 +57,14 @@ public class HotelService {
         ServiceUtils.validateId(hotelId);
 
         //find a hotel
-        for (Hotel hotel : hotelRepository.getAllObjects()) {
-            if (hotel.getId() == hotelId) {
-                //delete a hotel from repository
-                hotelRepository.remove(hotel);
-            }
+        Hotel hotel = hotelRepository.findObjById(hotelId);
+
+        if (hotel == null) {
+            throw new BadRequestException(methodName + ": hotel was not found");
         }
 
-        //if there is no such hotel - throw Exception
-        throw new BadRequestException(methodName + ": hotel was not found");
+        hotelRepository.remove(hotel);
+
     }
 
     private void validateHotel(Hotel hotel) throws BadRequestException {
