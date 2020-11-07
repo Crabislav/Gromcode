@@ -9,13 +9,14 @@ public class Controller {
     //checks if an authorized user is admin
     static void checkUserRights() throws NotEnoughRightsException {
         if (Session.getAuthorizedUser().getUserType() == UserType.USER) {
-            throw new NotEnoughRightsException("User (" + Session.getAuthorizedUser().getUserName() + ") doesn't have enough rights");
+            throw new NotEnoughRightsException("User (id=" + Session.getAuthorizedUser().getId() +
+                    " ,name=" + Session.getAuthorizedUser().getUserName() + ") doesn't have enough rights");
         }
     }
 
-    static void checkIsUserAuthorized() throws AuthorizationException {
-        if (Session.getAuthorizedUser() != null) {
-            throw new AuthorizationException("System can't hold more than one signed in user");
+    static void checkIsUserAuthorized(String methodName) throws AuthorizationException {
+        if (Session.getAuthorizedUser() == null) {
+            throw new AuthorizationException("Can't execute " + methodName + " method without user login");
         }
     }
 }
