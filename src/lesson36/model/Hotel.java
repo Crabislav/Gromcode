@@ -77,6 +77,10 @@ public class Hotel extends Entity {
 
     @Override
     public String toString() {
-        return id.toString();
+        return id + ", " +
+                name + ", " +
+                country + ", " +
+                city + ", " +
+                street;
     }
 }
