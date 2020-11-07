@@ -12,15 +12,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomService {
+    private RoomFilter roomFilter = new RoomFilter();
     private RoomRepository roomRepository = new RoomRepository();
     private OrderRepository orderRepository = new OrderRepository();
 
     public RoomService() throws IOException {
     }
 
-    //TODO: finish
-    public List<Room> findRooms(Filter filter) {
-        return new ArrayList<>();
+    public List<Room> findRooms(Filter filter) throws Exception {
+        ArrayList<Room> filteredRooms = roomRepository.getAllObjects();
+
+        if (filteredRooms == null) {
+            throw new BadRequestException("Can't find rooms among empty room repository");
+        }
+
+        //Room's fields
+        roomFilter.filterByBreakfast(filter.getBreakfastIncluded(), filteredRooms);
+        roomFilter.filterByPetsAllowed(filter.getPetsAllowed(), filteredRooms);
+        roomFilter.filterByNumberOfGuests(filter.getNumberOfGuests(), filteredRooms);
+        roomFilter.filterByPrice(filter.getPrice(), filteredRooms);
+        roomFilter.filterByDateAvailableFrom(filter.getDateAvailableFrom(), filteredRooms);
+
+        //Hotel's fields
+        roomFilter.filterByHotelName(filter.getName(), filteredRooms);
+        roomFilter.filterByHotelCountry(filter.getCountry(), filteredRooms);
+        roomFilter.filterByHotelCity(filter.getCity(), filteredRooms);
+        roomFilter.filterByHotelStreet(filter.getStreet(), filteredRooms);
+
+        return filteredRooms;
     }
 
     //only admins
@@ -44,13 +63,14 @@ public class RoomService {
 
         //delete room:
         //if room is used at order - throw new Exception
-        for (Order order : orderRepository.getAllObjects()) {
+        ArrayList<Order> allOrders = orderRepository.getAllObjects();
+        for (Order order : allOrders) {
             if (order.getRoom().equals(room)) {
                 throw new BadRequestException(methodName + ": can't delete already booked room");
             }
         }
 
-        //if room isn't used ar order - delete it
+        //if room wasn't used at order - delete it
         roomRepository.remove(room);
     }
 
