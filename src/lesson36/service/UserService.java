@@ -29,7 +29,8 @@ public class UserService {
 
         User userToLogin = null;
         //finds a user at users repository
-        for (User user : userRepository.getAllObjects()) {
+        ArrayList<User> allUsers = userRepository.getAllObjects();
+        for (User user : allUsers) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 userToLogin = user;
             }
@@ -82,11 +83,21 @@ public class UserService {
     }
 
     public void deleteUser(User user) throws Exception {
+        Long userId = user.getId();
+        if (userRepository.findObjById(userId) == null) {
+            throw new BadRequestException("User with id=" + userId + ") wasn't found");
+        }
+
         userRepository.remove(user);
     }
 
-    public void deleteUser(long id) throws Exception {
-        ServiceUtils.validateId(id);
-        userRepository.remove(userRepository.findObjById(id));
+    public void deleteUser(long userId) throws Exception {
+        ServiceUtils.validateId(userId);
+
+        User user = userRepository.findObjById(userId);
+        if (user == null) {
+            throw new BadRequestException("User with id=" + userId + ") wasn't found");
+        }
+        userRepository.remove(user);
     }
 }
