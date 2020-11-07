@@ -69,4 +69,43 @@ public class Room extends Entity {
     public Hotel getHotel() {
         return hotel;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Room room = (Room) o;
+
+        if (!id.equals(room.id)) return false;
+        if (!numberOfGuests.equals(room.numberOfGuests)) return false;
+        if (!price.equals(room.price)) return false;
+        if (!breakfastIncluded.equals(room.breakfastIncluded)) return false;
+        if (!petsAllowed.equals(room.petsAllowed)) return false;
+        if (!dateAvailableFrom.equals(room.dateAvailableFrom)) return false;
+        return hotel.equals(room.hotel);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + numberOfGuests.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + breakfastIncluded.hashCode();
+        result = 31 * result + petsAllowed.hashCode();
+        result = 31 * result + dateAvailableFrom.hashCode();
+        result = 31 * result + hotel.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return id + ", " +
+                numberOfGuests + ", " +
+                price + ", " +
+                breakfastIncluded + ", " +
+                petsAllowed + ", " +
+                dateAvailableFrom + ", " +
+                hotel.getId();
+    }
 }

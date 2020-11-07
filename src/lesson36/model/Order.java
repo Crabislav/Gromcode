@@ -58,4 +58,40 @@ public class Order extends Entity {
     public Double getMoneyPaid() {
         return moneyPaid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (!id.equals(order.id)) return false;
+        if (!user.equals(order.user)) return false;
+        if (!room.equals(order.room)) return false;
+        if (!dateFrom.equals(order.dateFrom)) return false;
+        if (!dateTo.equals(order.dateTo)) return false;
+        return moneyPaid.equals(order.moneyPaid);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + user.hashCode();
+        result = 31 * result + room.hashCode();
+        result = 31 * result + dateFrom.hashCode();
+        result = 31 * result + dateTo.hashCode();
+        result = 31 * result + moneyPaid.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return id + ", " +
+                user + ", " +
+                room + ", " +
+                dateFrom.toString() + ", " +
+                dateTo.toString() + ", " +
+                moneyPaid;
+    }
 }
