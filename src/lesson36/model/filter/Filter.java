@@ -1,4 +1,4 @@
-package lesson36.model;
+package lesson36.model.filter;
 
 import java.util.Date;
 
@@ -63,5 +63,18 @@ public class Filter {
 
     public String getStreet() {
         return street;
+    }
+
+    @Override
+    public String toString() {
+        return "numberOfGuests=" + numberOfGuests +
+                ", price=" + price +
+                ", breakfastIncluded=" + breakfastIncluded +
+                ", petsAllowed=" + petsAllowed +
+                ", dateAvailableFrom=" + dateAvailableFrom +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'';
     }
 }
