@@ -11,29 +11,24 @@ public class HotelController extends Controller {
     public HotelController() throws IOException {
     }
 
-
-    //TODO: test
     public Hotel findHotelByName(String name) throws Exception {
         checkIsUserAuthorized("findHotelByName");
         return hotelService.findHotelByName(name);
     }
 
-    //TODO: test
     public Hotel findHotelByCity(String city) throws Exception {
         checkIsUserAuthorized("findHotelByCity");
         return hotelService.findHotelByCity(city);
     }
 
-    //only admins
-    //TODO: test
+    /**only admins*/
     public void addHotel(Hotel hotel) throws Exception {
         checkIsUserAuthorized("addHotel");
         checkUserRights();
         hotelService.addHotel(hotel);
     }
 
-    //only admins
-    //TODO: test
+    /**only admins*/
     public void deleteHotel(long hotelId) throws Exception {
         checkIsUserAuthorized("deleteHotel");
         checkUserRights();
