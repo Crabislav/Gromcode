@@ -12,7 +12,7 @@ import lesson36.model.enums.UserType;
 import java.io.IOException;
 import java.util.Date;
 
-public class Demo {
+public class DemoUtils {
     private static RoomController roomController;
     private static HotelController hotelController;
     private static UserController userController;
@@ -24,8 +24,8 @@ public class Demo {
     private static Hotel hotel1 = new Hotel("hotel1", "UA", "ZP", "street1");
     private static Hotel hotel2 = new Hotel("hotel2", "RU", "Mosc", "street2");
 
-    private static Room room1 = new Room(5, 25d, true, true, new Date(), hotel1);
-    private static Room room2 = new Room(5, 20d, false, false, new Date(), hotel2);
+    private static Room room1 = new Room(5, 25d, true, true, new Date(172_800_000L), hotel1);
+    private static Room room2 = new Room(5, 20d, false, false, new Date(172_800_000L), hotel2);
 
     static {
         try {
@@ -67,6 +67,47 @@ public class Demo {
             userController.deleteUser(user);
         } catch (Exception e) {
             System.err.println("Can't clean up test values");
+            e.printStackTrace();
+        }
+    }
+
+    static void deleteTestHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
+        try {
+            User admin = getAdmin();
+            userController.registerUser(admin);
+            userController.login(admin.getUserName(), admin.getPassword());
+            for (Hotel hotel : hotels) {
+                hotelController.deleteHotel(hotel.getId());
+            }
+            userController.logout();
+            userController.deleteUser(admin);
+        } catch (Exception e) {
+            System.err.println("Can't init hotels");
+            e.printStackTrace();
+        }
+    }
+
+
+
+    static void deleteTestRooms(UserController userController, RoomController roomController, Room[] rooms, User userBefore, boolean doUserLogin) {
+        try {
+            if (doUserLogin) {
+                userController.logout();
+            }
+
+            User admin = getAdmin();
+            userController.registerUser(admin);
+            userController.login(admin.getUserName(), admin.getPassword());
+            roomController.deleteRoom(rooms[0].getId());
+            roomController.deleteRoom(rooms[1].getId());
+            userController.logout();
+            userController.deleteUser(admin);
+
+            if (doUserLogin) {
+                userController.login(userBefore.getUserName(), userBefore.getPassword());
+            }
+        } catch (Exception e) {
+            System.err.println("Can't delete test rooms");
             e.printStackTrace();
         }
     }
