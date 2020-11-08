@@ -17,13 +17,13 @@ public class DemoHotel {
             User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
 
             //method usage without registration - throws exception +
-//            complexTest(hotelController, hotel, userController, admin, false, false);
+            complexTest(hotelController, hotel, userController, admin, false, false);
 
             ///no access rights
-//            complexTest(hotelController, hotel, userController, user, true, true);
+//            complexTest(hotelController, hotel, userController, user, true, false);
 
             //all good
-            complexTest(hotelController, hotel, userController, admin, true, true);
+//            complexTest(hotelController, hotel, userController, admin, true, true);
 
             //delete an existing hotel at DB - already tested at complexTest +
             //findHotelByCity +
@@ -35,10 +35,10 @@ public class DemoHotel {
     }
 
     //tests for: users access rights, addHotel, deleteHotel, findHotelByCity, findHotelByName
-    //boolean doUserRegistration - to test method executing without user registration
-    //boolean forceAddHotel - for testing methods that are only for UserType.USER;
-    //if forceAddHotel true - doUserRegistration must be also true
-    private static void complexTest(HotelController hotelController, Hotel hotel, UserController userController, User user, boolean doUserRegistration, boolean forceAddHotel) throws Exception {
+    //if false - it will test methods without user registration and login
+    //if true -
+    private static void complexTest(HotelController hotelController, Hotel hotel, UserController userController, User user,
+                                    boolean doUserRegistration, boolean doUserLogin) {
         boolean res1;
         boolean res2;
 
@@ -46,53 +46,88 @@ public class DemoHotel {
 
         //user init
         if (doUserRegistration) {
-            userController.registerUser(user);
-            userController.login(user.getUserName(), user.getPassword());
+            TestUtils.registerAnUser(userController, user, doUserLogin);
         }
 
         //access rights tests - methods must be executed only by admins
-        res1 = addHotel(hotelController, hotel);
-        System.out.println("addHotel results : " + res1);
-        res2 = deleteHotel(hotelController, hotel);
-        System.out.println("deleteHotel results : " + res1);
-        System.out.println("access rights results : " + (res1 && res2));
+        testAccessRightsAddAndDeleteHotel(hotelController, hotel);
 
-        if (forceAddHotel) {
-            userController.logout();
-            userController.registerUser(admin);
-            userController.login(admin.getUserName(), admin.getPassword());
-            addHotel(hotelController, hotel);
-            userController.logout();
-            userController.deleteUser(admin);
-            userController.login(user.getUserName(), user.getPassword());
-        }
+        //findBy tests
+        initTestHotel(hotelController, hotel, userController, user, doUserLogin);
 
-        //findHotelByName tests
+        //findHotelByName test
         res1 = findHotelByName(hotelController, hotel.getName());
         res2 = findHotelByName(hotelController, hotel.getName() + "asdsad");
         System.out.println("findHotelByName results : " + (res1 && !res2));
 
-        //findHotelByCity tests
+        //findHotelByCity test
         res1 = findHotelByCity(hotelController, hotel.getCity());
         res2 = findHotelByCity(hotelController, hotel.getCity() + "asdasd");
         System.out.println("findHotelByCity results : " + (res1 && !res2));
 
-        //cleaning up test values
-        if (forceAddHotel) {
-            userController.logout();
+        deleteTestHotel(hotelController, hotel, userController, user, doUserLogin);
+
+        //deleting user test values
+        if (doUserRegistration) {
+            TestUtils.deleteTestUser(userController, user, doUserLogin);
+        }
+    }
+
+    private static void initTestHotel(HotelController hotelController, Hotel hotel, UserController userController, User userBefore, boolean doUserLogin) {
+        try {
+            if (doUserLogin) {
+                userController.logout();
+            }
+
+            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
-            deleteHotel(hotelController, hotel);
+            hotelController.addHotel(hotel);
             userController.logout();
             userController.deleteUser(admin);
-            userController.login(user.getUserName(), user.getPassword());
+
+            if (doUserLogin) {
+                userController.login(userBefore.getUserName(), userBefore.getPassword());
+            }
+        } catch (Exception e) {
+            System.err.println("Can't init test hotels");
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteTestHotel(HotelController hotelController, Hotel hotel, UserController userController, User userBefore, boolean doUserLogin) {
+        try {
+            if (doUserLogin) {
+                userController.logout();
+            }
+            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            userController.registerUser(admin);
+            userController.login(admin.getUserName(), admin.getPassword());
+            hotelController.deleteHotel(hotel.getId());
+            userController.logout();
+            userController.deleteUser(admin);
+
+        } catch (Exception e) {
+            System.err.println("Can't delete test hotels");
+            e.printStackTrace();
+        }
+    }
+
+    private static void testAccessRightsAddAndDeleteHotel(HotelController hotelController, Hotel hotel) {
+        boolean res1 = addHotel(hotelController, hotel);
+        System.out.println("addHotel results : " + res1);
+
+        boolean res2;
+
+        try {
+            res2 = deleteHotel(hotelController, hotel.getId());
+        } catch (NullPointerException e) {
+            res2 = true;
         }
 
-        //cleaning up test values
-        if (doUserRegistration) {
-            userController.logout();
-            userController.deleteUser(user);
-        }
+        System.out.println("deleteHotel results : " + res1);
+
+        System.out.println("access rights results : " + (res1 && res2));
     }
 
     private static boolean addHotel(HotelController hotelController, Hotel hotel) {
@@ -105,13 +140,14 @@ public class DemoHotel {
         return true;
     }
 
-    private static boolean deleteHotel(HotelController hotelController, Hotel hotel) throws Exception {
+    private static boolean deleteHotel(HotelController hotelController, long id) {
         try {
-            hotelController.deleteHotel(hotel.getId());
-        } catch (NullPointerException e) {
+            hotelController.deleteHotel(id);
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+
         return true;
     }
 
@@ -134,4 +170,5 @@ public class DemoHotel {
         }
         return true;
     }
+
 }

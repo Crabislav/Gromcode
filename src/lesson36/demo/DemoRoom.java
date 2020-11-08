@@ -30,7 +30,7 @@ public class DemoRoom {
 
             Room[] rooms = {room1, room2};
 
-            initHotels(hotelController, userController, admin, hotels);
+            initHotels(hotelController, userController, hotels);
 
             Filter filter = new FilterBuilder().setNumberOfGuests(5)
                     .setPrice(20d)
@@ -42,15 +42,16 @@ public class DemoRoom {
 
 //            complexTest(userController, user, roomController, rooms, filter, true, true);
 
-            deleteTestHotels(hotelController, userController, admin, hotels);
+            deleteTestHotels(hotelController, userController, hotels);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void deleteTestHotels(HotelController hotelController, UserController userController, User admin, Hotel[] hotels) {
+    private static void deleteTestHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
         try {
+            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             for (Hotel hotel : hotels) {
@@ -64,8 +65,9 @@ public class DemoRoom {
         }
     }
 
-    private static void initHotels(HotelController hotelController, UserController userController, User admin, Hotel[] hotels) {
+    private static void initHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
         try {
+            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             for (Hotel hotel : hotels) {
@@ -79,9 +81,10 @@ public class DemoRoom {
         }
     }
 
-    private static void complexTest(UserController userController, User user, RoomController roomController, Room[] rooms, Filter filter, boolean doUserRegistration, boolean doUserLogin) {
+    private static void complexTest(UserController userController, User user, RoomController roomController, Room[] rooms,
+                                    Filter filter, boolean doUserRegistration, boolean doUserLogin) {
         if (doUserRegistration) {
-            registerAnUser(userController, user, doUserLogin);
+            TestUtils.registerAnUser(userController, user, doUserLogin);
         }
 
         testAccessRightsAddAndDeleteRooms(roomController, rooms);
@@ -92,28 +95,7 @@ public class DemoRoom {
         deleteTestRooms(userController, roomController, rooms, user, doUserLogin);
 
         if (doUserRegistration) {
-            deleteTestUser(userController, user, doUserLogin);
-        }
-    }
-
-    private static void registerAnUser(UserController userController, User user, boolean doUserLogin) {
-        try {
-            userController.registerUser(user);
-            if (doUserLogin) {
-                doUserLogin(userController, user);
-            }
-        } catch (Exception e) {
-            System.err.println("Can't register an user");
-            e.printStackTrace();
-        }
-    }
-
-    private static void doUserLogin(UserController userController, User user) {
-        try {
-            userController.login(user.getUserName(), user.getPassword());
-        } catch (Exception e) {
-            System.err.println("Can't login user");
-            e.printStackTrace();
+            TestUtils.deleteTestUser(userController, user, doUserLogin);
         }
     }
 
@@ -159,18 +141,6 @@ public class DemoRoom {
             }
         } catch (Exception e) {
             System.err.println("Can't delete test rooms");
-            e.printStackTrace();
-        }
-    }
-
-    private static void deleteTestUser(UserController userController, User user, boolean doUserLogin) {
-        try {
-            if (doUserLogin) {
-                userController.logout();
-            }
-            userController.deleteUser(user);
-        } catch (Exception e) {
-            System.err.println("Can't clean up test values");
             e.printStackTrace();
         }
     }
