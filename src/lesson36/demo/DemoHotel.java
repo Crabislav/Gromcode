@@ -2,15 +2,9 @@ package lesson36.demo;
 
 import lesson36.controller.HotelController;
 import lesson36.controller.UserController;
-import lesson36.exceptions.BadRequestException;
 import lesson36.model.Hotel;
 import lesson36.model.User;
 import lesson36.model.enums.UserType;
-
-import java.lang.reflect.Method;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 
 public class DemoHotel {
     public static void main(String[] args) {
