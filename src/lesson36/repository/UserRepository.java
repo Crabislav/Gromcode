@@ -21,7 +21,7 @@ public class UserRepository extends Repository<User> {
         String country = objValues[3];
         UserType userType = UserType.valueOf(objValues[4]);
 
-        return new User(id, userName, password, country, userType);
+        return User.newMappedInstance(id, userName, password, country, userType);
     }
 
     @Override

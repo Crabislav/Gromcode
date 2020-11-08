@@ -1,6 +1,5 @@
 package lesson36.repository;
 
-import lesson36.exceptions.BadRequestException;
 import lesson36.model.Hotel;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class HotelRepository extends Repository<Hotel> {
         String city = objValues[3];
         String street = objValues[4];
 
-        return new Hotel(id, name, country, city, street);
+        return Hotel.newMappedInstance(id, name, country, city, street);
     }
 
     @Override
