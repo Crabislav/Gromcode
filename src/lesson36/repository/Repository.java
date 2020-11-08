@@ -76,7 +76,7 @@ public abstract class Repository<T extends Entity> {
         StringBuilder content = RepositoryUtils.readFromFile(path);
 
         if (content.toString().isEmpty()) {
-            throw new EmptyRepositoryException(methodName + ": Can't get object values from empty repository");
+            return new ArrayList<>();
         }
 
         //result array

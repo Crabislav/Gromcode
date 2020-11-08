@@ -28,7 +28,7 @@ public class RoomRepository extends Repository<Room> {
                 .parse(objValues[5]);
         Hotel hotel = hotelRepository.findObjById(Long.parseLong(objValues[6]));
 
-        return Room.newMappedInstance(id, numberOfGuests, price, breakfastIncluded, petsAllowed, dateAvailableFrom, hotel);
+        return new Room(id, numberOfGuests, price, breakfastIncluded, petsAllowed, dateAvailableFrom, hotel);
     }
 
     @Override
