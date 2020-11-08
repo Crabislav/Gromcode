@@ -3,7 +3,7 @@ package lesson36.model;
 import java.util.Date;
 
 public class Room extends Entity {
-    private Long id;
+    private Long id; //6
     private Integer numberOfGuests;
     private Double price;
     private Boolean breakfastIncluded;
@@ -22,7 +22,7 @@ public class Room extends Entity {
     }
 
     //used for mapping
-    private Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
+    public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
         this.id = id;
         this.numberOfGuests = numberOfGuests;
         this.price = price;
@@ -31,11 +31,6 @@ public class Room extends Entity {
         this.dateAvailableFrom = dateAvailableFrom;
         this.hotel = hotel;
     }
-
-    public static Room newMappedInstance(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
-        return new Room(id, numberOfGuests, price, breakfastIncluded, petsAllowed, dateAvailableFrom, hotel);
-    }
-
 
     @Override
     public Long getId() {

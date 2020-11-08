@@ -20,17 +20,13 @@ public class Order extends Entity {
     }
 
     //used for mapping
-    private Order(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
+    public Order(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
         this.id = id;
         this.user = user;
         this.room = room;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.moneyPaid = moneyPaid;
-    }
-
-    public static Order newMappedInstance(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
-        return new Order(id, user, room, dateFrom, dateTo, moneyPaid);
     }
 
     @Override
@@ -51,6 +47,10 @@ public class Order extends Entity {
         return room;
     }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     public Date getDateFrom() {
         return dateFrom;
     }
@@ -62,6 +62,8 @@ public class Order extends Entity {
     public Double getMoneyPaid() {
         return moneyPaid;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -90,8 +92,8 @@ public class Order extends Entity {
     @Override
     public String toString() {
         return id + ", " +
-                user + ", " +
-                room + ", " +
+                user.getId() + ", " +
+                room.getId() + ", " +
                 dateFrom.toString() + ", " +
                 dateTo.toString() + ", " +
                 moneyPaid;

@@ -16,16 +16,12 @@ public class Hotel extends Entity {
     }
 
     //used for mapping
-    private Hotel(Long id, String name, String country, String city, String street) {
+    public Hotel(Long id, String name, String country, String city, String street) {
         this.id = id;
         this.name = name;
         this.country = country;
         this.city = city;
         this.street = street;
-    }
-
-    public static Hotel newMappedInstance(Long id, String name, String country, String city, String street) {
-        return new Hotel(id, name, country, city, street);
     }
 
     @Override

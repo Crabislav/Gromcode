@@ -18,16 +18,12 @@ public class User extends Entity {
     }
 
     //used for mapping
-    private User(Long id, String userName, String password, String country, UserType userType) {
+    public User(Long id, String userName, String password, String country, UserType userType) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.country = country;
         this.userType = userType;
-    }
-
-    public static User newMappedInstance(Long id, String userName, String password, String country, UserType userType) {
-        return new User(id, userName, password, country, userType);
     }
 
     @Override
