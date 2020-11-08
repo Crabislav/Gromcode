@@ -1,7 +1,8 @@
 package lesson36.service;
 
 import lesson36.exceptions.BadRequestException;
-import lesson36.model.Filter;
+import lesson36.exceptions.EmptyRepositoryException;
+import lesson36.model.filter.Filter;
 import lesson36.model.Order;
 import lesson36.model.Room;
 import lesson36.repository.OrderRepository;
@@ -63,11 +64,18 @@ public class RoomService {
 
         //delete room:
         //if room is used at order - throw new Exception
-        ArrayList<Order> allOrders = orderRepository.getAllObjects();
-        for (Order order : allOrders) {
-            if (order.getRoom().equals(room)) {
-                throw new BadRequestException(methodName + ": can't delete already booked room");
+        try {
+            ArrayList<Order> allOrders = orderRepository.getAllObjects();
+            for (Order order : allOrders) {
+                if (order.getRoom().equals(room)) {
+                    throw new BadRequestException(methodName + ": can't delete already booked room");
+                }
             }
+        }
+        //if catches EmptyRepositoryException - there are no orders at repository
+        catch (EmptyRepositoryException e) {
+            roomRepository.remove(room);
+            return;
         }
 
         //if room wasn't used at order - delete it
