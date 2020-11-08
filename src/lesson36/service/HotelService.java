@@ -3,11 +3,13 @@ package lesson36.service;
 import lesson36.exceptions.BadRequestException;
 import lesson36.model.Hotel;
 import lesson36.repository.HotelRepository;
+import lesson36.repository.RoomRepository;
 
 import java.io.IOException;
 
 public class HotelService {
     private HotelRepository hotelRepository = new HotelRepository();
+    private RoomRepository roomRepository = new RoomRepository();
 
     public HotelService() throws IOException {
     }

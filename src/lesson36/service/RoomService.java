@@ -1,7 +1,6 @@
 package lesson36.service;
 
 import lesson36.exceptions.BadRequestException;
-import lesson36.exceptions.EmptyRepositoryException;
 import lesson36.model.filter.Filter;
 import lesson36.model.Order;
 import lesson36.model.Room;
@@ -22,10 +21,6 @@ public class RoomService {
 
     public List<Room> findRooms(Filter filter) throws Exception {
         ArrayList<Room> filteredRooms = roomRepository.getAllObjects();
-
-        if (filteredRooms == null) {
-            throw new BadRequestException("Can't find rooms among empty room repository");
-        }
 
         //Room's fields
         roomFilter.filterByBreakfast(filter.getBreakfastIncluded(), filteredRooms);
@@ -62,20 +57,13 @@ public class RoomService {
             throw new BadRequestException(methodName + ": Room (id=" + roomId + ") wasn't found");
         }
 
+
         //delete room:
         //if room is used at order - throw new Exception
-        try {
-            ArrayList<Order> allOrders = orderRepository.getAllObjects();
-            for (Order order : allOrders) {
-                if (order.getRoom().equals(room)) {
-                    throw new BadRequestException(methodName + ": can't delete already booked room");
-                }
+        for (Order order : orderRepository.getAllObjects()) {
+            if (order.getRoom().equals(room)) {
+                throw new BadRequestException(methodName + ": can't delete already booked room");
             }
-        }
-        //if catches EmptyRepositoryException - there are no orders at repository
-        catch (EmptyRepositoryException e) {
-            roomRepository.remove(room);
-            return;
         }
 
         //if room wasn't used at order - delete it

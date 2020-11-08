@@ -6,7 +6,6 @@ import lesson36.model.User;
 import lesson36.repository.UserRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 //business layer
 public class UserService {
@@ -29,8 +28,7 @@ public class UserService {
 
         User userToLogin = null;
         //finds a user at users repository
-        ArrayList<User> allUsers = userRepository.getAllObjects();
-        for (User user : allUsers) {
+        for (User user : userRepository.getAllObjects()) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 userToLogin = user;
                 break;
