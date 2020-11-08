@@ -1,6 +1,7 @@
 package lesson36.repository;
 
 import lesson36.exceptions.BadRequestException;
+import lesson36.exceptions.EmptyRepositoryException;
 import lesson36.model.Entity;
 
 import java.io.FileNotFoundException;
@@ -75,7 +76,7 @@ public abstract class Repository<T extends Entity> {
         StringBuilder content = RepositoryUtils.readFromFile(path);
 
         if (content.toString().isEmpty()) {
-            throw new BadRequestException(methodName + ": Can't get object values from empty repository");
+            throw new EmptyRepositoryException(methodName + ": Can't get object values from empty repository");
         }
 
         //result array
