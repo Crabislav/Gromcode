@@ -1,19 +1,20 @@
 package lesson36.demo;
 
+import gromcode.main.lesson8.phonesexample.Demo;
 import lesson36.controller.HotelController;
 import lesson36.controller.UserController;
 import lesson36.model.Hotel;
 import lesson36.model.User;
 
-public class DemoHotel extends Demo {
+public class DemoHotel {
     public static void main(String[] args) {
         try {
-            HotelController hotelController = Demo.getHotelController();
-            Hotel hotel = getHotel1();
+            HotelController hotelController = DemoUtils.getHotelController();
+            Hotel hotel = DemoUtils.getHotel1();
 
             UserController userController = new UserController();
-            User user = getUser();
-            User admin = getAdmin();
+            User user = DemoUtils.getUser();
+            User admin = DemoUtils.getAdmin();
 
             //method usage without registration - throws exception +
             complexTest(hotelController, hotel, userController, admin, false, false);
@@ -43,7 +44,7 @@ public class DemoHotel extends Demo {
 
         //user init
         if (doUserRegistration) {
-            Demo.registerAnUser(userController, user, doUserLogin);
+            DemoUtils.registerAnUser(userController, user, doUserLogin);
         }
 
         //access rights tests - methods must be executed only by admins
@@ -66,7 +67,7 @@ public class DemoHotel extends Demo {
 
         //deleting user test values
         if (doUserRegistration) {
-            Demo.deleteTestUser(userController, user, doUserLogin);
+            DemoUtils.deleteTestUser(userController, user, doUserLogin);
         }
     }
 
@@ -76,7 +77,7 @@ public class DemoHotel extends Demo {
                 userController.logout();
             }
 
-            User admin = getAdmin();
+            User admin = DemoUtils.getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             hotelController.addHotel(hotel);
@@ -97,7 +98,7 @@ public class DemoHotel extends Demo {
             if (doUserLogin) {
                 userController.logout();
             }
-            User admin = getAdmin();
+            User admin = DemoUtils.getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             hotelController.deleteHotel(hotel.getId());

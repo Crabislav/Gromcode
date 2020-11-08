@@ -1,5 +1,6 @@
 package lesson36.demo;
 
+import gromcode.main.lesson24.firstexample.Demo;
 import lesson36.controller.HotelController;
 import lesson36.controller.RoomController;
 import lesson36.controller.UserController;
@@ -9,67 +10,35 @@ import lesson36.model.filter.FilterBuilder;
 
 import java.util.ArrayList;
 
-public class DemoRoom extends Demo {
+public class DemoRoom {
     public static void main(String[] args) {
         try {
-            RoomController roomController = getRoomController();
-            HotelController hotelController = getHotelController();
-            UserController userController = getUserController();
+            RoomController roomController = DemoUtils.getRoomController();
+            HotelController hotelController = DemoUtils.getHotelController();
+            UserController userController = DemoUtils.getUserController();
 
-            User user = getUser();
-            User admin = getAdmin();
+            User user = DemoUtils.getUser();
+            User admin = DemoUtils.getAdmin();
 
-            Hotel[] hotels = {getHotel1(), getHotel2()};
+            Hotel[] hotels = {DemoUtils.getHotel1(), DemoUtils.getHotel2()};
 
-            Room[] rooms = {getRoom1(), getRoom2()};
+            Room[] rooms = {DemoUtils.getRoom1(), DemoUtils.getRoom2()};
 
-            initHotels(hotelController, userController, hotels);
+            initTestHotels(hotelController, userController, hotels);
 
             Filter filter = new FilterBuilder().setNumberOfGuests(5)
                     .setPrice(20d)
                     .createFilter();
 
-            complexTest(userController, admin, roomController, rooms, filter, false, false);
+//            complexTest(userController, admin, roomController, rooms, filter, false, false);
 
 //            complexTest(userController, user, roomController, rooms, filter, true, false);
 
 //            complexTest(userController, user, roomController, rooms, filter, true, true);
 
-            deleteTestHotels(hotelController, userController, hotels);
+            DemoUtils.deleteTestHotels(hotelController, userController, hotels);
 
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void deleteTestHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
-        try {
-            User admin = getAdmin();
-            userController.registerUser(admin);
-            userController.login(admin.getUserName(), admin.getPassword());
-            for (Hotel hotel : hotels) {
-                hotelController.deleteHotel(hotel.getId());
-            }
-            userController.logout();
-            userController.deleteUser(admin);
-        } catch (Exception e) {
-            System.err.println("Can't init hotels");
-            e.printStackTrace();
-        }
-    }
-
-    private static void initHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
-        try {
-            User admin = getAdmin();
-            userController.registerUser(admin);
-            userController.login(admin.getUserName(), admin.getPassword());
-            for (Hotel hotel : hotels) {
-                hotelController.addHotel(hotel);
-            }
-            userController.logout();
-            userController.deleteUser(admin);
-        } catch (Exception e) {
-            System.err.println("Can't init hotels");
             e.printStackTrace();
         }
     }
@@ -77,7 +46,7 @@ public class DemoRoom extends Demo {
     private static void complexTest(UserController userController, User user, RoomController roomController, Room[] rooms,
                                     Filter filter, boolean doUserRegistration, boolean doUserLogin) {
         if (doUserRegistration) {
-            Demo.registerAnUser(userController, user, doUserLogin);
+            DemoUtils.registerAnUser(userController, user, doUserLogin);
         }
 
         testAccessRightsAddAndDeleteRooms(roomController, rooms);
@@ -85,56 +54,10 @@ public class DemoRoom extends Demo {
         //findRooms
         initTestRooms(userController, roomController, rooms, user, doUserLogin);
         System.out.println("findRooms results : " + findRooms(roomController, filter));
-        deleteTestRooms(userController, roomController, rooms, user, doUserLogin);
+        DemoUtils.deleteTestRooms(userController, roomController, rooms, user, doUserLogin);
 
         if (doUserRegistration) {
-            Demo.deleteTestUser(userController, user, doUserLogin);
-        }
-    }
-
-    private static void initTestRooms(UserController userController, RoomController roomController, Room[] rooms, User userBefore, boolean doUserLogin) {
-        try {
-            if (doUserLogin) {
-                userController.logout();
-            }
-
-            User admin = getAdmin();
-            userController.registerUser(admin);
-            userController.login(admin.getUserName(), admin.getPassword());
-            roomController.addRoom(rooms[0]);
-            roomController.addRoom(rooms[1]);
-            userController.logout();
-            userController.deleteUser(admin);
-
-            if (doUserLogin) {
-                userController.login(userBefore.getUserName(), userBefore.getPassword());
-            }
-        } catch (Exception e) {
-            System.err.println("Can't init test rooms");
-            e.printStackTrace();
-        }
-    }
-
-    private static void deleteTestRooms(UserController userController, RoomController roomController, Room[] rooms, User userBefore, boolean doUserLogin) {
-        try {
-            if (doUserLogin) {
-                userController.logout();
-            }
-
-            User admin = getAdmin();
-            userController.registerUser(admin);
-            userController.login(admin.getUserName(), admin.getPassword());
-            roomController.deleteRoom(rooms[0].getId());
-            roomController.deleteRoom(rooms[1].getId());
-            userController.logout();
-            userController.deleteUser(admin);
-
-            if (doUserLogin) {
-                userController.login(userBefore.getUserName(), userBefore.getPassword());
-            }
-        } catch (Exception e) {
-            System.err.println("Can't delete test rooms");
-            e.printStackTrace();
+            DemoUtils.deleteTestUser(userController, user, doUserLogin);
         }
     }
 
@@ -200,4 +123,42 @@ public class DemoRoom extends Demo {
         return true;
     }
 
+    static void initTestRooms(UserController userController, RoomController roomController, Room[] rooms, User userBefore, boolean doUserLogin) {
+        try {
+            if (doUserLogin) {
+                userController.logout();
+            }
+
+            User admin = DemoUtils.getAdmin();
+            userController.registerUser(admin);
+            userController.login(admin.getUserName(), admin.getPassword());
+            roomController.addRoom(rooms[0]);
+            roomController.addRoom(rooms[1]);
+            userController.logout();
+            userController.deleteUser(admin);
+
+            if (doUserLogin) {
+                userController.login(userBefore.getUserName(), userBefore.getPassword());
+            }
+        } catch (Exception e) {
+            System.err.println("Can't init test rooms");
+            e.printStackTrace();
+        }
+    }
+
+    static void initTestHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
+        try {
+            User admin = DemoUtils.getAdmin();
+            userController.registerUser(admin);
+            userController.login(admin.getUserName(), admin.getPassword());
+            for (Hotel hotel : hotels) {
+                hotelController.addHotel(hotel);
+            }
+            userController.logout();
+            userController.deleteUser(admin);
+        } catch (Exception e) {
+            System.err.println("Can't init hotels");
+            e.printStackTrace();
+        }
+    }
 }
