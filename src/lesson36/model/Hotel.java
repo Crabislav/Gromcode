@@ -16,7 +16,7 @@ public class Hotel extends Entity {
     }
 
     //used for mapping
-    public Hotel(Long id, String name, String country, String city, String street) {
+    private Hotel(Long id, String name, String country, String city, String street) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -24,6 +24,9 @@ public class Hotel extends Entity {
         this.street = street;
     }
 
+    public static Hotel newMappedInstance(Long id, String name, String country, String city, String street) {
+        return new Hotel(id, name, country, city, street);
+    }
 
     @Override
     public Long getId() {
@@ -58,7 +61,6 @@ public class Hotel extends Entity {
 
         Hotel hotel = (Hotel) o;
 
-        if (!id.equals(hotel.id)) return false;
         if (!name.equals(hotel.name)) return false;
         if (!country.equals(hotel.country)) return false;
         if (!city.equals(hotel.city)) return false;
@@ -67,8 +69,7 @@ public class Hotel extends Entity {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = name.hashCode();
         result = 31 * result + country.hashCode();
         result = 31 * result + city.hashCode();
         result = 31 * result + street.hashCode();

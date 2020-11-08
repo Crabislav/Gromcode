@@ -20,13 +20,17 @@ public class Order extends Entity {
     }
 
     //used for mapping
-    public Order(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
+    private Order(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
         this.id = id;
         this.user = user;
         this.room = room;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.moneyPaid = moneyPaid;
+    }
+
+    public static Order newMappedInstance(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
+        return new Order(id, user, room, dateFrom, dateTo, moneyPaid);
     }
 
     @Override
@@ -66,7 +70,6 @@ public class Order extends Entity {
 
         Order order = (Order) o;
 
-        if (!id.equals(order.id)) return false;
         if (!user.equals(order.user)) return false;
         if (!room.equals(order.room)) return false;
         if (!dateFrom.equals(order.dateFrom)) return false;
@@ -76,8 +79,7 @@ public class Order extends Entity {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + user.hashCode();
+        int result = user.hashCode();
         result = 31 * result + room.hashCode();
         result = 31 * result + dateFrom.hashCode();
         result = 31 * result + dateTo.hashCode();

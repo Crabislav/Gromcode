@@ -22,7 +22,7 @@ public class Room extends Entity {
     }
 
     //used for mapping
-    public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
+    private Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
         this.id = id;
         this.numberOfGuests = numberOfGuests;
         this.price = price;
@@ -31,6 +31,11 @@ public class Room extends Entity {
         this.dateAvailableFrom = dateAvailableFrom;
         this.hotel = hotel;
     }
+
+    public static Room newMappedInstance(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
+        return new Room(id, numberOfGuests, price, breakfastIncluded, petsAllowed, dateAvailableFrom, hotel);
+    }
+
 
     @Override
     public Long getId() {
@@ -77,7 +82,6 @@ public class Room extends Entity {
 
         Room room = (Room) o;
 
-        if (!id.equals(room.id)) return false;
         if (!numberOfGuests.equals(room.numberOfGuests)) return false;
         if (!price.equals(room.price)) return false;
         if (!breakfastIncluded.equals(room.breakfastIncluded)) return false;
@@ -88,8 +92,7 @@ public class Room extends Entity {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + numberOfGuests.hashCode();
+        int result = numberOfGuests.hashCode();
         result = 31 * result + price.hashCode();
         result = 31 * result + breakfastIncluded.hashCode();
         result = 31 * result + petsAllowed.hashCode();

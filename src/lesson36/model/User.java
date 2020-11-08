@@ -18,12 +18,16 @@ public class User extends Entity {
     }
 
     //used for mapping
-    public User(Long id, String userName, String password, String country, UserType userType) {
+    private User(Long id, String userName, String password, String country, UserType userType) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.country = country;
         this.userType = userType;
+    }
+
+    public static User newMappedInstance(Long id, String userName, String password, String country, UserType userType) {
+        return new User(id, userName, password, country, userType);
     }
 
     @Override
@@ -59,20 +63,18 @@ public class User extends Entity {
 
         User user = (User) o;
 
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (country != null ? !country.equals(user.country) : user.country != null) return false;
+        if (!userName.equals(user.userName)) return false;
+        if (!password.equals(user.password)) return false;
+        if (!country.equals(user.country)) return false;
         return userType == user.userType;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (userType != null ? userType.hashCode() : 0);
+        int result = userName.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + country.hashCode();
+        result = 31 * result + userType.hashCode();
         return result;
     }
 
