@@ -4,31 +4,24 @@ import lesson36.controller.HotelController;
 import lesson36.controller.RoomController;
 import lesson36.controller.UserController;
 import lesson36.model.*;
-import lesson36.model.enums.UserType;
 import lesson36.model.filter.Filter;
 import lesson36.model.filter.FilterBuilder;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class DemoRoom {
+public class DemoRoom extends Demo {
     public static void main(String[] args) {
         try {
-            RoomController roomController = new RoomController();
-            HotelController hotelController = new HotelController();
-            UserController userController = new UserController();
+            RoomController roomController = getRoomController();
+            HotelController hotelController = getHotelController();
+            UserController userController = getUserController();
 
-            User user = new User("User", "user", "UA", UserType.USER);
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User user = getUser();
+            User admin = getAdmin();
 
-            Hotel hotel1 = new Hotel("hotel1", "UA", "ZP", "street1");
-            Hotel hotel2 = new Hotel("hotel2", "RU", "Mosc", "street2");
-            Hotel[] hotels = {hotel1, hotel2};
+            Hotel[] hotels = {getHotel1(), getHotel2()};
 
-            Room room1 = new Room(5, 25d, true, true, new Date(), hotel1);
-            Room room2 = new Room(5, 20d, false, false, new Date(), hotel2);
-
-            Room[] rooms = {room1, room2};
+            Room[] rooms = {getRoom1(), getRoom2()};
 
             initHotels(hotelController, userController, hotels);
 
@@ -51,7 +44,7 @@ public class DemoRoom {
 
     private static void deleteTestHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
         try {
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User admin = getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             for (Hotel hotel : hotels) {
@@ -67,7 +60,7 @@ public class DemoRoom {
 
     private static void initHotels(HotelController hotelController, UserController userController, Hotel[] hotels) {
         try {
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User admin = getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             for (Hotel hotel : hotels) {
@@ -84,7 +77,7 @@ public class DemoRoom {
     private static void complexTest(UserController userController, User user, RoomController roomController, Room[] rooms,
                                     Filter filter, boolean doUserRegistration, boolean doUserLogin) {
         if (doUserRegistration) {
-            TestUtils.registerAnUser(userController, user, doUserLogin);
+            Demo.registerAnUser(userController, user, doUserLogin);
         }
 
         testAccessRightsAddAndDeleteRooms(roomController, rooms);
@@ -95,7 +88,7 @@ public class DemoRoom {
         deleteTestRooms(userController, roomController, rooms, user, doUserLogin);
 
         if (doUserRegistration) {
-            TestUtils.deleteTestUser(userController, user, doUserLogin);
+            Demo.deleteTestUser(userController, user, doUserLogin);
         }
     }
 
@@ -105,7 +98,7 @@ public class DemoRoom {
                 userController.logout();
             }
 
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User admin = getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             roomController.addRoom(rooms[0]);
@@ -128,7 +121,7 @@ public class DemoRoom {
                 userController.logout();
             }
 
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User admin = getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             roomController.deleteRoom(rooms[0].getId());
@@ -168,7 +161,6 @@ public class DemoRoom {
     }
 
     private static boolean findRooms(RoomController roomController, Filter filter) {
-
         try {
             ArrayList<Room> rooms = (ArrayList<Room>) roomController.findRooms(filter);
 
@@ -207,4 +199,5 @@ public class DemoRoom {
         }
         return true;
     }
+
 }

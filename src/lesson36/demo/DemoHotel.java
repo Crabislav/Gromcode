@@ -4,17 +4,16 @@ import lesson36.controller.HotelController;
 import lesson36.controller.UserController;
 import lesson36.model.Hotel;
 import lesson36.model.User;
-import lesson36.model.enums.UserType;
 
-public class DemoHotel {
+public class DemoHotel extends Demo {
     public static void main(String[] args) {
         try {
-            HotelController hotelController = new HotelController();
-            Hotel hotel = new Hotel("hotel1", "UA", "ZP", "street");
+            HotelController hotelController = Demo.getHotelController();
+            Hotel hotel = getHotel1();
 
             UserController userController = new UserController();
-            User user = new User("User", "user", "UA", UserType.USER);
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User user = getUser();
+            User admin = getAdmin();
 
             //method usage without registration - throws exception +
             complexTest(hotelController, hotel, userController, admin, false, false);
@@ -42,11 +41,9 @@ public class DemoHotel {
         boolean res1;
         boolean res2;
 
-        User admin = new User("testAdmin", "admin", "UA", UserType.ADMIN);
-
         //user init
         if (doUserRegistration) {
-            TestUtils.registerAnUser(userController, user, doUserLogin);
+            Demo.registerAnUser(userController, user, doUserLogin);
         }
 
         //access rights tests - methods must be executed only by admins
@@ -69,7 +66,7 @@ public class DemoHotel {
 
         //deleting user test values
         if (doUserRegistration) {
-            TestUtils.deleteTestUser(userController, user, doUserLogin);
+            Demo.deleteTestUser(userController, user, doUserLogin);
         }
     }
 
@@ -79,7 +76,7 @@ public class DemoHotel {
                 userController.logout();
             }
 
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User admin = getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             hotelController.addHotel(hotel);
@@ -100,7 +97,7 @@ public class DemoHotel {
             if (doUserLogin) {
                 userController.logout();
             }
-            User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
+            User admin = getAdmin();
             userController.registerUser(admin);
             userController.login(admin.getUserName(), admin.getPassword());
             hotelController.deleteHotel(hotel.getId());
