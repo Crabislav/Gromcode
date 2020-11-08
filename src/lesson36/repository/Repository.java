@@ -45,7 +45,7 @@ public abstract class Repository<T extends Entity> {
     public void remove(T t) throws Exception {
         //find an object at repository
         ArrayList<T> allObjects = getAllObjects();
-        if (!getAllObjects().contains(t)) {
+        if (!allObjects.contains(t)) {
             throw new BadRequestException("remove: Input object wasn't found");
         }
 
@@ -93,10 +93,11 @@ public abstract class Repository<T extends Entity> {
 
     //each entity has its own amount of fields,
     //so it must be overwritten at each repository class
-    abstract T getMappedObject(String[] objValues);
+    abstract T getMappedObject(String[] objValues) throws Exception;
 
     public T findObjById(long id) throws Exception {
-        for (T obj : getAllObjects()) {
+        ArrayList<T> allObjects = getAllObjects();
+        for (T obj : allObjects) {
             if (obj.getId() == id) {
                 return obj;
             }
