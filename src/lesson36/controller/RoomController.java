@@ -13,13 +13,11 @@ public class RoomController extends Controller {
     public RoomController() throws IOException {
     }
 
-    //TODO: test
     public List<Room> findRooms(Filter filter) throws Exception {
         checkIsUserAuthorized("findRooms");
         return roomService.findRooms(filter);
     }
 
-    //TODO: test
     /**only admins*/
     public void addRoom(Room room) throws Exception {
         checkIsUserAuthorized("addRoom");
@@ -27,7 +25,6 @@ public class RoomController extends Controller {
         roomService.addRoom(room);
     }
 
-    //TODO: test
     /**only admins*/
     public void deleteRoom(long roomId) throws Exception {
         checkIsUserAuthorized("deleteRoom");

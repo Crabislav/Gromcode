@@ -37,8 +37,8 @@ public class OrderService {
         if (!roomDateAvailableFrom.equals(dateFrom) || roomDateAvailableFrom.after(dateFrom)) {
             throw new BadRequestException(
                     "bookRoom: Room(id=" + room.getId() +
-                            "dateAvailableFrom=" + room.getDateAvailableFrom() +
-                            "hotel id=" + room.getHotel().getId() +
+                            ", dateAvailableFrom=" + room.getDateAvailableFrom() +
+                            ", hotel id=" + room.getHotel().getId() +
                             ")" +
                             "is not available now");
         }
@@ -62,31 +62,33 @@ public class OrderService {
         ServiceUtils.validateId(roomId);
         ServiceUtils.validateId(userId);
 
+        String methodName = "cancelReservation : ";
         //check up room existence
         Room room = roomRepository.findObjById(roomId);
         if (room == null) {
-            throw new BadRequestException("Room (id=" + roomId + ") wasn't found");
+            throw new BadRequestException(methodName + "Room (id=" + roomId + ") wasn't found");
         }
 
         //if room exists
         //check up user existence
         User user = userRepository.findObjById(userId);
         if (user == null) {
-            throw new BadRequestException("User with id=" + userId + ") wasn't found");
+            throw new BadRequestException(methodName + "User with id=" + userId + ") wasn't found");
         }
 
         //find an order
-        ArrayList<Order> allOrders = orderRepository.getAllObjects();
-        for (Order order : allOrders) {
+        for (Order order : orderRepository.getAllObjects()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) {
                 //cancel reservation
                 orderRepository.remove(order);
-                break;
+                //set room's dateAvailableFrom to new Date()
+                room.setDateAvailableFrom(new Date());
+//                order.setRoom(null);
+                return;
             }
         }
 
-        //set room's dateAvailableFrom to new Date()
-        room.setDateAvailableFrom(new Date());
+        throw new BadRequestException(methodName + ": order was not found");
     }
 
     private void validateDate(Date dateFrom, Date dateTo) throws IllegalArgumentException {
