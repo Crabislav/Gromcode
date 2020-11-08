@@ -33,6 +33,7 @@ public class UserService {
         for (User user : allUsers) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 userToLogin = user;
+                break;
             }
         }
 
