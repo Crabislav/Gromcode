@@ -1,46 +1,29 @@
 package lesson36.repository;
 
 import lesson36.exceptions.BadRequestException;
-import lesson36.exceptions.EmptyRepositoryException;
 import lesson36.model.Entity;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public abstract class Repository<T extends Entity> {
     private String path;
 
-    public T save(T t) throws IOException, BadRequestException {
-        if (t == null) {
-            throw new BadRequestException("save: input can't be null");
-        }
-
-        if (path == null) {
-            throw new BadRequestException("save: path can't be null");
-        }
-
-        //content to write;
-        StringBuilder content = new StringBuilder();
-
-        //creates a file if it doesn't exist
-        if (!RepositoryUtils.isFileExists(path)) {
-            RepositoryUtils.writeToFile(path, content, false);
-        }
-
-        //sets valid id to object
-        if (RepositoryUtils.isFileEmpty(path)) {
-            t.setId(1L);
-        } else {
-            t.setId(RepositoryUtils.getLastId(path) + 1L);
-        }
-
-        //sets proper content to write
-        content = new StringBuilder(t.toString());
-
-        RepositoryUtils.writeToFile(path, content, true);
+    public T save(T t) throws Exception {
+        t.setId(generateId());
+        RepositoryUtils.writeToFile(path, new StringBuilder(t.toString()), true);
         return t;
+    }
+
+    private Long generateId() throws Exception {
+        long id;
+
+        do {
+            id = (long) (Math.random() * 50_000_000);
+        } while (findObjById(id) != null);
+
+        return id;
     }
 
     public void remove(T t) throws Exception {
