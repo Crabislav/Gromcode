@@ -35,6 +35,7 @@ public abstract class Repository<T extends Entity> {
 
         //delete it
         allObjects.remove(t);
+
         //rewrite repos file
         StringBuilder content = new StringBuilder();
         for (T object : allObjects) {
@@ -50,18 +51,11 @@ public abstract class Repository<T extends Entity> {
 
     //maps info from file-db to objects
     public ArrayList<T> getAllObjects() throws Exception {
-        String methodName = "getAllObjects";
-
-        if (!RepositoryUtils.isFileExists(path)) {
-            throw new FileNotFoundException(methodName + ": Can't map from non-existent file " + path);
-        }
-
         StringBuilder content = RepositoryUtils.readFromFile(path);
 
-        if (content.toString().isEmpty()) {
+        if (content.length() == 0) {
             return new ArrayList<>();
         }
-
         //result array
         ArrayList<T> mappedObjects = new ArrayList<>();
 

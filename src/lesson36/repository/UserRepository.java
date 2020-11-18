@@ -3,6 +3,7 @@ package lesson36.repository;
 import lesson36.model.User;
 import lesson36.model.enums.UserType;
 
+import java.io.File;
 import java.io.IOException;
 
 //data access layer
@@ -10,7 +11,7 @@ public class UserRepository extends Repository<User> {
 
     public UserRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/UserDb.txt");
-        RepositoryUtils.createFileIfNotExists(getPath());
+        new File(getPath()).createNewFile();
     }
 
     @Override

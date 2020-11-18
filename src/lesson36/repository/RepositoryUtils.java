@@ -3,13 +3,6 @@ package lesson36.repository;
 import java.io.*;
 
 public class RepositoryUtils {
-
-    @SuppressWarnings("all")
-    static boolean isFileExists(String path) {
-        File file = new File(path);
-        return file.exists();
-    }
-
     static boolean isFileEmpty(String path) {
         File file = new File(path);
         return file.length() == 0;
@@ -46,11 +39,5 @@ public class RepositoryUtils {
             throw new IOException(methodName + ": Can't read file from" + path);
         }
         return content;
-    }
-
-    static void createFileIfNotExists(String path) throws IOException {
-        if (!RepositoryUtils.isFileExists(path)) {
-            RepositoryUtils.writeToFile(path, new StringBuilder(), false);
-        }
     }
 }

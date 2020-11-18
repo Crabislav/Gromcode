@@ -4,6 +4,7 @@ import lesson36.model.Order;
 import lesson36.model.Room;
 import lesson36.model.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,11 +13,10 @@ import java.util.Locale;
 public class OrderRepository extends Repository<Order> {
     private UserRepository userRepository = new UserRepository();
     private RoomRepository roomRepository = new RoomRepository();
-    private HotelRepository hotelRepository = new HotelRepository();
 
     public OrderRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/OrderDb.txt");
-        RepositoryUtils.createFileIfNotExists(getPath());
+        new File(getPath()).createNewFile();
     }
 
     @Override

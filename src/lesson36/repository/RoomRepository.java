@@ -3,6 +3,7 @@ package lesson36.repository;
 import lesson36.model.Hotel;
 import lesson36.model.Room;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +15,7 @@ public class RoomRepository extends Repository<Room> {
 
     public RoomRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/RoomDb.txt");
-        RepositoryUtils.createFileIfNotExists(getPath());
+        new File(getPath()).createNewFile();
     }
 
     @Override
