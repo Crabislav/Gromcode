@@ -15,30 +15,6 @@ public class RepositoryUtils {
         return file.length() == 0;
     }
 
-    static Long getLastId(String path) throws IOException {
-        long lastId;
-        String lastLine = "";
-        String methodName = "getLastId";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                lastLine = currentLine;
-            }
-            //first field - is always an id field
-            String idValue = lastLine.split(", ")[0];
-            lastId = Long.parseLong(idValue);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(methodName + ": Can't parse id value from " + lastLine);
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(methodName + ": File " + path + "doesn't exists");
-        } catch (IOException e) {
-            throw new IOException(methodName + ": Can't read file from" + path);
-        }
-
-        return lastId;
-    }
-
     static void writeToFile(String path, StringBuilder content, boolean append) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, append))) {
             if (isFileEmpty(path)) {
