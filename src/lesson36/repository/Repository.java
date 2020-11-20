@@ -3,16 +3,16 @@ package lesson36.repository;
 import lesson36.exceptions.BadRequestException;
 import lesson36.model.Entity;
 
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public abstract class Repository<T extends Entity> {
     private String path;
-
+    
     public T save(T t) throws Exception {
         t.setId(generateId());
-        RepositoryUtils.writeToFile(path, new StringBuilder(t.toString()), true);
+        writeToFile(path, new StringBuilder(t.toString()), true);
         return t;
     }
 
@@ -46,12 +46,12 @@ public abstract class Repository<T extends Entity> {
             }
             content.append(object.toString()).append("\n");
         }
-        RepositoryUtils.writeToFile(path, content, false);
+        writeToFile(path, content, false);
     }
 
     //maps info from file-db to objects
     public ArrayList<T> getAllObjects() throws Exception {
-        StringBuilder content = RepositoryUtils.readFromFile(path);
+        StringBuilder content = readFromFile(path);
 
         if (content.length() == 0) {
             return new ArrayList<>();
@@ -81,6 +81,44 @@ public abstract class Repository<T extends Entity> {
             }
         }
         return null;
+    }
+
+    private static boolean isFileEmpty(String path) {
+        File file = new File(path);
+        return file.length() == 0;
+    }
+
+    private static void writeToFile(String path, StringBuilder content, boolean append) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, append))) {
+            if (isFileEmpty(path)) {
+                bw.append(content);
+            } else {
+                bw.append("\n").append(content);
+            }
+        } catch (IOException e) {
+            throw new IOException("writeToFile: Can't write to file: " + path);
+        }
+    }
+
+    private static StringBuilder readFromFile(String path) throws IOException {
+        String methodName = "read";
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (isFileEmpty(path)) {
+                    return content;
+                } else if (!line.isEmpty()) {
+                    content.append(line).append("\n");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(methodName + ": File " + path + "doesn't exists");
+        } catch (IOException e) {
+            throw new IOException(methodName + ": Can't read file from" + path);
+        }
+        return content;
     }
 
     public String getPath() {
