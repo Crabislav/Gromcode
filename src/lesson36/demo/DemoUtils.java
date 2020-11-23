@@ -64,7 +64,7 @@ public class DemoUtils {
             if (doUserLogin) {
                 userController.logout();
             }
-            userController.deleteUser(user);
+            userController.deleteUser(user.getId());
         } catch (Exception e) {
             System.err.println("Can't clean up test values");
             e.printStackTrace();
@@ -80,14 +80,12 @@ public class DemoUtils {
                 hotelController.deleteHotel(hotel.getId());
             }
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
         } catch (Exception e) {
             System.err.println("Can't init hotels");
             e.printStackTrace();
         }
     }
-
-
 
     static void deleteTestRooms(UserController userController, RoomController roomController, Room[] rooms, User userBefore, boolean doUserLogin) {
         try {
@@ -101,7 +99,7 @@ public class DemoUtils {
             roomController.deleteRoom(rooms[0].getId());
             roomController.deleteRoom(rooms[1].getId());
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
 
             if (doUserLogin) {
                 userController.login(userBefore.getUserName(), userBefore.getPassword());

@@ -1,6 +1,5 @@
 package lesson36.demo;
 
-import gromcode.main.lesson24.firstexample.Demo;
 import lesson36.controller.HotelController;
 import lesson36.controller.OrderController;
 import lesson36.controller.RoomController;
@@ -31,7 +30,7 @@ public class DemoOrder {
             hotelController.addHotel(hotel);
             roomController.addRoom(room);
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
         } catch (Exception e) {
             System.err.println("Can't init test values");
             e.printStackTrace();
@@ -51,7 +50,7 @@ public class DemoOrder {
             roomController.deleteRoom(room.getId());
             hotelController.deleteHotel(hotel.getId());
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
         } catch (Exception e) {
             System.err.println("Can't delete test values");
             e.printStackTrace();

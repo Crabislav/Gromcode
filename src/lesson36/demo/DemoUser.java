@@ -39,7 +39,7 @@ public class DemoUser {
             userController.registerUser(user);
             userController.registerUser(user);
 
-            userController.deleteUser(user);
+            userController.deleteUser(user.getId());
             userController.deleteUser(1);
             userController.deleteUser(2);
         } catch (Exception e) {
@@ -75,8 +75,8 @@ public class DemoUser {
 
         //clear file
         try {
-            userController.deleteUser(user);
-            userController.deleteUser(admin);
+            userController.deleteUser(user.getId());
+            userController.deleteUser(admin.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class DemoUser {
         }
 
         try {
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
             userController.deleteUser(1);
         } catch (Exception e) {
             e.printStackTrace();

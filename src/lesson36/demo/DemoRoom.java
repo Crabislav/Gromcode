@@ -135,7 +135,7 @@ public class DemoRoom {
             roomController.addRoom(rooms[0]);
             roomController.addRoom(rooms[1]);
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
 
             if (doUserLogin) {
                 userController.login(userBefore.getUserName(), userBefore.getPassword());
@@ -155,7 +155,7 @@ public class DemoRoom {
                 hotelController.addHotel(hotel);
             }
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
         } catch (Exception e) {
             System.err.println("Can't init hotels");
             e.printStackTrace();

@@ -1,6 +1,5 @@
 package lesson36.demo;
 
-import gromcode.main.lesson8.phonesexample.Demo;
 import lesson36.controller.HotelController;
 import lesson36.controller.UserController;
 import lesson36.model.Hotel;
@@ -82,7 +81,7 @@ public class DemoHotel {
             userController.login(admin.getUserName(), admin.getPassword());
             hotelController.addHotel(hotel);
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
 
             if (doUserLogin) {
                 userController.login(userBefore.getUserName(), userBefore.getPassword());
@@ -103,7 +102,7 @@ public class DemoHotel {
             userController.login(admin.getUserName(), admin.getPassword());
             hotelController.deleteHotel(hotel.getId());
             userController.logout();
-            userController.deleteUser(admin);
+            userController.deleteUser(admin.getId());
 
         } catch (Exception e) {
             System.err.println("Can't delete test hotels");

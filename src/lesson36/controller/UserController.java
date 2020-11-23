@@ -27,11 +27,6 @@ public class UserController extends Controller {
     }
 
     //own method
-    public void deleteUser(User user) throws Exception {
-        userService.deleteUser(user);
-    }
-
-    //own method
     public void deleteUser(long id) throws Exception {
         userService.deleteUser(id);
     }
