@@ -8,7 +8,7 @@ import lesson36.repository.UserRepository;
 import java.io.IOException;
 
 //business layer
-public class UserService {
+public class UserService extends Service {
     private UserRepository userRepository = new UserRepository();
 
     public UserService() throws IOException {
@@ -51,48 +51,14 @@ public class UserService {
     }
 
     private void validateUser(User user) throws BadRequestException {
-        String methodName = "validateUser";
-        //input object
-        if (user == null) {
-            throw new BadRequestException(methodName + ": User can't be null");
-        }
-
-        //name
-        String userName = user.getUserName();
-        if (userName == null || userName.isEmpty()) {
-            throw new BadRequestException(methodName + ": User's name can't be empty or null.");
-        }
-
-        //userPassword
-        String userPassword = user.getPassword();
-        if (userPassword == null || userPassword.isEmpty()) {
-            throw new BadRequestException(methodName + ": User's password can't be empty or null");
-        }
-
-        //country
-        String userCountry = user.getCountry();
-        if (userCountry == null || userCountry.isEmpty()) {
-            throw new BadRequestException(methodName + ": User's country can't be empty or null");
-        }
-
-        //userType
-        if (user.getUserType() == null) {
-            throw new BadRequestException(methodName + ": User's type can't be null");
-        }
-    }
-
-    public void deleteUser(User user) throws Exception {
-        Long userId = user.getId();
-        if (userRepository.findObjById(userId) == null) {
-            throw new BadRequestException("User with id=" + userId + ") wasn't found");
-        }
-
-        userRepository.remove(user);
+        validate(user);
+        validate(user.getUserName());
+        validate(user.getPassword());
+        validate(user.getCountry());
+        validate(user.getUserType());
     }
 
     public void deleteUser(long userId) throws Exception {
-        ServiceUtils.validateId(userId);
-
         User user = userRepository.findObjById(userId);
         if (user == null) {
             throw new BadRequestException("User with id=" + userId + ") wasn't found");

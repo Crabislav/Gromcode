@@ -3,11 +3,10 @@ package lesson36.service;
 import lesson36.exceptions.BadRequestException;
 import lesson36.model.Hotel;
 import lesson36.repository.HotelRepository;
-import lesson36.repository.RoomRepository;
 
 import java.io.IOException;
 
-public class HotelService {
+public class HotelService extends Service {
     private HotelRepository hotelRepository = new HotelRepository();
 
     public HotelService() throws IOException {
@@ -67,31 +66,10 @@ public class HotelService {
     }
 
     private void validateHotel(Hotel hotel) throws BadRequestException {
-        String methodName = "validateHotel";
-        String msg = "can't be null or empty";
-
-        if (hotel == null) {
-            throw new BadRequestException(methodName + ": Input " + msg);
-        }
-
-        String hotelCity = hotel.getCity();
-        if (hotelCity == null || hotelCity.isEmpty()) {
-            throw new BadRequestException(methodName + ": hotel's city " + msg);
-        }
-
-        String hotelName = hotel.getName();
-        if (hotelName == null || hotelName.isEmpty()) {
-            throw new BadRequestException(methodName + ": hotel's name " + msg);
-        }
-
-        String hotelCountry = hotel.getCountry();
-        if (hotelCountry == null || hotelCountry.isEmpty()) {
-            throw new BadRequestException(methodName + ": hotel's country " + msg);
-        }
-
-        String hotelStreet = hotel.getStreet();
-        if (hotelStreet == null || hotelStreet.isEmpty()) {
-            throw new BadRequestException(methodName + ": hotel's street " + msg);
-        }
+        validate(hotel);
+        validate(hotel.getCity());
+        validate(hotel.getName());
+        validate(hotel.getCountry());
+        validate(hotel.getStreet());
     }
 }

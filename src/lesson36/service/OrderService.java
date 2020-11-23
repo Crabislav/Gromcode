@@ -9,10 +9,9 @@ import lesson36.repository.RoomRepository;
 import lesson36.repository.UserRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
-public class OrderService {
+public class OrderService extends Service {
     private OrderRepository orderRepository = new OrderRepository();
     private RoomRepository roomRepository = new RoomRepository();
     private UserRepository userRepository = new UserRepository();
@@ -22,8 +21,6 @@ public class OrderService {
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
         validateDate(dateFrom, dateTo);
-        ServiceUtils.validateId(roomId);
-        ServiceUtils.validateId(userId);
 
         //check up room existence
         Room room = roomRepository.findObjById(roomId);
@@ -59,9 +56,6 @@ public class OrderService {
     }
 
     public void cancelReservation(long roomId, long userId) throws Exception {
-        ServiceUtils.validateId(roomId);
-        ServiceUtils.validateId(userId);
-
         String methodName = "cancelReservation : ";
         //check up room existence
         Room room = roomRepository.findObjById(roomId);
