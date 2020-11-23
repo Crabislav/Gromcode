@@ -9,21 +9,12 @@ import java.util.regex.Pattern;
 
 public abstract class Repository<T extends Entity> {
     private String path;
-    
+
     public T save(T t) throws Exception {
-        t.setId(generateId());
+        long id = (long) (Math.random() * 50_000_000);
+        t.setId(id);
         writeToFile(path, new StringBuilder(t.toString()), true);
         return t;
-    }
-
-    private Long generateId() throws Exception {
-        long id;
-
-        do {
-            id = (long) (Math.random() * 50_000_000);
-        } while (findObjById(id) != null);
-
-        return id;
     }
 
     public void remove(T t) throws Exception {
