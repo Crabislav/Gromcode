@@ -16,6 +16,11 @@ public class UserService extends Service {
 
     public User registerUser(User user) throws Exception {
         validateUser(user);
+
+        if (userRepository.findObjById(user.getId()) != null) {
+            throw new BadRequestException("registerUser: User already exists");
+        }
+
         return userRepository.save(user);
     }
 
@@ -50,13 +55,6 @@ public class UserService extends Service {
         Session.setAuthorizedUser(null);
     }
 
-    private void validateUser(User user) throws BadRequestException {
-        validate(user);
-        validate(user.getUserName());
-        validate(user.getPassword());
-        validate(user.getCountry());
-        validate(user.getUserType());
-    }
 
     public void deleteUser(long userId) throws Exception {
         User user = userRepository.findObjById(userId);
@@ -64,5 +62,13 @@ public class UserService extends Service {
             throw new BadRequestException("User with id=" + userId + ") wasn't found");
         }
         userRepository.remove(user);
+    }
+
+    private void validateUser(User user) throws BadRequestException {
+        validate(user);
+        validate(user.getUserName());
+        validate(user.getPassword());
+        validate(user.getCountry());
+        validate(user.getUserType());
     }
 }
