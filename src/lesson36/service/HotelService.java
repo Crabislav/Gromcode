@@ -9,7 +9,6 @@ import java.io.IOException;
 
 public class HotelService {
     private HotelRepository hotelRepository = new HotelRepository();
-    private RoomRepository roomRepository = new RoomRepository();
 
     public HotelService() throws IOException {
     }
@@ -55,8 +54,6 @@ public class HotelService {
 
     public void deleteHotel(long hotelId) throws Exception {
         String methodName = "deleteHotel";
-
-        ServiceUtils.validateId(hotelId);
 
         //find a hotel
         Hotel hotel = hotelRepository.findObjById(hotelId);
