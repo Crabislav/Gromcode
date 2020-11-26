@@ -3,7 +3,7 @@ package lesson36.model;
 import java.util.Date;
 
 public class Room extends Entity {
-    private Long id; //6
+    private Long id;
     private Integer numberOfGuests;
     private Double price;
     private Boolean breakfastIncluded;
@@ -11,7 +11,6 @@ public class Room extends Entity {
     private Date dateAvailableFrom;
     private Hotel hotel;
 
-    //used for creating
     public Room(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
         this.numberOfGuests = numberOfGuests;
         this.price = price;
@@ -21,7 +20,6 @@ public class Room extends Entity {
         this.hotel = hotel;
     }
 
-    //used for mapping
     public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
         this.id = id;
         this.numberOfGuests = numberOfGuests;

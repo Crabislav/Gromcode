@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.Date;
 
 public class OrderService extends Service {
-    private OrderRepository orderRepository = new OrderRepository();
-    private RoomRepository roomRepository = new RoomRepository();
-    private UserRepository userRepository = new UserRepository();
+    private final OrderRepository orderRepository = new OrderRepository();
+    private final RoomRepository roomRepository = new RoomRepository();
+    private final UserRepository userRepository = new UserRepository();
 
     public OrderService() throws IOException {
     }
@@ -22,15 +22,12 @@ public class OrderService extends Service {
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
         validateDate(dateFrom, dateTo);
 
-        //check up room existence
         Room room = roomRepository.findObjById(roomId);
         if (room == null) {
             throw new BadRequestException("Room (id=" + roomId + ") wasn't found");
         }
 
-        //change room's data field
         Date roomDateAvailableFrom = room.getDateAvailableFrom();
-        //when room is not available
         if (!roomDateAvailableFrom.equals(dateFrom) || roomDateAvailableFrom.after(dateFrom)) {
             throw new BadRequestException(
                     "bookRoom: Room(id=" + room.getId() +
@@ -39,43 +36,34 @@ public class OrderService extends Service {
                             ")" +
                             "is not available now");
         }
-        //when room is available
+
         room.setDateAvailableFrom(dateTo);
 
-        //check up user existence
         User user = userRepository.findObjById(userId);
         if (user == null) {
             throw new BadRequestException("User with id=" + userId + ") wasn't found");
         }
 
-        //create a new order
         Order order = new Order(user, room, dateFrom, dateTo, room.getPrice());
-
-        //save order to repository
         orderRepository.save(order);
     }
 
     public void cancelReservation(long roomId, long userId) throws Exception {
         String methodName = "cancelReservation : ";
-        //check up room existence
+
         Room room = roomRepository.findObjById(roomId);
         if (room == null) {
             throw new BadRequestException(methodName + "Room (id=" + roomId + ") wasn't found");
         }
 
-        //if room exists
-        //check up user existence
         User user = userRepository.findObjById(userId);
         if (user == null) {
             throw new BadRequestException(methodName + "User with id=" + userId + ") wasn't found");
         }
 
-        //find an order
         for (Order order : orderRepository.getAllObjects()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) {
-                //cancel reservation
                 orderRepository.remove(order);
-                //set room's dateAvailableFrom to new Date()
                 room.setDateAvailableFrom(new Date());
 //                order.setRoom(null);
                 return;

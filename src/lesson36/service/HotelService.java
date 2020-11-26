@@ -7,7 +7,7 @@ import lesson36.repository.HotelRepository;
 import java.io.IOException;
 
 public class HotelService extends Service {
-    private HotelRepository hotelRepository = new HotelRepository();
+    private final HotelRepository hotelRepository = new HotelRepository();
 
     public HotelService() throws IOException {
     }
@@ -15,12 +15,10 @@ public class HotelService extends Service {
     public Hotel findHotelByName(String name) throws Exception {
         String methodName = "findHotelByName";
 
-        //input validation
         if (name == null || name.isBlank()) {
             throw new BadRequestException(methodName + ": input can't be null");
         }
 
-        //find a hotel by name
         for (Hotel hotel : hotelRepository.getAllObjects()) {
             if (hotel.getName().equals(name)) {
                 return hotel;
@@ -54,9 +52,7 @@ public class HotelService extends Service {
     public void deleteHotel(long hotelId) throws Exception {
         String methodName = "deleteHotel";
 
-        //find a hotel
         Hotel hotel = hotelRepository.findObjById(hotelId);
-
         if (hotel == null) {
             throw new BadRequestException(methodName + ": hotel was not found");
         }

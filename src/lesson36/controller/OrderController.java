@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class OrderController extends Controller {
-    private OrderService orderService = new OrderService();
+    private final OrderService orderService = new OrderService();
 
     public OrderController() throws IOException {
     }

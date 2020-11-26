@@ -9,7 +9,6 @@ public class User extends Entity {
     private String country;
     private UserType userType;
 
-    //used for creating
     public User(String userName, String password, String country, UserType userType) {
         this.userName = userName;
         this.password = password;
@@ -17,7 +16,6 @@ public class User extends Entity {
         this.userType = userType;
     }
 
-    //used for mapping
     public User(Long id, String userName, String password, String country, UserType userType) {
         this.id = id;
         this.userName = userName;

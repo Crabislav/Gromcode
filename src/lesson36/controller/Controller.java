@@ -6,7 +6,6 @@ import lesson36.exceptions.NotEnoughRightsException;
 import lesson36.model.enums.UserType;
 
 public class Controller {
-    //checks if an authorized user is admin
     static void checkUserRights() throws NotEnoughRightsException {
         if (Session.getAuthorizedUser().getUserType() == UserType.USER) {
             throw new NotEnoughRightsException("User (id=" + Session.getAuthorizedUser().getId() +

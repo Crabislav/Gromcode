@@ -7,7 +7,6 @@ public class Hotel extends Entity {
     private String city;
     private String street;
 
-    //used for creating
     public Hotel(String name, String country, String city, String street) {
         this.name = name;
         this.country = country;
@@ -15,7 +14,6 @@ public class Hotel extends Entity {
         this.street = street;
     }
 
-    //used for mapping
     public Hotel(Long id, String name, String country, String city, String street) {
         this.id = id;
         this.name = name;

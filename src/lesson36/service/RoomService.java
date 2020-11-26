@@ -22,14 +22,12 @@ public class RoomService extends Service {
     public List<Room> findRooms(Filter filter) throws Exception {
         ArrayList<Room> filteredRooms = roomRepository.getAllObjects();
 
-        //Room's fields
         roomFilter.filterByBreakfast(filter.getBreakfastIncluded(), filteredRooms);
         roomFilter.filterByPetsAllowed(filter.getPetsAllowed(), filteredRooms);
         roomFilter.filterByNumberOfGuests(filter.getNumberOfGuests(), filteredRooms);
         roomFilter.filterByPrice(filter.getPrice(), filteredRooms);
         roomFilter.filterByDateAvailableFrom(filter.getDateAvailableFrom(), filteredRooms);
 
-        //Hotel's fields
         roomFilter.filterByHotelName(filter.getName(), filteredRooms);
         roomFilter.filterByHotelCountry(filter.getCountry(), filteredRooms);
         roomFilter.filterByHotelCity(filter.getCity(), filteredRooms);
@@ -38,32 +36,31 @@ public class RoomService extends Service {
         return filteredRooms;
     }
 
-    //only admins
+    /**
+     * only admins
+     */
     public void addRoom(Room room) throws Exception {
         validateRoom(room);
         roomRepository.save(room);
     }
 
-    //only admins
+    /**
+     * only admins
+     */
     public void deleteRoom(long roomId) throws Exception {
         String methodName = "deleteRoom";
 
-        //find a room by id
         Room room = roomRepository.findObjById(roomId);
         if (room == null) {
             throw new BadRequestException(methodName + ": Room (id=" + roomId + ") wasn't found");
         }
 
-
-        //delete room:
-        //if room is used at order - throw new Exception
         for (Order order : orderRepository.getAllObjects()) {
             if (order.getRoom().equals(room)) {
                 throw new BadRequestException(methodName + ": can't delete already booked room");
             }
         }
 
-        //if room wasn't used at order - delete it
         roomRepository.remove(room);
     }
 

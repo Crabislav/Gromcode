@@ -7,7 +7,6 @@ import lesson36.repository.UserRepository;
 
 import java.io.IOException;
 
-//business layer
 public class UserService extends Service {
     private UserRepository userRepository = new UserRepository();
 
@@ -32,7 +31,6 @@ public class UserService extends Service {
         }
 
         User userToLogin = null;
-        //finds a user at users repository
         for (User user : userRepository.getAllObjects()) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                 userToLogin = user;
@@ -40,7 +38,6 @@ public class UserService extends Service {
             }
         }
 
-        //if there is no such user
         if (userToLogin == null) {
             throw new BadRequestException(methodName + ": Can't find a such user at repository");
         }

@@ -6,7 +6,7 @@ import lesson36.service.HotelService;
 import java.io.IOException;
 
 public class HotelController extends Controller {
-    private HotelService hotelService = new HotelService();
+    private final HotelService hotelService = new HotelService();
 
     public HotelController() throws IOException {
     }
@@ -21,14 +21,18 @@ public class HotelController extends Controller {
         return hotelService.findHotelByCity(city);
     }
 
-    /**only admins*/
+    /**
+     * only admins
+     */
     public void addHotel(Hotel hotel) throws Exception {
         checkIsUserAuthorized("addHotel");
         checkUserRights();
         hotelService.addHotel(hotel);
     }
 
-    /**only admins*/
+    /**
+     * only admins
+     */
     public void deleteHotel(long hotelId) throws Exception {
         checkIsUserAuthorized("deleteHotel");
         checkUserRights();
