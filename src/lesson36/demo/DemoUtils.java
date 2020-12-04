@@ -9,14 +9,16 @@ import lesson36.model.Room;
 import lesson36.model.User;
 import lesson36.model.enums.UserType;
 
-import java.io.IOException;
 import java.util.Date;
 
 public class DemoUtils {
-    private static RoomController roomController;
-    private static HotelController hotelController;
-    private static UserController userController;
-    private static OrderController orderController;
+    private DemoUtils() {
+    }
+
+    private static final RoomController roomController = new RoomController();
+    private static final HotelController hotelController = new HotelController();
+    private static final UserController userController = new UserController();
+    private static final OrderController orderController = new OrderController();
 
     private static User user = new User("User", "user", "UA", UserType.USER);
     private static User admin = new User("Admin", "admin", "UA", UserType.ADMIN);
@@ -26,17 +28,6 @@ public class DemoUtils {
 
     private static Room room1 = new Room(5, 25d, true, true, new Date(172_800_000L), hotel1);
     private static Room room2 = new Room(5, 20d, false, false, new Date(172_800_000L), hotel2);
-
-    static {
-        try {
-            roomController = new RoomController();
-            hotelController = new HotelController();
-            userController = new UserController();
-            orderController = new OrderController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     static void registerAnUser(UserController userController, User user, boolean doUserLogin) {
         try {

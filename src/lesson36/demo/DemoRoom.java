@@ -1,10 +1,11 @@
 package lesson36.demo;
 
-import gromcode.main.lesson24.firstexample.Demo;
 import lesson36.controller.HotelController;
 import lesson36.controller.RoomController;
 import lesson36.controller.UserController;
-import lesson36.model.*;
+import lesson36.model.Hotel;
+import lesson36.model.Room;
+import lesson36.model.User;
 import lesson36.model.filter.Filter;
 import lesson36.model.filter.FilterBuilder;
 
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 
 public class DemoRoom {
     public static void main(String[] args) {
+
+        
         try {
             RoomController roomController = DemoUtils.getRoomController();
             HotelController hotelController = DemoUtils.getHotelController();
@@ -34,7 +37,7 @@ public class DemoRoom {
 
 //            complexTest(userController, user, roomController, rooms, filter, true, false);
 
-//            complexTest(userController, user, roomController, rooms, filter, true, true);
+            complexTest(userController, user, roomController, rooms, filter, true, true);
 
             DemoUtils.deleteTestHotels(hotelController, userController, hotels);
 
@@ -71,8 +74,7 @@ public class DemoRoom {
         try {
             res2 = deleteRoom(roomController, rooms[0].getId()) &&
                     deleteRoom(roomController, rooms[1].getId()) &&
-                    //invalid id
-                    !deleteRoom(roomController, rooms[1].getId() + 156) &&
+                    !deleteRoom(roomController, rooms[1].getId() + 156) && //invalid id
                     deleteRoom(roomController, rooms[1].getId());
         } catch (NullPointerException e) {
             res2 = true;
