@@ -1,6 +1,8 @@
 package lesson36.model.filter;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Filter {
     private Integer numberOfGuests;
@@ -60,6 +62,11 @@ public class Filter {
 
     public String getStreet() {
         return street;
+    }
+
+    public List<Object> getFields() {
+        return Arrays.asList(getBreakfastIncluded(), getName(), getCountry(), getCity(), getStreet(), getNumberOfGuests(),
+                getPrice(), getBreakfastIncluded(), getDateAvailableFrom(), getPetsAllowed());
     }
 
     @Override

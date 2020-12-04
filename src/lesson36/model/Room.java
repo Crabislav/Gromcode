@@ -1,6 +1,8 @@
 package lesson36.model;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Room extends Entity {
     private Long id;
@@ -66,6 +68,12 @@ public class Room extends Entity {
 
     public Hotel getHotel() {
         return hotel;
+    }
+
+    public List<Object> getFields() {
+        return Arrays.asList(getBreakfastIncluded(), getDateAvailableFrom(), getNumberOfGuests(),
+                getPetsAllowed(), getPrice(), getHotel().getCity(), getHotel().getCountry(),
+                getHotel().getName(), getHotel().getStreet());
     }
 
     @Override
