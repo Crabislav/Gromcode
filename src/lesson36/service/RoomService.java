@@ -1,13 +1,12 @@
 package lesson36.service;
 
 import lesson36.exceptions.BadRequestException;
-import lesson36.model.filter.Filter;
 import lesson36.model.Order;
 import lesson36.model.Room;
+import lesson36.model.filter.Filter;
 import lesson36.repository.OrderRepository;
 import lesson36.repository.RoomRepository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +15,38 @@ public class RoomService extends Service {
     private static final OrderRepository orderRepository = new OrderRepository();
 
     public List<Room> findRooms(Filter filter) throws Exception {
-        ArrayList<Room> filteredRooms = roomRepository.getAllObjects();
+        List<Room> result = new ArrayList<>();
 
-        roomFilter.filterByBreakfast(filter.getBreakfastIncluded(), filteredRooms);
-        roomFilter.filterByPetsAllowed(filter.getPetsAllowed(), filteredRooms);
-        roomFilter.filterByNumberOfGuests(filter.getNumberOfGuests(), filteredRooms);
-        roomFilter.filterByPrice(filter.getPrice(), filteredRooms);
-        roomFilter.filterByDateAvailableFrom(filter.getDateAvailableFrom(), filteredRooms);
+        for (Room room : roomRepository.getAllObjects()) {
+            if (isRoomSuitable(filter, room)) {
+                result.add(room);
+            }
+        }
 
-        roomFilter.filterByHotelName(filter.getName(), filteredRooms);
-        roomFilter.filterByHotelCountry(filter.getCountry(), filteredRooms);
-        roomFilter.filterByHotelCity(filter.getCity(), filteredRooms);
-        roomFilter.filterByHotelStreet(filter.getStreet(), filteredRooms);
+        return result;
+    }
 
-        return filteredRooms;
+    private boolean isRoomSuitable(Filter filter, Room room) {
+        boolean isRoomSuitable = false;
+
+        for (Object roomField : room.getFields()) {
+            if (roomField == null) {
+                continue;
+            }
+
+            isRoomSuitable = compareFieldsWithFilter(filter, isRoomSuitable, roomField);
+        }
+        return isRoomSuitable;
+    }
+
+    private boolean compareFieldsWithFilter(Filter filter, boolean isRoomSuitable, Object roomField) {
+        for (Object filterField : filter.getFields()) {
+            if (roomField.equals(filterField)) {
+                isRoomSuitable = true;
+                break;
+            }
+        }
+        return isRoomSuitable;
     }
 
     /**
