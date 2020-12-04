@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class HotelRepository extends Repository<Hotel> {
-
     public HotelRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/HotelDb.txt");
         new File(getPath()).createNewFile();
@@ -21,15 +20,5 @@ public class HotelRepository extends Repository<Hotel> {
         String street = objValues[4];
 
         return new Hotel(id, name, country, city, street);
-    }
-
-    @Override
-    public String getPath() {
-        return super.getPath();
-    }
-
-    @Override
-    public void setPath(String path) {
-        super.setPath(path);
     }
 }

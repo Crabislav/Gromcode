@@ -6,9 +6,7 @@ import lesson36.model.enums.UserType;
 import java.io.File;
 import java.io.IOException;
 
-//data access layer
 public class UserRepository extends Repository<User> {
-
     public UserRepository() throws IOException {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/UserDb.txt");
         new File(getPath()).createNewFile();
@@ -23,15 +21,5 @@ public class UserRepository extends Repository<User> {
         UserType userType = UserType.valueOf(objValues[4]);
 
         return new User(id, userName, password, country, userType);
-    }
-
-    @Override
-    public String getPath() {
-        return super.getPath();
-    }
-
-    @Override
-    public void setPath(String path) {
-        super.setPath(path);
     }
 }
