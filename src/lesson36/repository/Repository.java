@@ -112,6 +112,21 @@ public abstract class Repository<T extends Entity> {
         return content;
     }
 
+    void createRepositoryFile(String className) {
+        try {
+            if (!new File(getPath()).createNewFile()) {
+                System.out.println(className + " already exists. File wasn't created");
+            }
+        } catch (IOException e) {
+            System.out.println("Can't create" + className + " file");
+        }
+    }
+
+    private boolean isFileEmpty() {
+        File file = new File(path);
+        return file.length() == 0;
+    }
+
     public String getPath() {
         return path;
     }

@@ -13,9 +13,9 @@ import java.util.Locale;
 public class RoomRepository extends Repository<Room> {
     private HotelRepository hotelRepository = new HotelRepository();
 
-    public RoomRepository() throws IOException {
+    public RoomRepository() {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/RoomDb.txt");
-        new File(getPath()).createNewFile();
+        createRepositoryFile(RoomRepository.class.getSimpleName());
     }
 
     @Override

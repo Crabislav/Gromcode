@@ -3,13 +3,10 @@ package lesson36.repository;
 import lesson36.model.User;
 import lesson36.model.enums.UserType;
 
-import java.io.File;
-import java.io.IOException;
-
 public class UserRepository extends Repository<User> {
-    public UserRepository() throws IOException {
+    public UserRepository() {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/UserDb.txt");
-        new File(getPath()).createNewFile();
+        createRepositoryFile(UserRepository.class.getSimpleName());
     }
 
     @Override

@@ -2,13 +2,10 @@ package lesson36.repository;
 
 import lesson36.model.Hotel;
 
-import java.io.File;
-import java.io.IOException;
-
 public class HotelRepository extends Repository<Hotel> {
-    public HotelRepository() throws IOException {
+    public HotelRepository() {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/HotelDb.txt");
-        new File(getPath()).createNewFile();
+        createRepositoryFile(HotelRepository.class.getSimpleName());
     }
 
     @Override

@@ -14,9 +14,9 @@ public class OrderRepository extends Repository<Order> {
     private UserRepository userRepository = new UserRepository();
     private RoomRepository roomRepository = new RoomRepository();
 
-    public OrderRepository() throws IOException {
+    public OrderRepository() {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/OrderDb.txt");
-        new File(getPath()).createNewFile();
+        createRepositoryFile(OrderRepository.class.getSimpleName());
     }
 
     @Override
