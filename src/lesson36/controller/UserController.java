@@ -1,16 +1,11 @@
 package lesson36.controller;
 
 import lesson36.exceptions.BadRequestException;
-import lesson36.service.UserService;
 import lesson36.model.User;
-
-import java.io.IOException;
+import lesson36.service.UserService;
 
 public class UserController extends Controller {
-    private final UserService userService = new UserService();
-
-    public UserController() throws IOException {
-    }
+    private static final UserService userService = new UserService();
 
     public User registerUser(User user) throws Exception {
         return userService.registerUser(user);

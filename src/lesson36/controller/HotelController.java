@@ -3,13 +3,8 @@ package lesson36.controller;
 import lesson36.model.Hotel;
 import lesson36.service.HotelService;
 
-import java.io.IOException;
-
 public class HotelController extends Controller {
-    private final HotelService hotelService = new HotelService();
-
-    public HotelController() throws IOException {
-    }
+    private static final HotelService hotelService = new HotelService();
 
     public Hotel findHotelByName(String name) throws Exception {
         checkIsUserAuthorized("findHotelByName");

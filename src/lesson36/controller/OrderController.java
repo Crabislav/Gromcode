@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class OrderController extends Controller {
-    private final OrderService orderService = new OrderService();
-
-    public OrderController() throws IOException {
-    }
+    private static final OrderService orderService = new OrderService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
         checkIsUserAuthorized("bookRoom");
