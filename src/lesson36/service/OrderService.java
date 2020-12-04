@@ -70,15 +70,15 @@ public class OrderService extends Service {
         throw new BadRequestException(methodName + ": order was not found");
     }
 
-    private void validateDate(Date dateFrom, Date dateTo) throws IllegalArgumentException {
+    private void validateDate(Date dateFrom, Date dateTo) throws BadRequestException {
         String methodName = "validateDate";
 
         if (dateFrom == null || dateTo == null) {
-            throw new IllegalArgumentException(methodName + ": date can't be null");
+            throw new BadRequestException(methodName + ": date can't be null");
         }
 
         if (dateFrom.after(dateTo)) {
-            throw new IllegalArgumentException(methodName + ": dateFrom can't be after dateTo");
+            throw new BadRequestException(methodName + ": dateFrom can't be after dateTo");
         }
     }
 
