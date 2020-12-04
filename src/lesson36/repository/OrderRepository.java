@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class OrderRepository extends Repository<Order> {
-    private UserRepository userRepository = new UserRepository();
-    private RoomRepository roomRepository = new RoomRepository();
+    private static final UserRepository userRepository = new UserRepository();
+    private static final RoomRepository roomRepository = new RoomRepository();
 
     public OrderRepository() {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/OrderDb.txt");

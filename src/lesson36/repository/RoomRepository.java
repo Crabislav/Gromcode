@@ -11,7 +11,7 @@ import java.util.Locale;
 
 
 public class RoomRepository extends Repository<Room> {
-    private HotelRepository hotelRepository = new HotelRepository();
+    private static final HotelRepository hotelRepository = new HotelRepository();
 
     public RoomRepository() {
         setPath("C:/Users/Alex Kopnin/Desktop/lesson36/RoomDb.txt");
