@@ -5,8 +5,6 @@ import lesson36.exceptions.BadRequestException;
 import lesson36.model.User;
 import lesson36.repository.UserRepository;
 
-import java.io.IOException;
-
 public class UserService extends Service {
     private static final UserRepository userRepository = new UserRepository();
 
