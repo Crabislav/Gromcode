@@ -3,21 +3,18 @@ package lesson36.model.filter;
 import java.util.Date;
 
 public class Filter {
-    //Room fields
     private Integer numberOfGuests;
     private Double price;
     private Boolean breakfastIncluded;
     private Boolean petsAllowed;
     private Date dateAvailableFrom;
 
-    //Hotel fields
     private String name;
     private String country;
     private String city;
     private String street;
 
-
-    public Filter(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, String name, String country, String city, String street) {
+    Filter(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, String name, String country, String city, String street) {
         this.numberOfGuests = numberOfGuests;
         this.price = price;
         this.breakfastIncluded = breakfastIncluded;
