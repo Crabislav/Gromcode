@@ -8,7 +8,6 @@ import lesson36.repository.OrderRepository;
 import lesson36.repository.RoomRepository;
 import lesson36.repository.UserRepository;
 
-import java.io.IOException;
 import java.util.Date;
 
 public class OrderService extends Service {
@@ -55,7 +54,7 @@ public class OrderService extends Service {
 
         User user = userRepository.findObjById(userId);
         if (user == null) {
-            throw new BadRequestException(methodName + "User with id=" + userId + ") wasn't found");
+            throw new BadRequestException(methodName + "User (id=" + userId + ") wasn't found");
         }
 
         for (Order order : orderRepository.getAllObjects()) {
