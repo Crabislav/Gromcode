@@ -61,8 +61,10 @@ public class OrderService extends Service {
         for (Order order : orderRepository.getAllObjects()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) {
                 orderRepository.remove(order);
+
+                roomRepository.remove(room);
                 room.setDateAvailableFrom(new Date());
-//                order.setRoom(null);
+                roomRepository.save(room);
                 return;
             }
         }
