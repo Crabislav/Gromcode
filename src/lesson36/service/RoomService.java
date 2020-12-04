@@ -12,12 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomService extends Service {
-    private RoomFilter roomFilter = new RoomFilter();
-    private RoomRepository roomRepository = new RoomRepository();
-    private OrderRepository orderRepository = new OrderRepository();
-
-    public RoomService() throws IOException {
-    }
+    private static final RoomRepository roomRepository = new RoomRepository();
+    private static final OrderRepository orderRepository = new OrderRepository();
 
     public List<Room> findRooms(Filter filter) throws Exception {
         ArrayList<Room> filteredRooms = roomRepository.getAllObjects();

@@ -12,12 +12,9 @@ import java.io.IOException;
 import java.util.Date;
 
 public class OrderService extends Service {
-    private final OrderRepository orderRepository = new OrderRepository();
-    private final RoomRepository roomRepository = new RoomRepository();
-    private final UserRepository userRepository = new UserRepository();
-
-    public OrderService() throws IOException {
-    }
+    private static final OrderRepository orderRepository = new OrderRepository();
+    private static final RoomRepository roomRepository = new RoomRepository();
+    private static final UserRepository userRepository = new UserRepository();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
         validateDate(dateFrom, dateTo);

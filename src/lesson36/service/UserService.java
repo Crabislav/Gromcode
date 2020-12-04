@@ -8,10 +8,7 @@ import lesson36.repository.UserRepository;
 import java.io.IOException;
 
 public class UserService extends Service {
-    private UserRepository userRepository = new UserRepository();
-
-    public UserService() throws IOException {
-    }
+    private static final UserRepository userRepository = new UserRepository();
 
     public User registerUser(User user) throws Exception {
         validateUser(user);

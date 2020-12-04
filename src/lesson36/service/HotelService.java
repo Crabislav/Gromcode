@@ -4,13 +4,8 @@ import lesson36.exceptions.BadRequestException;
 import lesson36.model.Hotel;
 import lesson36.repository.HotelRepository;
 
-import java.io.IOException;
-
 public class HotelService extends Service {
-    private final HotelRepository hotelRepository = new HotelRepository();
-
-    public HotelService() throws IOException {
-    }
+    private static final HotelRepository hotelRepository = new HotelRepository();
 
     public Hotel findHotelByName(String name) throws Exception {
         String methodName = "findHotelByName";
